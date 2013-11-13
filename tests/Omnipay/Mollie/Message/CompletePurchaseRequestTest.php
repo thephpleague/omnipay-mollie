@@ -2,7 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class CompletePurchaseRequestTest extends TestCase
 {
