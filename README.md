@@ -29,7 +29,7 @@ And run composer to update your dependencies:
 
 ## Basic Usage
 
-The following gatmollies are provided by this package:
+The following gateways are provided by this package:
 
 * Mollie
 
