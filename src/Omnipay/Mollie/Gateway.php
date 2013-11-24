@@ -20,7 +20,7 @@ class Gateway extends AbstractGateway
     {
         return array(
             'partnerId' => '',
-            'testMode' => '',
+            'testMode' => false,
         );
     }
 
