@@ -16,7 +16,13 @@ class Response extends AbstractResponse implements RedirectResponseInterface
             return false;
         }
 
-        return 'error' !== (string) $this->data->item['type'];
+        if (isset($this->data->item)) {
+            return 'error' !== (string) $this->data->item['type'];
+        } elseif (isset($this->data->order->status)) {
+            return 'Success' === (string) $this->data->order->status;
+        }
+
+        return true;
     }
 
     public function isRedirect()
@@ -63,6 +69,8 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     {
         if (isset($this->data->item)) {
             return (string) $this->data->item->errorcode;
+        } elseif (isset($this->data->order->status)) {
+            return (string) $this->data->order->status;
         }
     }
 

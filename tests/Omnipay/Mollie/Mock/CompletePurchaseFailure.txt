@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Server: nginx/1.4.4
+Date: Sat, 21 Dec 2013 23:22:46 GMT
+Content-Type: text/xml
+Content-Length: 393
+Connection: keep-alive
+Vary: Accept-Encoding
+
+<?xml version="1.0"?>
+<response>
+  <order>
+    <transaction_id>d0feefce2a1ae5a05d24a10d364bc281</transaction_id>
+    <amount>40150</amount>
+    <currency>EUR</currency>
+    <payed>false</payed>
+    <message>This iDEAL-order wasn't payed for, or was already checked by you. (We give payed=true only once, for your protection)</message>
+    <status>CheckedBefore</status>
+  </order>
+</response>

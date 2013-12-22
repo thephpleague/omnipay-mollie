@@ -27,9 +27,27 @@ class CompletePurchaseRequestTest extends TestCase
         $this->assertSame('abc123', $data['transaction_id']);
     }
 
-    /*
-     * We need a Mollie test account to record some responses to completePurchase()
-     * and test CompletePurchaseRequest::send()
-     * Pull requests welcome!
-     */
+    public function testSendSuccess()
+    {
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
+        $response = $this->request->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('3be9b120ea75fe6807571f5f649cad6d', $response->getTransactionReference());
+        $this->assertSame('This iDEAL-order has successfuly been payed for, and this is the first time you check it.', $response->getMessage());
+        $this->assertSame('Success', $response->getCode());
+    }
+
+    public function testSendFailure()
+    {
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('d0feefce2a1ae5a05d24a10d364bc281', $response->getTransactionReference());
+        $this->assertSame('This iDEAL-order wasn\'t payed for, or was already checked by you. (We give payed=true only once, for your protection)', $response->getMessage());
+        $this->assertSame('CheckedBefore', $response->getCode());
+    }
 }

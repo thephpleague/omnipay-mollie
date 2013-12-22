@@ -1,0 +1,24 @@
+HTTP/1.1 200 OK
+Server: nginx/1.4.4
+Date: Sat, 21 Dec 2013 23:36:50 GMT
+Content-Type: text/xml
+Content-Length: 540
+Connection: keep-alive
+Vary: Accept-Encoding
+
+<?xml version="1.0"?>
+<response>
+  <order>
+    <transaction_id>3be9b120ea75fe6807571f5f649cad6d</transaction_id>
+    <amount>40150</amount>
+    <currency>EUR</currency>
+    <payed>true</payed>
+    <message>This iDEAL-order has successfuly been payed for, and this is the first time you check it.</message>
+    <status>Success</status>
+    <consumer>
+      <consumerName>T. TEST</consumerName>
+      <consumerAccount>NL17RABO0213698412</consumerAccount>
+      <consumerCity>NOT PROVIDED</consumerCity>
+    </consumer>
+  </order>
+</response>
