@@ -6,25 +6,42 @@ use Omnipay\Tests\TestCase;
 
 class CompletePurchaseRequestTest extends TestCase
 {
+    /**
+     * @var \Omnipay\Mollie\Message\CompletePurchaseRequest
+     */
+    protected $request;
+
     public function setUp()
     {
         $this->request = new CompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
-            'partnerId' => 'my partner id',
+            'apiKey' => 'mykey',
         ));
+
+        $this->getHttpRequest()->request->replace(array(
+            'id' => 'tr_Qzin4iTWrU',
+        ));
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
+     * @expectedExceptionMessage The id parameter is required
+     */
+    public function testGetDataWithoutIDParameter()
+    {
+        $this->getHttpRequest()->request->remove('id');
+
+        $data = $this->request->getData();
+
+        $this->assertEmpty($data);
     }
 
     public function testGetData()
     {
-        $this->getHttpRequest()->query->replace(array(
-            'transaction_id' => 'abc123',
-        ));
-
         $data = $this->request->getData();
 
-        $this->assertSame('check', $data['a']);
-        $this->assertSame('my partner id', $data['partnerid']);
-        $this->assertSame('abc123', $data['transaction_id']);
+        $this->assertSame("tr_Qzin4iTWrU", $data['id']);
+        $this->assertCount(1, $data);
     }
 
     public function testSendSuccess()
@@ -32,22 +49,36 @@ class CompletePurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
         $response = $this->request->send();
 
+        $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isOpen());
+        $this->assertTrue($response->isPaid());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('3be9b120ea75fe6807571f5f649cad6d', $response->getTransactionReference());
-        $this->assertSame('This iDEAL-order has successfuly been payed for, and this is the first time you check it.', $response->getMessage());
-        $this->assertSame('Success', $response->getCode());
+        $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
+    }
+
+    public function testSendExpired()
+    {
+        $this->setMockHttpResponse('CompletePurchaseExpired.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isPaid());
+        $this->assertTrue($response->isExpired());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
     }
 
     public function testSendFailure()
     {
-        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
         $response = $this->request->send();
 
+        $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('d0feefce2a1ae5a05d24a10d364bc281', $response->getTransactionReference());
-        $this->assertSame('This iDEAL-order wasn\'t payed for, or was already checked by you. (We give payed=true only once, for your protection)', $response->getMessage());
-        $this->assertSame('CheckedBefore', $response->getCode());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame("The issuer is invalid", $response->getMessage());
     }
 }
