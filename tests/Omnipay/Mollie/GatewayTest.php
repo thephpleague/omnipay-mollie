@@ -6,6 +6,11 @@ use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
 {
+    /**
+     * @var \Omnipay\Mollie\Gateway
+     */
+    protected $gateway;
+
     public function setUp()
     {
         parent::setUp();
@@ -15,10 +20,9 @@ class GatewayTest extends GatewayTestCase
 
     public function testFetchIssuers()
     {
-        $request = $this->gateway->fetchIssuers(array('partnerId' => 'abc123'));
+        $request = $this->gateway->fetchIssuers();
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersRequest', $request);
-        $this->assertSame('abc123', $request->getPartnerId());
     }
 
     public function testPurchase()
@@ -35,5 +39,18 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
+    }
+
+    public function testFetchTransaction()
+    {
+        $request = $this->gateway->fetchTransaction(array(
+            'apiKey' => 'key',
+            'transactionReference' => 'tr_Qzin4iTWrU'
+        ));
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchTransactionRequest', $request);
+
+        $data = $request->getData();
+        $this->assertSame('tr_Qzin4iTWrU', $data['id']);
     }
 }

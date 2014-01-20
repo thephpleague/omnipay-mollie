@@ -6,42 +6,46 @@ use Omnipay\Tests\TestCase;
 
 class PurchaseRequestTest extends TestCase
 {
+    /**
+     * @var \Omnipay\Mollie\Message\PurchaseRequest
+     */
+    protected $request;
+
     public function setUp()
     {
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(
-            array(
-                'partnerId' => 'my partner id',
-                'amount' => '12.00',
-                'issuer' => 'my bank',
-                'returnUrl' => 'https://www.example.com/return',
-                'notifyUrl' => 'https://www.example.com/return',
-            )
-        );
+        $this->request->initialize(array(
+            'apiKey'      => 'mykey',
+            'amount'      => '12.00',
+            'issuer'      => 'my bank',
+            'description' => 'Description',
+            'returnUrl'   => 'https://www.example.com/return',
+            'method'      => 'ideal',
+            'metadata'    => 'meta',
+        ));
     }
 
     public function testGetData()
     {
         $this->request->initialize(array(
-            'partnerId' => 'my partner id',
-            'amount' => '12.00',
-            'issuer' => 'my bank',
-            'returnUrl' => 'https://www.example.com/return',
-            'notifyUrl' => 'https://www.example.com/notify',
-            'description' => 'a description',
-            'testMode' => true,
+            'apiKey'      => 'mykey',
+            'amount'      => '12.00',
+            'description' => 'Description',
+            'returnUrl'   => 'https://www.example.com/return',
+            'method'      => 'ideal',
+            'metadata'    => 'meta',
+            'issuer'      => 'my bank',
         ));
 
         $data = $this->request->getData();
 
-        $this->assertSame('fetch', $data['a']);
-        $this->assertSame('my partner id', $data['partnerid']);
-        $this->assertSame(1200, $data['amount']);
-        $this->assertSame('my bank', $data['bank_id']);
-        $this->assertSame('a description', $data['description']);
-        $this->assertSame('https://www.example.com/return', $data['returnurl']);
-        $this->assertSame('https://www.example.com/notify', $data['reporturl']);
-        $this->assertSame('true', $data['testmode']);
+        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame('Description', $data['description']);
+        $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
+        $this->assertSame('ideal', $data['method']);
+        $this->assertSame('meta', $data['metadata']);
+        $this->assertSame('my bank', $data['issuer']);
+        $this->assertCount(6, $data);
     }
 
     public function testSendSuccess()
@@ -49,27 +53,30 @@ class PurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('PurchaseSuccess.txt');
         $response = $this->request->send();
 
+        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertSame('GET', $response->getRedirectMethod());
-        $this->assertSame('https://www.mollie.nl/partners/ideal-test-bank?order_nr=M0361705M1078X9J&transaction_id=2e6455e7c1999436ef7093219f016fc5&trxid=0036170512173671', $response->getRedirectUrl());
+        $this->assertSame('https://www.mollie.nl/payscreen/pay/Qzin4iTWrU', $response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
-        $this->assertSame('2e6455e7c1999436ef7093219f016fc5', $response->getTransactionReference());
-        $this->assertSame('Your iDEAL-payment has successfully been setup. Your customer should visit the given URL to make the payment', $response->getMessage());
+        $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
+        $this->assertTrue($response->isOpen());
+        $this->assertFalse($response->isPaid());
         $this->assertNull($response->getCode());
+        $this->assertNull($response->getMessage());
     }
 
-    public function testSendError()
+    public function testSendFailure()
     {
         $this->setMockHttpResponse('PurchaseFailure.txt');
         $response = $this->request->send();
 
+        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
-        $this->assertSame("A fetch was issued without specification of 'partnerid'.", $response->getMessage());
-        $this->assertSame('-2', $response->getCode());
+        $this->assertSame("The issuer is invalid", $response->getMessage());
     }
 }

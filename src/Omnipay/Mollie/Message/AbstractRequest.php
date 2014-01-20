@@ -2,48 +2,44 @@
 
 namespace Omnipay\Mollie\Message;
 
-/**
- * Mollie Abstract Request
- */
+use Guzzle\Common\Event;
+
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $endpoint = 'https://secure.mollie.nl/xml/ideal';
+    protected $endpoint = 'https://api.mollie.nl/v1';
 
-    public function getPartnerId()
+    public function getApiKey()
     {
-        return $this->getParameter('partnerId');
+        return $this->getParameter('apiKey');
     }
 
-    public function setPartnerId($value)
+    public function setApiKey($value)
     {
-        return $this->setParameter('partnerId', $value);
+        return $this->setParameter('apiKey', $value);
     }
 
-    public function getIssuer()
+    protected function sendRequest($method, $endpoint, $data = null)
     {
-        return $this->getParameter('issuer');
-    }
+        $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event) {
+            /**
+             * @var \Guzzle\Http\Message\Response $response
+             */
+            $response = $event['response'];
 
-    public function setIssuer($value)
-    {
-        return $this->setParameter('issuer', $value);
-    }
+            if ($response->isClientError()) {
+                $event->stopPropagation();
+            }
+        });
 
-    protected function getBaseData()
-    {
-        $data = array();
+        $httpRequest = $this->httpClient->createRequest(
+            $method,
+            $this->endpoint . $endpoint,
+            array(
+                'Authorization' => 'Bearer ' . $this->getApiKey()
+            ),
+            $data
+        );
 
-        if ($this->getTestMode()) {
-            $data['testmode'] = 'true';
-        }
-
-        return $data;
-    }
-
-    public function sendData($data)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data)->send();
-
-        return $this->response = new Response($this, $httpResponse->xml());
+        return $httpRequest->send();
     }
 }
