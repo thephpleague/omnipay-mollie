@@ -7,7 +7,7 @@ use Omnipay\Common\AbstractGateway;
 /**
  * Mollie (iDeal) Gateway
  *
- * @link https://www.mollie.nl/support/documentatie/betaaldiensten/ideal/en/
+ * @link https://www.mollie.nl/files/documentatie/payments-api.html
  */
 class Gateway extends AbstractGateway
 {
