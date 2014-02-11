@@ -28,4 +28,3 @@ class FetchMethodsRequest extends AbstractRequest
         return $this->response = new FetchMethodsResponse($this, $httpResponse->json());
     }
 }
- 
