@@ -17,7 +17,7 @@ class FetchMethodsResponse extends AbstractResponse
 
             foreach ($this->data['data'] as $method) {
                 $result[] = array(
-                	'id' => $method['id'],
+					'id' => $method['id'],
 					'name' => $method['description']
                 );
             }
@@ -27,5 +27,4 @@ class FetchMethodsResponse extends AbstractResponse
 
         return null;
     }
-
 }
