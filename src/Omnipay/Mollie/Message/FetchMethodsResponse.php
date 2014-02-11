@@ -6,7 +6,7 @@ class FetchMethodsResponse extends AbstractResponse
 {
 
     /**
-     * Return available issuers as an associative array.
+     * Return available methods as an associative array.
      *
      * @return array|null
      */
