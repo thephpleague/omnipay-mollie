@@ -51,10 +51,6 @@ class FetchMethodsRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
-<<<<<<< HEAD
-        $this->assertNull($response->getIssuers());
-=======
         $this->assertNull($response->getMethods());
->>>>>>> 1e29e07cd2e62d1279ed4913188a1f11aab5eb20
     }
 }
