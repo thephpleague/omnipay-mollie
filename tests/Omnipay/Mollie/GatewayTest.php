@@ -18,6 +18,13 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
     }
 
+    public function testFetchMethods()
+    {
+        $request = $this->gateway->fetchMethods();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchMethodsRequest', $request);
+    }
+
     public function testFetchIssuers()
     {
         $request = $this->gateway->fetchIssuers();
