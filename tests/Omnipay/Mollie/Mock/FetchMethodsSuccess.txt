@@ -27,33 +27,6 @@ X-Whom: dc1-web-2
                 "normal": "https://www.mollie.nl/images/payscreen/methods/ideal.png",
                 "bigger": "https://www.mollie.nl/images/payscreen/methods/ideal@2x.png"
             }
-<<<<<<< HEAD
-        },
-        {
-            "id": "creditcard",
-            "description": "Creditcard",
-            "amount": {
-                "minimum": "0.32",
-                "maximum": "10000.00"
-            },
-            "image": {
-                "normal": "https://www.mollie.nl/images/payscreen/methods/creditcard.png",
-                "bigger": "https://www.mollie.nl/images/payscreen/methods/creditcard@2x.png"
-            }
-        },
-        {
-            "id": "mistercash",
-            "description": "Mister Cash",
-            "amount": {
-                "minimum": "0.31",
-                "maximum": "10000.00"
-            },
-            "image": {
-                "normal": "https://www.mollie.nl/images/payscreen/methods/mistercash.png",
-                "bigger": "https://www.mollie.nl/images/payscreen/methods/mistercash@2x.png"
-            }
-=======
->>>>>>> 1e29e07cd2e62d1279ed4913188a1f11aab5eb20
         }
     ]
 }
