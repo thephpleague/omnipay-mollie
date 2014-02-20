@@ -45,15 +45,6 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('apiKey', $value);
     }
-    
-    /**
-     * @param array $parameters
-     * @return \Omnipay\Mollie\Message\FetchMethodsRequest
-     */
-    public function fetchMethods(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Mollie\Message\FetchMethodsRequest', $parameters);
-    }
 
     /**
      * @param array $parameters
