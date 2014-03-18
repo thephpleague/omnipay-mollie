@@ -9,16 +9,6 @@ namespace Omnipay\Mollie\Message;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    public function getMethod()
-    {
-        return $this->getParameter('method');
-    }
-
-    public function setMethod($value)
-    {
-        return $this->setParameter('method', $value);
-    }
-
     public function getMetadata()
     {
         return $this->getParameter('metadata');
@@ -29,16 +19,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('metadata', $value);
     }
 
-    public function getIssuer()
-    {
-        return $this->getParameter('issuer');
-    }
-
-    public function setIssuer($value)
-    {
-        return $this->setParameter('issuer', $value);
-    }
-
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
@@ -47,7 +27,7 @@ class PurchaseRequest extends AbstractRequest
         $data['amount'] = $this->getAmount();
         $data['description'] = $this->getDescription();
         $data['redirectUrl'] = $this->getReturnUrl();
-        $data['method'] = $this->getMethod();
+        $data['method'] = $this->getPaymentMethod();
         $data['metadata'] = $this->getMetadata();
         $data['issuer'] = $this->getIssuer();
 
