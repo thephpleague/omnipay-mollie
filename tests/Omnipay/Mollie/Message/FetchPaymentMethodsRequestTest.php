@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Mollie\PaymentMethod;
 use Omnipay\Tests\TestCase;
 
 class FetchPaymentMethodsRequestTest extends TestCase
@@ -38,18 +39,20 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $paymentMethods = $response->getPaymentMethods();
         $this->assertCount(4, $paymentMethods);
 
-        $this->assertEquals(array(
-            'id' => 'ideal',
-            'description' => 'iDEAL',
-            'amount' => array(
+        $expectedPaymentMethod = new PaymentMethod(
+            'ideal',
+            'iDEAL',
+            array(
                 'minimum' => 0.43,
                 'maximum' => 50000.00
             ),
-            'image' => array(
+            array(
                 'normal' => 'https://www.mollie.nl/images/payscreen/methods/ideal.png',
                 'bigger' => 'https://www.mollie.nl/images/payscreen/methods/ideal@2x.png'
             )
-        ), $paymentMethods[0]);
+        );
+
+        $this->assertEquals($expectedPaymentMethod, $paymentMethods[0]);
     }
 
     public function testSendFailure()
@@ -62,6 +65,6 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
-        $this->assertNull($response->getPaymentMethods());
+        $this->assertEmpty($response->getPaymentMethods());
     }
 }

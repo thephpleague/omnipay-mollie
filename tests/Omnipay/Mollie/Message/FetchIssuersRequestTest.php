@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Common\Issuer;
 use Omnipay\Tests\TestCase;
 
 class FetchIssuersRequestTest extends TestCase
@@ -35,11 +36,8 @@ class FetchIssuersRequestTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame(array(array(
-            'id'     => 'ideal_TESTNL99',
-            'name'   => 'TBM Bank',
-            'method' => 'ideal'
-        )), $response->getIssuers());
+        $expectedIssuer = new Issuer('ideal_TESTNL99', 'TBM Bank', 'ideal');
+        $this->assertEquals(array($expectedIssuer), $response->getIssuers());
     }
 
     public function testSendFailure()
@@ -52,6 +50,6 @@ class FetchIssuersRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
-        $this->assertNull($response->getIssuers());
+        $this->assertEmpty($response->getIssuers());
     }
 }

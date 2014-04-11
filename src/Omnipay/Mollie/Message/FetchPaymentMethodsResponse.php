@@ -2,30 +2,31 @@
 
 namespace Omnipay\Mollie\Message;
 
-class FetchPaymentMethodsResponse extends AbstractResponse
+use Omnipay\Common\Message\FetchPaymentMethodsResponseInterface;
+use Omnipay\Mollie\PaymentMethod;
+
+class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPaymentMethodsResponseInterface
 {
     /**
      * Return available paymentmethods as an associative array.
      *
-     * @return array|null
+     * @return \Omnipay\Mollie\PaymentMethod[]
      */
     public function getPaymentMethods()
     {
-        if (isset($this->data['data'])) {
-            $result = array();
+        $paymentMethods = array();
 
+        if (isset($this->data['data'])) {
             foreach ($this->data['data'] as $method) {
-                $result[] = array(
-                    'id'          => $method['id'],
-                    'description' => $method['description'],
-                    'amount'      => $method['amount'],
-                    'image'       => $method['image']
+                $paymentMethods[] = new PaymentMethod(
+                    $method['id'],
+                    $method['description'],
+                    $method['amount'],
+                    $method['image']
                 );
             }
-
-            return $result;
         }
 
-        return null;
+        return $paymentMethods;
     }
 }
