@@ -54,6 +54,6 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
-        $this->assertEmpty($response->getPaymentMethods());
+        $this->assertNull($response->getPaymentMethods());
     }
 }

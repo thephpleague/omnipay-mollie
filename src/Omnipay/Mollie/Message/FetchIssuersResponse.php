@@ -14,14 +14,13 @@ class FetchIssuersResponse extends AbstractResponse implements FetchIssuersRespo
      */
     public function getIssuers()
     {
-        $issuers = array();
-
         if (isset($this->data['data'])) {
+            $issuers = array();
             foreach ($this->data['data'] as $issuer) {
                 $issuers[] = new Issuer($issuer['id'], $issuer['name'], $issuer['method']);
             }
-        }
 
-        return $issuers;
+            return $issuers;
+        }
     }
 }

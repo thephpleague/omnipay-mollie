@@ -50,6 +50,6 @@ class FetchIssuersRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
-        $this->assertEmpty($response->getIssuers());
+        $this->assertNull($response->getIssuers());
     }
 }
