@@ -2,7 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Mollie\PaymentMethod;
+use Omnipay\Common\PaymentMethod;
 use Omnipay\Tests\TestCase;
 
 class FetchPaymentMethodsRequestTest extends TestCase
@@ -39,18 +39,7 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $paymentMethods = $response->getPaymentMethods();
         $this->assertCount(4, $paymentMethods);
 
-        $expectedPaymentMethod = new PaymentMethod(
-            'ideal',
-            'iDEAL',
-            array(
-                'minimum' => 0.43,
-                'maximum' => 50000.00
-            ),
-            array(
-                'normal' => 'https://www.mollie.nl/images/payscreen/methods/ideal.png',
-                'bigger' => 'https://www.mollie.nl/images/payscreen/methods/ideal@2x.png'
-            )
-        );
+        $expectedPaymentMethod = new PaymentMethod('ideal', 'iDEAL');
 
         $this->assertEquals($expectedPaymentMethod, $paymentMethods[0]);
     }
