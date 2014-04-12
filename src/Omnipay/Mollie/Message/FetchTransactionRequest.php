@@ -9,16 +9,6 @@ namespace Omnipay\Mollie\Message;
  */
 class FetchTransactionRequest extends AbstractRequest
 {
-    public function getTransactionReference()
-    {
-        return $this->getParameter('transactionReference');
-    }
-
-    public function setTransactionReference($value)
-    {
-        return $this->setParameter('transactionReference', $value);
-    }
-
     public function getData()
     {
         $this->validate('apiKey', 'transactionReference');
