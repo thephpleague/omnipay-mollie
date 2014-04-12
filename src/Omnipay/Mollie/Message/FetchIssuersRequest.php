@@ -10,15 +10,11 @@ namespace Omnipay\Mollie\Message;
 class FetchIssuersRequest extends AbstractRequest
 {
     /**
-     * @return array
+     * @return null
      */
     public function getData()
     {
         $this->validate('apiKey');
-
-        $data = array();
-
-        return $data;
     }
 
     public function sendData($data)
