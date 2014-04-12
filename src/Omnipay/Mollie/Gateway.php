@@ -57,6 +57,15 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
+     * @return \Omnipay\Mollie\Message\FetchPaymentMethodsRequest
+     */
+    public function fetchPaymentMethods(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\FetchPaymentMethodsRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
      * @return \Omnipay\Mollie\Message\FetchTransactionRequest
      */
     public function fetchTransaction(array $parameters = array())

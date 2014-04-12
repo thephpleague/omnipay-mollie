@@ -28,13 +28,13 @@ class PurchaseRequestTest extends TestCase
     public function testGetData()
     {
         $this->request->initialize(array(
-            'apiKey'      => 'mykey',
-            'amount'      => '12.00',
-            'description' => 'Description',
-            'returnUrl'   => 'https://www.example.com/return',
-            'method'      => 'ideal',
-            'metadata'    => 'meta',
-            'issuer'      => 'my bank',
+            'apiKey'        => 'mykey',
+            'amount'        => '12.00',
+            'description'   => 'Description',
+            'returnUrl'     => 'https://www.example.com/return',
+            'paymentMethod' => 'ideal',
+            'metadata'      => 'meta',
+            'issuer'        => 'my bank',
         ));
 
         $data = $this->request->getData();
