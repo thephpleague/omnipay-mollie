@@ -25,6 +25,13 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersRequest', $request);
     }
 
+    public function testFetchPaymentMethods()
+    {
+        $request = $this->gateway->fetchPaymentMethods();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchPaymentMethodsRequest', $request);
+    }
+
     public function testPurchase()
     {
         $request = $this->gateway->purchase(array('amount' => '10.00'));

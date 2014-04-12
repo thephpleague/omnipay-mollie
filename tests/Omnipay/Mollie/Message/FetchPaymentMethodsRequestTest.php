@@ -2,19 +2,19 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Common\Issuer;
+use Omnipay\Common\PaymentMethod;
 use Omnipay\Tests\TestCase;
 
-class FetchIssuersRequestTest extends TestCase
+class FetchPaymentMethodsRequestTest extends TestCase
 {
     /**
-     * @var \Omnipay\Mollie\Message\FetchIssuersRequest
+     * @var \Omnipay\Mollie\Message\FetchPaymentMethodsRequest
      */
     protected $request;
 
     public function setUp()
     {
-        $this->request = new FetchIssuersRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new FetchPaymentMethodsRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
             'apiKey' => 'mykey'
         ));
@@ -29,27 +29,31 @@ class FetchIssuersRequestTest extends TestCase
 
     public function testSendSuccess()
     {
-        $this->setMockHttpResponse('FetchIssuersSuccess.txt');
+        $this->setMockHttpResponse('FetchPaymentMethodsSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchPaymentMethodsResponse', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $expectedIssuer = new Issuer('ideal_TESTNL99', 'TBM Bank', 'ideal');
-        $this->assertEquals(array($expectedIssuer), $response->getIssuers());
+        $paymentMethods = $response->getPaymentMethods();
+        $this->assertCount(4, $paymentMethods);
+
+        $expectedPaymentMethod = new PaymentMethod('ideal', 'iDEAL');
+
+        $this->assertEquals($expectedPaymentMethod, $paymentMethods[0]);
     }
 
     public function testSendFailure()
     {
-        $this->setMockHttpResponse('FetchIssuersFailure.txt');
+        $this->setMockHttpResponse('FetchPaymentMethodsFailure.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchPaymentMethodsResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
-        $this->assertEmpty($response->getIssuers());
+        $this->assertEmpty($response->getPaymentMethods());
     }
 }

@@ -47,7 +47,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array                                       $parameters
      * @return \Omnipay\Mollie\Message\FetchIssuersRequest
      */
     public function fetchIssuers(array $parameters = array())
@@ -56,7 +56,16 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array                                              $parameters
+     * @return \Omnipay\Mollie\Message\FetchPaymentMethodsRequest
+     */
+    public function fetchPaymentMethods(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\FetchPaymentMethodsRequest', $parameters);
+    }
+
+    /**
+     * @param  array                                           $parameters
      * @return \Omnipay\Mollie\Message\FetchTransactionRequest
      */
     public function fetchTransaction(array $parameters = array())
@@ -65,7 +74,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array                                   $parameters
      * @return \Omnipay\Mollie\Message\PurchaseRequest
      */
     public function purchase(array $parameters = array())
@@ -74,7 +83,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array                                           $parameters
      * @return \Omnipay\Mollie\Message\CompletePurchaseRequest
      */
     public function completePurchase(array $parameters = array())
