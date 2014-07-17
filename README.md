@@ -17,7 +17,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/mollie": "~2.0"
+        "omnipay/mollie": "~3.0"
     }
 }
 ```
