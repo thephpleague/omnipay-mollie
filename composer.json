@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/omnipay/mollie",
+    "homepage": "https://github.com/thephpleague/omnipay-mollie",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/mollie/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-mollie/contributors"
         }
     ],
     "autoload": {
