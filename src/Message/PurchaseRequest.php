@@ -1,5 +1,4 @@
 <?php
-
 namespace Omnipay\Mollie\Message;
 
 /**
@@ -9,6 +8,7 @@ namespace Omnipay\Mollie\Message;
  */
 class PurchaseRequest extends AbstractRequest
 {
+
     public function getMetadata()
     {
         return $this->getParameter('metadata');
@@ -18,21 +18,21 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('metadata', $value);
     }
-    
-    public function setWebhookUrl ($value)
+
+    public function setWebhookUrl($value)
     {
-    	$this->setParameter('webhookUrl', $value);
+        $this->setParameter('webhookUrl', $value);
     }
-    
-    public function getWebhookUrl ()
+
+    public function getWebhookUrl()
     {
-    	return $this->getParameter('webhookUrl');
+        return $this->getParameter('webhookUrl');
     }
 
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
-
+        
         $data = array();
         $data['amount'] = $this->getAmount();
         $data['description'] = $this->getDescription();
@@ -42,18 +42,17 @@ class PurchaseRequest extends AbstractRequest
         $data['issuer'] = $this->getIssuer();
         
         $webhookUrl = $this->getWebhookUrl();
-        if (null !== $webhookUrl)
-        {
-        	$data['webhookUrl'] = $webhookUrl;
+        if (null !== $webhookUrl) {
+            $data['webhookUrl'] = $webhookUrl;
         }
-
+        
         return $data;
     }
 
     public function sendData($data)
     {
         $httpResponse = $this->sendRequest('POST', '/payments', $data);
-
+        
         return $this->response = new PurchaseResponse($this, $httpResponse->json());
     }
 }
