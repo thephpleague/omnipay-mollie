@@ -18,6 +18,16 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('metadata', $value);
     }
+    
+    public function setWebhookUrl ($value)
+    {
+    	$this->setParameter('webhookUrl', $value);
+    }
+    
+    public function getWebhookUrl ()
+    {
+    	return $this->getParameter('webhookUrl');
+    }
 
     public function getData()
     {
@@ -30,6 +40,12 @@ class PurchaseRequest extends AbstractRequest
         $data['method'] = $this->getPaymentMethod();
         $data['metadata'] = $this->getMetadata();
         $data['issuer'] = $this->getIssuer();
+        
+        $webhookUrl = $this->getWebhookUrl();
+        if (null !== $webhookUrl)
+        {
+        	$data['webhookUrl'] = $webhookUrl;
+        }
 
         return $data;
     }
