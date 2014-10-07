@@ -26,7 +26,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
              */
             $response = $event['response'];
 
-            if ($response->isClientError()) {
+            if ($response->isError()) {
                 $event->stopPropagation();
             }
         });

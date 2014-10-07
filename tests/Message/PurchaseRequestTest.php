@@ -79,4 +79,32 @@ class PurchaseRequestTest extends TestCase
         $this->assertNull($response->getRedirectData());
         $this->assertSame("The issuer is invalid", $response->getMessage());
     }
+
+    public function testIssuerFailure()
+    {
+        $this->setMockHttpResponse('PurchaseIssuerFailure.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertNull($response->getRedirectData());
+        $this->assertSame("Issuer failure", $response->getMessage());
+    }
+
+    public function testSystemFailure()
+    {
+        $this->setMockHttpResponse('PurchaseSystemFailure.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertNull($response->getRedirectData());
+        $this->assertSame("Payment platform for this payment method temporarily not available", $response->getMessage());
+    }
 }
