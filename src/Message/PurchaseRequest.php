@@ -19,16 +19,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('metadata', $value);
     }
 
-    public function setNotifyUrl($value)
-    {
-        $this->setParameter('notifyUrl', $value);
-    }
-
-    public function getNotifyUrl()
-    {
-        return $this->getParameter('notifyUrl');
-    }
-
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
