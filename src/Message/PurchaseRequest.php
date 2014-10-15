@@ -19,14 +19,14 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('metadata', $value);
     }
 
-    public function setWebhookUrl($value)
+    public function setNotifyUrl($value)
     {
-        $this->setParameter('webhookUrl', $value);
+        $this->setParameter('notifyUrl', $value);
     }
 
-    public function getWebhookUrl()
+    public function getNotifyUrl()
     {
-        return $this->getParameter('webhookUrl');
+        return $this->getParameter('notifyUrl');
     }
 
     public function getData()
@@ -41,7 +41,7 @@ class PurchaseRequest extends AbstractRequest
         $data['metadata'] = $this->getMetadata();
         $data['issuer'] = $this->getIssuer();
         
-        $webhookUrl = $this->getWebhookUrl();
+        $webhookUrl = $this->getNotifyUrl();
         if (null !== $webhookUrl) {
             $data['webhookUrl'] = $webhookUrl;
         }

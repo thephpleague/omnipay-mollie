@@ -59,7 +59,7 @@ class PurchaseRequestTest extends TestCase
             'paymentMethod' => 'ideal',
             'metadata'      => 'meta',
             'issuer'        => 'my bank',
-            'webhookUrl'    => 'https://www.example.com/hook'
+            'notifyUrl'    => 'https://www.example.com/hook'
         ));
         
         $data = $this->request->getData();
