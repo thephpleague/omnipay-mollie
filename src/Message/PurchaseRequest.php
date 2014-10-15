@@ -22,7 +22,7 @@ class PurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
-        
+
         $data = array();
         $data['amount'] = $this->getAmount();
         $data['description'] = $this->getDescription();
@@ -30,19 +30,19 @@ class PurchaseRequest extends AbstractRequest
         $data['method'] = $this->getPaymentMethod();
         $data['metadata'] = $this->getMetadata();
         $data['issuer'] = $this->getIssuer();
-        
+
         $webhookUrl = $this->getNotifyUrl();
         if (null !== $webhookUrl) {
             $data['webhookUrl'] = $webhookUrl;
         }
-        
+
         return $data;
     }
 
     public function sendData($data)
     {
         $httpResponse = $this->sendRequest('POST', '/payments', $data);
-        
+
         return $this->response = new PurchaseResponse($this, $httpResponse->json());
     }
 }

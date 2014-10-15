@@ -37,9 +37,9 @@ class PurchaseRequestTest extends TestCase
             'metadata'      => 'meta',
             'issuer'        => 'my bank'
         ));
-        
+
         $data = $this->request->getData();
-        
+
         $this->assertSame("12.00", $data['amount']);
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
@@ -61,9 +61,9 @@ class PurchaseRequestTest extends TestCase
             'issuer'        => 'my bank',
             'notifyUrl'    => 'https://www.example.com/hook'
         ));
-        
+
         $data = $this->request->getData();
-        
+
         $this->assertSame("12.00", $data['amount']);
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
@@ -78,7 +78,7 @@ class PurchaseRequestTest extends TestCase
     {
         $this->setMockHttpResponse('PurchaseSuccess.txt');
         $response = $this->request->send();
-        
+
         $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -96,7 +96,7 @@ class PurchaseRequestTest extends TestCase
     {
         $this->setMockHttpResponse('PurchaseFailure.txt');
         $response = $this->request->send();
-        
+
         $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
