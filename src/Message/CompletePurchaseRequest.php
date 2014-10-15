@@ -13,18 +13,10 @@ class CompletePurchaseRequest extends FetchTransactionRequest
 {
     public function getData()
     {
-        $this->validate('apiKey');
+        $this->validate('apiKey', 'transactionReference');
 
         $data = array();
         $data['id'] = $this->getTransactionReference();
-
-        if (!isset($data['id'])) {
-            $data['id'] = $this->httpRequest->request->get('id');
-        }
-
-        if (empty($data['id'])) {
-            throw new InvalidRequestException("The id parameter is required");
-        }
 
         return $data;
     }
