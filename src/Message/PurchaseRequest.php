@@ -1,5 +1,4 @@
 <?php
-
 namespace Omnipay\Mollie\Message;
 
 /**
@@ -9,6 +8,7 @@ namespace Omnipay\Mollie\Message;
  */
 class PurchaseRequest extends AbstractRequest
 {
+
     public function getMetadata()
     {
         return $this->getParameter('metadata');
@@ -30,6 +30,11 @@ class PurchaseRequest extends AbstractRequest
         $data['method'] = $this->getPaymentMethod();
         $data['metadata'] = $this->getMetadata();
         $data['issuer'] = $this->getIssuer();
+
+        $webhookUrl = $this->getNotifyUrl();
+        if (null !== $webhookUrl) {
+            $data['webhookUrl'] = $webhookUrl;
+        }
 
         return $data;
     }

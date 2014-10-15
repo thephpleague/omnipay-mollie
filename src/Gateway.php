@@ -38,7 +38,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return $this
      */
     public function setApiKey($value)
