@@ -23,7 +23,7 @@ class CompletePurchaseRequest extends FetchTransactionRequest
         }
 
         if (empty($data['id'])) {
-            throw new InvalidRequestException("The id parameter is required");
+            throw new InvalidRequestException("The transactionReference parameter is required");
         }
 
         return $data;
