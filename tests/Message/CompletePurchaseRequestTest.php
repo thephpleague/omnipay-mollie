@@ -25,7 +25,7 @@ class CompletePurchaseRequestTest extends TestCase
 
     /**
      * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     * @expectedExceptionMessage The id parameter is required
+     * @expectedExceptionMessage The transactionReference parameter is required
      */
     public function testGetDataWithoutIDParameter()
     {
