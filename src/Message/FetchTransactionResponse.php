@@ -1,6 +1,7 @@
 <?php
 
 namespace Omnipay\Mollie\Message;
+
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 class FetchTransactionResponse extends AbstractResponse implements RedirectResponseInterface
