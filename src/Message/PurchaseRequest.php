@@ -34,7 +34,7 @@ class PurchaseRequest extends AbstractRequest
         $data['issuer'] = $this->getIssuer();
 
         if (null !== $this->getCancelUrl()) {
-            throw new RuntimeException ('Mollie does not support a cancel url.');
+            throw new RuntimeException('Mollie does not support a cancel url.');
         }
 
         $webhookUrl = $this->getNotifyUrl();
