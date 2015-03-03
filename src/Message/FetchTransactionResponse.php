@@ -2,7 +2,9 @@
 
 namespace Omnipay\Mollie\Message;
 
-class FetchTransactionResponse extends AbstractResponse
+use Omnipay\Common\Message\RedirectResponseInterface;
+
+class FetchTransactionResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
      * {@inheritdoc}
