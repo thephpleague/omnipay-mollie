@@ -117,4 +117,14 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
             return $this->data['amount'];
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMetadata()
+    {
+        if (isset($this->data['metadata'])) {
+            return $this->data['metadata'];
+        }
+    }
 }
