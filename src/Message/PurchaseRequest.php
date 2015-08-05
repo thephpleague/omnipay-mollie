@@ -19,6 +19,18 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('metadata', $value);
     }
 
+    public function getLocale()
+    {
+        return $this->getParameter('locale');
+    }
+
+    public function setLocale($value)
+    {
+        if (in_array($value, ['de', 'en', 'es', 'fr', 'be', 'be-fr', 'nl'])) {
+            $this->setParameter('locale', $value);
+        }
+    }
+
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
@@ -30,6 +42,11 @@ class PurchaseRequest extends AbstractRequest
         $data['method'] = $this->getPaymentMethod();
         $data['metadata'] = $this->getMetadata();
         $data['issuer'] = $this->getIssuer();
+
+        $locale = $this->getLocale();
+        if (!empty($locale)) {
+            $data['locale'] = $locale;
+        }
 
         $webhookUrl = $this->getNotifyUrl();
         if (null !== $webhookUrl) {
