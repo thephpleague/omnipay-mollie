@@ -26,7 +26,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setLocale($value)
     {
-        if (in_array($value, ['de', 'en', 'es', 'fr', 'be', 'be-fr', 'nl'])) {
+        if (in_array($value, array('de', 'en', 'es', 'fr', 'be', 'be-fr', 'nl'))) {
             $this->setParameter('locale', $value);
         }
     }
