@@ -45,7 +45,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isSuccessful()
     {
-        return parent::isSuccessful();
+        return parent::isSuccessful() && self::isPaid();
     }
 
     /**
