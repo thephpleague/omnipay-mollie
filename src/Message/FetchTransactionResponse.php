@@ -101,6 +101,16 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
     /**
      * @return mixed
      */
+    public function getTransactionId()
+    {
+        if (isset($this->data['metadata']['transactionId'])) {
+            return $this->data['metadata']['transactionId'];
+        }
+    }
+
+    /**
+     * @return mixed
+     */
     public function getStatus()
     {
         if (isset($this->data['status'])) {

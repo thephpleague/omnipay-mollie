@@ -18,6 +18,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('apiKey', $value);
     }
 
+    public function setTransactionId($value)
+    {
+        return $this->setParameter('transactionId', $value);
+    }
+
+    public function getTransactionId()
+    {
+        return $this->getParameter('transactionId');
+    }
+
     protected function sendRequest($method, $endpoint, $data = null)
     {
         $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event) {

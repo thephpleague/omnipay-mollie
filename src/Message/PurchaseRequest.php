@@ -29,6 +29,9 @@ class PurchaseRequest extends AbstractRequest
         $data['redirectUrl'] = $this->getReturnUrl();
         $data['method'] = $this->getPaymentMethod();
         $data['metadata'] = $this->getMetadata();
+        if ($this->getTransactionId()) {
+            $data['metadata']['transactionId'] = $this->getTransactionId();
+        }
         $data['issuer'] = $this->getIssuer();
 
         $webhookUrl = $this->getNotifyUrl();
