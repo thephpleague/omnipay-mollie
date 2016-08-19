@@ -48,12 +48,39 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('10.00', $request->getAmount());
     }
 
+    public function testRefund()
+    {
+        $request = $this->gateway->refund(
+            array(
+                'apiKey'               => 'key',
+                'transactionReference' => 'tr_Qzin4iTWrU'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\RefundRequest', $request);
+        $data = $request->getData();
+        $this->assertFalse(array_key_exists('amount', $data));
+        $request = $this->gateway->refund(
+            array(
+                'apiKey'               => 'key',
+                'transactionReference' => 'tr_Qzin4iTWrU',
+                'amount'               => '10.00'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\RefundRequest', $request);
+        $data = $request->getData();
+        $this->assertSame('10.00', $data['amount']);
+    }
+
     public function testFetchTransaction()
     {
-        $request = $this->gateway->fetchTransaction(array(
-            'apiKey' => 'key',
-            'transactionReference' => 'tr_Qzin4iTWrU'
-        ));
+        $request = $this->gateway->fetchTransaction(
+            array(
+                'apiKey'               => 'key',
+                'transactionReference' => 'tr_Qzin4iTWrU'
+            )
+        );
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchTransactionRequest', $request);
 

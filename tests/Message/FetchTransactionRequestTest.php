@@ -14,10 +14,12 @@ class FetchTransactionRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new FetchTransactionRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
-            'apiKey' => 'mykey',
-            'transactionReference' => 'tr_Qzin4iTWrU',
-        ));
+        $this->request->initialize(
+            array(
+                'apiKey'               => 'mykey',
+                'transactionReference' => 'tr_Qzin4iTWrU',
+            )
+        );
     }
 
     public function testGetData()
@@ -39,6 +41,8 @@ class FetchTransactionRequestTest extends TestCase
         $this->assertFalse($response->isCancelled());
         $this->assertFalse($response->isPaidOut());
         $this->assertFalse($response->isRedirect());
+        $this->assertFalse($response->isRefunded());
+        $this->assertFalse($response->isPartialRefunded());
         $this->assertSame("paid", $response->getStatus());
         $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
         $this->assertSame("100.00", $response->getAmount());
