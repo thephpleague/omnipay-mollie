@@ -1,0 +1,43 @@
+HTTP/1.1 201 Created
+Server: nginx/1.4.4
+Date: Sun, 19 Jan 2014 11:41:55 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 344
+Connection: keep-alive
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
+Access-Control-Max-Age: 300
+Cache-Control: no-cache, no-store
+Strict-Transport-Security: max-age=31556926; includeSubDomains
+X-Whom: dc1-web-2
+
+{
+    "id": "re_4qqhO89gsT",
+    "payment": {
+        "id": "tr_WDqYK6vllg",
+        "mode": "test",
+        "createdDatetime": "2016-08-18T03:51:53.0Z",
+        "status": "refunded",
+        "amount": "35.07",
+        "amountRefunded": "5.95",
+        "amountRemaining": "54.12",
+        "description": "Order",
+        "method": "ideal",
+        "metadata": {
+            "order_id": "33"
+        },
+        "details": {
+            "consumerName": "Hr E G H K\u00fcppers en\/of MW M.J. K\u00fcppers-Veeneman",
+            "consumerAccount": "NL53INGB0654422370",
+            "consumerBic": "INGBNL2A"
+        },
+        "locale": "nl",
+        "links": {
+            "webhookUrl": "https://webshop.example.org/payments/webhook",
+            "redirectUrl": "https://webshop.example.org/order/33/",
+            "refunds": "https://api.mollie.nl/v1/payments/tr_WDqYK6vllg/refunds"
+        }
+    },
+    "amount": "5.95",
+    "refundedDatetime": "2016-08-19T08:49:58.0Z"
+}
