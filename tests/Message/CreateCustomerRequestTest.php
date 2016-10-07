@@ -25,7 +25,7 @@ class CreateCustomerRequestTest extends TestCase
         ));
     }
 
-    public function testEndpRoint()
+    public function testEndpoint()
     {
         $this->assertSame('https://api.mollie.nl/v1/customers', $this->request->getEndpoint());
     }
