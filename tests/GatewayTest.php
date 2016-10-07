@@ -87,4 +87,20 @@ class GatewayTest extends GatewayTestCase
         $data = $request->getData();
         $this->assertSame('tr_Qzin4iTWrU', $data['id']);
     }
+
+    public function testCreateCustomer()
+    {
+        $request = $this->gateway->createCustomerRequest(
+            array(
+                'description'  => 'Test name',
+                'email'        => 'test@example.com',
+                'metadata'     => 'Something something dark side.',
+                'locale'       => 'nl_NL'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\CreateCustomerRequest', $request);
+
+        $data = $request->getData();
+    }
 }
