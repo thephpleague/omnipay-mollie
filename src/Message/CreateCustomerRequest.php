@@ -2,6 +2,8 @@
 
 /**
  * Mollie Create Customer Request.
+ *
+ * URL: https://www.mollie.com/be/docs/reference/customers/create
  */
 namespace Omnipay\Mollie\Message;
 
@@ -27,6 +29,10 @@ class CreateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Get the customer's locale.
+     *
+     * Possible values: de_DE, en_US, es_ES, fr_FR, nl_BE, fr_BE, nl_NL.
+     *
      * @return string
      */
     public function getLocale()
@@ -35,6 +41,8 @@ class CreateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Optional value.
+     *
      * @param $value
      * @return \Omnipay\Common\Message\AbstractRequest
      */
@@ -44,6 +52,8 @@ class CreateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Get the customer's metadata.
+     *
      * @return string
      */
     public function getMetadata()
@@ -52,6 +62,8 @@ class CreateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Optional value.
+     *
      * @param $value
      * @return \Omnipay\Common\Message\AbstractRequest
      */

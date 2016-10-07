@@ -2,6 +2,8 @@
 
 /**
  * Mollie Update Customer Request.
+ *
+ * URL: https://www.mollie.com/be/docs/reference/customers/update
  */
 namespace Omnipay\Mollie\Message;
 
@@ -46,6 +48,10 @@ class UpdateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Get the customer's locale.
+     *
+     * Possible values: de_DE, en_US, es_ES, fr_FR, nl_BE, fr_BE, nl_NL.
+     *
      * @return string
      */
     public function getLocale()
@@ -54,6 +60,8 @@ class UpdateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Optional value.
+     *
      * @param $value
      * @return \Omnipay\Common\Message\AbstractRequest
      */
@@ -63,6 +71,8 @@ class UpdateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Get the customer's metadata.
+     *
      * @return string
      */
     public function getMetadata()
@@ -71,6 +81,8 @@ class UpdateCustomerRequest extends AbstractRequest
     }
 
     /**
+     * Optional value.
+     *
      * @param $value
      * @return \Omnipay\Common\Message\AbstractRequest
      */
