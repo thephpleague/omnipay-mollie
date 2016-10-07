@@ -2,7 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
-class CreateCustomerResponse extends AbstractResponse
+class UpdateCustomerResponse extends AbstractResponse
 {
     /**
      * @return string

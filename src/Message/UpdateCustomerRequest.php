@@ -1,12 +1,31 @@
 <?php
 
 /**
- * Mollie Create Customer Request.
+ * Mollie Update Customer Request.
  */
 namespace Omnipay\Mollie\Message;
 
-class CreateCustomerRequest extends AbstractRequest
+class UpdateCustomerRequest extends AbstractRequest
 {
+    /**
+     * Get the customer's reference id.
+     *
+     * @return string
+     */
+    public function getCustomerReference()
+    {
+        return $this->getParameter('customerReference');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setCustomerReference($value)
+    {
+        return $this->setParameter('customerReference', $value);
+    }
+
     /**
      * Get the customer's email address.
      *
@@ -65,9 +84,10 @@ class CreateCustomerRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('apiKey', 'description', 'email');
+        $this->validate('apiKey', 'customerReference');
 
         $data                = array();
+        $data['id']          = $this->getCustomerReference();
         $data['name']        = $this->getDescription();
         $data['email']       = $this->getEmail();
         $data['metadata']    = $this->getMetadata();
@@ -82,13 +102,13 @@ class CreateCustomerRequest extends AbstractRequest
 
     /**
      * @param mixed $data
-     * @return CreateCustomerResponse
+     * @return UpdateCustomerResponse
      */
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('POST', '/customers', $data);
+        $httpResponse = $this->sendRequest('POST', '/customers/'.$this->getCustomerReference(), $data);
 
-        return $this->response = new CreateCustomerResponse($this, $httpResponse->json());
+        return $this->response = new UpdateCustomerResponse($this, $httpResponse->json());
     }
 
     /**
@@ -96,6 +116,6 @@ class CreateCustomerRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->endpoint.'/customers';
+        return $this->endpoint.'/customers/'.$this->getCustomerReference();
     }
 }
