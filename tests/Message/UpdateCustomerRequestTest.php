@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Omnipay;
 use Omnipay\Tests\TestCase;
 
 class UpdateCustomerRequestTest extends TestCase
@@ -56,6 +57,8 @@ class UpdateCustomerRequestTest extends TestCase
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('UpdateCustomerSuccess.txt');
+
+        /** @var \Omnipay\Mollie\Message\UpdateCustomerResponse $response */
         $response = $this->request->send();
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\UpdateCustomerResponse', $response);
@@ -72,7 +75,7 @@ class UpdateCustomerRequestTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCustomerReference());
         $this->assertSame('Unauthorized request', $response->getMessage());
     }
 }
