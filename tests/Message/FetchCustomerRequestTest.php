@@ -32,6 +32,8 @@ class FetchCustomerRequestTest extends TestCase
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('FetchCustomerSuccess.txt');
+
+        /** @var \Omnipay\Mollie\Message\FetchCustomerResponse $response */
         $response = $this->request->send();
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerResponse', $response);
