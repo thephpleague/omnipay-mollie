@@ -3,7 +3,7 @@
 /**
  * Mollie Create Customer Request.
  *
- * URL: https://www.mollie.com/be/docs/reference/customers/create
+ * URL: https://www.mollie.com/en/docs/reference/customers/create
  */
 namespace Omnipay\Mollie\Message;
 

@@ -3,7 +3,7 @@
 /**
  * Mollie Update Customer Request.
  *
- * URL: https://www.mollie.com/be/docs/reference/customers/update
+ * URL: https://www.mollie.com/en/docs/reference/customers/update
  */
 namespace Omnipay\Mollie\Message;
 

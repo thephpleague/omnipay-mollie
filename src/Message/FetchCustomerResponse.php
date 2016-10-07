@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Omnipay\Mollie\Message;
-
 
 class FetchCustomerResponse extends AbstractResponse
 {

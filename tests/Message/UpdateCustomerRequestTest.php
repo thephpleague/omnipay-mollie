@@ -2,7 +2,6 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Omnipay;
 use Omnipay\Tests\TestCase;
 
 class UpdateCustomerRequestTest extends TestCase
