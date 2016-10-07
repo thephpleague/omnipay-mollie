@@ -107,7 +107,7 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->updateCustomer(
             array(
                 'customerReference' => 'cst_bSNBBJBzdG',
-                'description'       => 'Test name',
+                'description'       => 'Test name2',
                 'email'             => 'test@example.com',
                 'metadata'          => 'Something something dark side.',
                 'locale'            => 'nl_NL'

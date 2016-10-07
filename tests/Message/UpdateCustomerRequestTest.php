@@ -19,7 +19,7 @@ class UpdateCustomerRequestTest extends TestCase
         $this->request->initialize(array(
             'apiKey'            => 'mykey',
             'customerReference' => 'cst_bSNBBJBzdG',
-            'description'       => 'Test Customer',
+            'description'       => 'Test Customer2',
             'email'             => 'test123@example.com',
             'locale'            => 'nl_NL',
             'metadata'          => 'Just some meta data.',
@@ -39,7 +39,7 @@ class UpdateCustomerRequestTest extends TestCase
         $this->request->initialize(array(
             'apiKey'            => 'mykey',
             'customerReference' => 'cst_bSNBBJBzdG',
-            'description'       => 'Test Customer',
+            'description'       => 'Test Customer2',
             'email'             => 'test123@example.com',
             'metadata'          => 'Just some meta data.',
         ));
@@ -47,7 +47,7 @@ class UpdateCustomerRequestTest extends TestCase
         $data = $this->request->getData();
 
         $this->assertSame("cst_bSNBBJBzdG", $data['id']);
-        $this->assertSame("Test Customer", $data['name']);
+        $this->assertSame("Test Customer2", $data['name']);
         $this->assertSame('test123@example.com', $data['email']);
         $this->assertSame('Just some meta data.', $data['metadata']);
         $this->assertCount(5, $data);
