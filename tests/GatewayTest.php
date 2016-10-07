@@ -94,7 +94,7 @@ class GatewayTest extends GatewayTestCase
             array(
                 'description'  => 'Test name',
                 'email'        => 'test@example.com',
-                'metadata'     => 'Something something dark side.',
+                'metadata'     => 'Something something something dark side.',
                 'locale'       => 'nl_NL'
             )
         );
@@ -109,7 +109,7 @@ class GatewayTest extends GatewayTestCase
                 'customerReference' => 'cst_bSNBBJBzdG',
                 'description'       => 'Test name2',
                 'email'             => 'test@example.com',
-                'metadata'          => 'Something something dark side.',
+                'metadata'          => 'Something something something dark side.',
                 'locale'            => 'nl_NL'
             )
         );
