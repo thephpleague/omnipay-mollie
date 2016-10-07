@@ -120,4 +120,16 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertSame('cst_bSNBBJBzdG', $data['id']);
     }
+
+    public function testFetchCustomer()
+    {
+        $request = $this->gateway->fetchCustomer(
+            array(
+                'apiKey'            => 'key',
+                'customerReference' => 'cst_bSNBBJBzdG'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerRequest', $request);
+    }
 }
