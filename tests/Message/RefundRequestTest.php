@@ -53,6 +53,24 @@ class RefundRequestTest extends TestCase
         $this->assertCount(0, $data);
     }
 
+    public function testGetDataWithDescription()
+    {
+        $this->request->initialize(
+            array(
+                'apiKey'               => 'mykey',
+                'amount'               => '12.00',
+                'description'          => 'Custom description',
+                'transactionReference' => 'tr_WDqYK6vllg'
+            )
+        );
+
+        $data = $this->request->getData();
+
+        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame("Custom description", $data['description']);
+        $this->assertCount(2, $data);
+    }
+
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('RefundSuccess.txt');

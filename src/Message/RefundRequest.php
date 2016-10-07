@@ -8,6 +8,11 @@ use Omnipay\Common\Message\ResponseInterface;
 
 class RefundRequest extends AbstractRequest
 {
+    public function getRefundDescription()
+    {
+        return $this->getParameter('description');
+    }
+
     public function getData()
     {
         $this->validate('apiKey', 'transactionReference');
@@ -15,6 +20,10 @@ class RefundRequest extends AbstractRequest
         $data = array();
         if ($this->getAmountInteger() > 0) {
             $data['amount'] = $this->getAmount();
+        }
+
+        if (null !== $this->getRefundDescription()) {
+            $data['description'] = $this->getRefundDescription();
         }
 
         return $data;

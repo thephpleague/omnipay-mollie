@@ -39,5 +39,6 @@ X-Whom: dc1-web-2
         }
     },
     "amount": "5.95",
+    "description": "My first payment",
     "refundedDatetime": "2016-08-19T08:49:58.0Z"
 }
