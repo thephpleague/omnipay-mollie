@@ -99,4 +99,31 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Mollie\Message\RefundRequest', $parameters);
     }
+
+    /**
+     * @param  array $parameters
+     * @return \Omnipay\Mollie\Message\CreateCustomerRequest
+     */
+    public function createCustomer(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\CreateCustomerRequest', $parameters);
+    }
+
+    /**
+     * @param  array $parameters
+     * @return \Omnipay\Mollie\Message\UpdateCustomerRequest
+     */
+    public function updateCustomer(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\UpdateCustomerRequest', $parameters);
+    }
+
+    /**
+     * @param  array $parameters
+     * @return \Omnipay\Mollie\Message\FetchCustomerRequest
+     */
+    public function fetchCustomer(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\FetchCustomerRequest', $parameters);
+    }
 }

@@ -87,4 +87,49 @@ class GatewayTest extends GatewayTestCase
         $data = $request->getData();
         $this->assertSame('tr_Qzin4iTWrU', $data['id']);
     }
+
+    public function testCreateCustomer()
+    {
+        $request = $this->gateway->createCustomer(
+            array(
+                'description'  => 'Test name',
+                'email'        => 'test@example.com',
+                'metadata'     => 'Something something something dark side.',
+                'locale'       => 'nl_NL'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\CreateCustomerRequest', $request);
+    }
+
+    public function testUpdateCustomer()
+    {
+        $request = $this->gateway->updateCustomer(
+            array(
+                'customerReference' => 'cst_bSNBBJBzdG',
+                'description'       => 'Test name2',
+                'email'             => 'test@example.com',
+                'metadata'          => 'Something something something dark side.',
+                'locale'            => 'nl_NL'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\UpdateCustomerRequest', $request);
+
+        $data = $request->getData();
+
+        $this->assertSame('cst_bSNBBJBzdG', $data['id']);
+    }
+
+    public function testFetchCustomer()
+    {
+        $request = $this->gateway->fetchCustomer(
+            array(
+                'apiKey'            => 'key',
+                'customerReference' => 'cst_bSNBBJBzdG'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerRequest', $request);
+    }
 }
