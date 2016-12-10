@@ -1,6 +1,8 @@
 <?php
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Common\Exception\RuntimeException;
+
 /**
  * Mollie Purchase Request
  *
@@ -35,6 +37,10 @@ class PurchaseRequest extends AbstractRequest
         $issuer = $this->getIssuer();
         if ($issuer) {
             $data['issuer'] = $issuer;
+        }
+
+        if (null !== $this->getCancelUrl()) {
+            throw new RuntimeException('Mollie does not support a cancel url.');
         }
 
         $webhookUrl = $this->getNotifyUrl();
