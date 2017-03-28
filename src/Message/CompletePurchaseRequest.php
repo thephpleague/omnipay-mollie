@@ -3,6 +3,7 @@
 namespace Omnipay\Mollie\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Http\Decoder;
 
 /**
  * Mollie Complete Purchase Request
@@ -33,6 +34,6 @@ class CompletePurchaseRequest extends FetchTransactionRequest
     {
         $httpResponse = $this->sendRequest('GET', '/payments/' . $data['id']);
 
-        return $this->response = new CompletePurchaseResponse($this, $httpResponse->json());
+        return $this->response = new CompletePurchaseResponse($this, Decoder::json($httpResponse));
     }
 }

@@ -7,6 +7,8 @@
  */
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Common\Http\Decoder;
+
 class CreateCustomerRequest extends AbstractRequest
 {
     /**
@@ -100,7 +102,7 @@ class CreateCustomerRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest('POST', '/customers', $data);
 
-        return $this->response = new CreateCustomerResponse($this, $httpResponse->json());
+        return $this->response = new CreateCustomerResponse($this, Decoder::json($httpResponse));
     }
 
     /**

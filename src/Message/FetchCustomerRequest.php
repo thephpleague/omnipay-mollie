@@ -7,6 +7,8 @@
  */
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Common\Http\Decoder;
+
 class FetchCustomerRequest extends AbstractRequest
 {
     /**
@@ -44,7 +46,7 @@ class FetchCustomerRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest('GET', '/customers/' . $this->getCustomerReference(), $data);
 
-        return $this->response = new FetchCustomerResponse($this, $httpResponse->json());
+        return $this->response = new FetchCustomerResponse($this, Decoder::json($httpResponse));
     }
 
     /**
