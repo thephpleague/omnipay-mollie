@@ -2,7 +2,7 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Common\Http\Decoder;
+use Omnipay\Common\Http\ResponseParser;
 
 /**
  * Mollie Fetch PaymentMethods Request
@@ -23,6 +23,6 @@ class FetchPaymentMethodsRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest('GET', '/methods');
 
-        return $this->response = new FetchPaymentMethodsResponse($this, Decoder::json($httpResponse));
+        return $this->response = new FetchPaymentMethodsResponse($this, ResponseParser::json($httpResponse));
     }
 }

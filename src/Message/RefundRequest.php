@@ -3,8 +3,7 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Common\Http\Decoder;
-use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Common\Http\ResponseParser;
 
 class RefundRequest extends AbstractRequest
 {
@@ -24,6 +23,6 @@ class RefundRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest('POST', '/payments/' . $this->getTransactionReference() . '/refunds', $data);
 
-        return $this->response = new RefundResponse($this, Decoder::json($httpResponse));
+        return $this->response = new RefundResponse($this, ResponseParser::json($httpResponse));
     }
 }
