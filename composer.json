@@ -26,11 +26,10 @@
         "psr-4": { "Omnipay\\Mollie\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "dev-3.0-simple",
-        "php-http/guzzle6-adapter": "~1.1.1"
+        "omnipay/common": "^3"
     },
     "require-dev": {
-        "omnipay/tests": "3.0.x-dev"
+        "omnipay/tests": "^3"
     },
     "extra": {
         "branch-alias": {
