@@ -3,7 +3,6 @@
 
 namespace Omnipay\Mollie\Message;
 
-
 class RefundResponse extends AbstractResponse
 {
     public function getTransactionReference()

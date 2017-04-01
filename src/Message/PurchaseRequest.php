@@ -1,5 +1,6 @@
 <?php
 namespace Omnipay\Mollie\Message;
+
 use Omnipay\Common\Http\Decoder;
 
 /**
@@ -9,7 +10,6 @@ use Omnipay\Common\Http\Decoder;
  */
 class PurchaseRequest extends AbstractRequest
 {
-
     public function getMetadata()
     {
         return $this->getParameter('metadata');

@@ -3,7 +3,6 @@
 
 namespace Omnipay\Mollie\Message;
 
-
 use Omnipay\Common\Http\Decoder;
 use Omnipay\Common\Message\ResponseInterface;
 

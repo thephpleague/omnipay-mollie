@@ -1,6 +1,7 @@
 <?php
 
 namespace Omnipay\Mollie\Message;
+
 use Omnipay\Common\Http\Decoder;
 
 /**
