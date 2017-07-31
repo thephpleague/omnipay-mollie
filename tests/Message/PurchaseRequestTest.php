@@ -16,13 +16,15 @@ class PurchaseRequestTest extends TestCase
     {
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
-            'apiKey'      => 'mykey',
-            'amount'      => '12.00',
-            'issuer'      => 'my bank',
-            'description' => 'Description',
-            'returnUrl'   => 'https://www.example.com/return',
-            'method'      => 'ideal',
-            'metadata'    => 'meta',
+            'apiKey'       => 'mykey',
+            'amount'       => '12.00',
+            'issuer'       => 'my bank',
+            'description'  => 'Description',
+            'returnUrl'    => 'https://www.example.com/return',
+            'method'       => 'ideal',
+            'metadata'     => 'meta',
+            'locale'       => 'fr_FR',
+            'billingEmail' => 'billing-email@example.com',
         ));
     }
 
@@ -36,6 +38,8 @@ class PurchaseRequestTest extends TestCase
             'paymentMethod' => 'ideal',
             'metadata'      => 'meta',
             'issuer'        => 'my bank',
+            'locale'        => 'fr_FR',
+            'billingEmail'  => 'billing-email@example.com',
         ));
 
         $data = $this->request->getData();
@@ -46,7 +50,9 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('ideal', $data['method']);
         $this->assertSame('meta', $data['metadata']);
         $this->assertSame('my bank', $data['issuer']);
-        $this->assertCount(6, $data);
+        $this->assertSame('fr_FR', $data['locale']);
+        $this->assertSame('billing-email@example.com', $data['billingEmail']);
+        $this->assertCount(8, $data);
     }
 
     public function testGetDataWithWebhook()
@@ -59,6 +65,8 @@ class PurchaseRequestTest extends TestCase
             'paymentMethod' => 'ideal',
             'metadata'      => 'meta',
             'issuer'        => 'my bank',
+            'locale'        => 'fr_FR',
+            'billingEmail'  => 'billing-email@example.com',
             'notifyUrl'     => 'https://www.example.com/hook',
         ));
 
@@ -70,8 +78,10 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('ideal', $data['method']);
         $this->assertSame('meta', $data['metadata']);
         $this->assertSame('my bank', $data['issuer']);
+        $this->assertSame('fr_FR', $data['locale']);
+        $this->assertSame('billing-email@example.com', $data['billingEmail']);
         $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
-        $this->assertCount(7, $data);
+        $this->assertCount(9, $data);
     }
 
     public function testNoIssuer()
@@ -83,6 +93,8 @@ class PurchaseRequestTest extends TestCase
             'returnUrl'     => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
             'metadata'      => 'meta',
+            'locale'        => 'fr_FR',
+            'billingEmail'  => 'billing-email@example.com',
             'notifyUrl'     => 'https://www.example.com/hook',
         ));
 
@@ -93,8 +105,10 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
         $this->assertSame('meta', $data['metadata']);
+        $this->assertSame('fr_FR', $data['locale']);
+        $this->assertSame('billing-email@example.com', $data['billingEmail']);
         $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
-        $this->assertCount(6, $data);
+        $this->assertCount(8, $data);
     }
 
     public function testSendSuccess()
