@@ -46,7 +46,7 @@ class FetchCustomerMandatesRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest("GET", "/customers/{$this->getCustomerReference()}/mandates", $data);
 
-        return $this->response = new FetchCustomerMandatesResponse($this, ResponseParser::json($httpResponse));
+        return $this->response = new FetchCustomerMandatesResponse($this, $httpResponse->json());
     }
 
 }
