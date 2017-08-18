@@ -25,7 +25,7 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'apiKey' => ''
+            'apiKey' => '',
         );
     }
 
@@ -125,5 +125,14 @@ class Gateway extends AbstractGateway
     public function fetchCustomer(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Mollie\Message\FetchCustomerRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Mollie\Message\FetchCustomerMandatesRequest
+     */
+    public function fetchCustomerMandates(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\FetchCustomerMandatesRequest', $parameters);
     }
 }

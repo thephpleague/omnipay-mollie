@@ -132,4 +132,17 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerRequest', $request);
     }
+
+    public function testFetchCustomerMandates()
+    {
+        $request = $this->gateway->fetchCustomerMandates(
+            array(
+                'apiKey' => 'key',
+                'customerReference' => 'cst_bSNBBJBzdG'
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerMandatesRequest', $request);
+
+    }
 }

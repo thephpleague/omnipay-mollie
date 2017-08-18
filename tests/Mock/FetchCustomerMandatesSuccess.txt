@@ -1,0 +1,48 @@
+HTTP/1.1 201 Created
+Server: nginx/1.4.4
+Date: Sun, 19 Jan 2014 11:41:55 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 344
+Connection: keep-alive
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
+Access-Control-Max-Age: 300
+Cache-Control: no-cache, no-store
+Strict-Transport-Security: max-age=31556926; includeSubDomains
+X-Whom: dc1-web-2
+
+{
+    "totalCount": 2,
+    "offset": 0,
+    "count": 2,
+    "data": [
+        {
+            "resource": "mandate",
+            "id": "mdt_pO2m5jVgMa",
+            "status": "valid",
+            "method": "directdebit",
+            "customerId": "cst_R6JLAuqEgm",
+            "details": {
+                "consumerName": "Hr E G H K\u00fcppers en\/of MW M.J. K\u00fcppers-Veeneman",
+                "consumerAccount": "NL53INGB0618365937",
+                "consumerBic": "INGBNL2A"
+            },
+            "createdDatetime": "2016-04-13T11:32:38.0Z"
+        },
+        {
+            "resource": "mandate",
+            "id": "mdt_qtUgejVgMN",
+            "status": "valid",
+            "method": "creditcard",
+            "customerId": "cst_R6JLAuqEgm",
+            "details": {
+                "cardHolder": "John Doe",
+                "cardNumber": "1234",
+                "cardLabel": "Mastercard",
+                "cardFingerprint": "fHB3CCKx9REkz8fPplT8N4nq",
+                "cardExpiryDate": "2016-03-31"
+            },
+            "createdDatetime": "2016-04-13T11:32:38.0Z"
+        }
+    ]
+}
