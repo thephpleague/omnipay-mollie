@@ -19,6 +19,26 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('metadata', $value);
     }
 
+    public function getCustomerReference()
+    {
+        return $this->getParameter('customerReference');
+    }
+
+    public function setCustomerReference($value)
+    {
+        return $this->setParameter('customerReference', $value);
+    }
+
+    public function getRecurringType()
+    {
+        return $this->getParameter('recurringType');
+    }
+
+    public function setRecurringType($value)
+    {
+        return $this->setParameter('recurringType', $value);
+    }
+
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
@@ -40,6 +60,16 @@ class PurchaseRequest extends AbstractRequest
         $webhookUrl = $this->getNotifyUrl();
         if (null !== $webhookUrl) {
             $data['webhookUrl'] = $webhookUrl;
+        }
+
+        $customerReference = $this->getCustomerReference();
+        if($customerReference){
+            $data['customerId'] = $customerReference;
+        }
+
+        $recurringType = $this->getRecurringType();
+        if($recurringType){
+            $data['recurringType'] = $recurringType;
         }
 
         return $data;
