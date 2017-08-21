@@ -1,0 +1,27 @@
+HTTP/1.1 201 Created
+Server: nginx/1.4.4
+Date: Sun, 19 Jan 2014 11:41:55 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 344
+Connection: keep-alive
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
+Access-Control-Max-Age: 300
+Cache-Control: no-cache, no-store
+Strict-Transport-Security: max-age=31556926; includeSubDomains
+X-Whom: dc1-web-2
+
+{
+    "resource": "mandate",
+    "id": "mdt_pWUnw6pkBN",
+    "status": "valid",
+    "method": "directdebit",
+    "customerId": "cst_bSNBBJBzdG",
+    "details": {
+        "consumerName": "Customer A",
+        "consumerAccount": "NL53INGB0000000000",
+        "consumerBic": "INGBNL2A"
+    },
+    "mandateReference": "YOUR-COMPANY-MD13804",
+    "createdDatetime": "2016-04-30T22:00:00.0Z"
+}
