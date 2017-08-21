@@ -52,8 +52,8 @@ class GatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->refund(
             array(
-                'apiKey'               => 'key',
-                'transactionReference' => 'tr_Qzin4iTWrU'
+                'apiKey' => 'key',
+                'transactionReference' => 'tr_Qzin4iTWrU',
             )
         );
 
@@ -62,9 +62,9 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse(array_key_exists('amount', $data));
         $request = $this->gateway->refund(
             array(
-                'apiKey'               => 'key',
+                'apiKey' => 'key',
                 'transactionReference' => 'tr_Qzin4iTWrU',
-                'amount'               => '10.00'
+                'amount' => '10.00',
             )
         );
 
@@ -77,8 +77,8 @@ class GatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->fetchTransaction(
             array(
-                'apiKey'               => 'key',
-                'transactionReference' => 'tr_Qzin4iTWrU'
+                'apiKey' => 'key',
+                'transactionReference' => 'tr_Qzin4iTWrU',
             )
         );
 
@@ -92,10 +92,10 @@ class GatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->createCustomer(
             array(
-                'description'  => 'Test name',
-                'email'        => 'test@example.com',
-                'metadata'     => 'Something something something dark side.',
-                'locale'       => 'nl_NL'
+                'description' => 'Test name',
+                'email' => 'test@example.com',
+                'metadata' => 'Something something something dark side.',
+                'locale' => 'nl_NL',
             )
         );
 
@@ -107,10 +107,10 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->updateCustomer(
             array(
                 'customerReference' => 'cst_bSNBBJBzdG',
-                'description'       => 'Test name2',
-                'email'             => 'test@example.com',
-                'metadata'          => 'Something something something dark side.',
-                'locale'            => 'nl_NL'
+                'description' => 'Test name2',
+                'email' => 'test@example.com',
+                'metadata' => 'Something something something dark side.',
+                'locale' => 'nl_NL',
             )
         );
 
@@ -125,8 +125,8 @@ class GatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->fetchCustomer(
             array(
-                'apiKey'            => 'key',
-                'customerReference' => 'cst_bSNBBJBzdG'
+                'apiKey' => 'key',
+                'customerReference' => 'cst_bSNBBJBzdG',
             )
         );
 
@@ -138,11 +138,39 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->fetchCustomerMandates(
             array(
                 'apiKey' => 'key',
-                'customerReference' => 'cst_bSNBBJBzdG'
+                'customerReference' => 'cst_bSNBBJBzdG',
             )
         );
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerMandatesRequest', $request);
+    }
 
+    public function testRevokeCustomerMandate()
+    {
+        $request = $this->gateway->revokeCustomerMandate(
+            array(
+                'apiKey' => "key",
+                "customerReference" => "cst_bSNBBJBzdG",
+                "mandateId" => "mdt_pWUnw6pkBN",
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\RevokeCustomerMandateRequest', $request);
+    }
+
+    public function testCreateCustomerMandate()
+    {
+        $request = $this->gateway->createCustomerMandate(
+            array(
+                'apiKey' => "mykey",
+                'consumerName' => "Customer A",
+                'consumerAccount' => "NL53INGB0000000000",
+                "method" => "directdebit",
+                'customerReference' => 'cst_bSNBBJBzdG',
+                'mandateReference' => "YOUR-COMPANY-MD13804",
+            )
+        );
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\CreateCustomerMandateRequest', $request);
     }
 }
