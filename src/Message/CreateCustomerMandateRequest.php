@@ -155,7 +155,7 @@ class CreateCustomerMandateRequest extends AbstractRequest
         }
 
         if ($this->getSignatureDate()) {
-            $data['signaturedate'] = $this->getSignatureDate();
+            $data['signatureDate'] = $this->getSignatureDate();
         }
 
         if ($this->getMandateReference()) {
