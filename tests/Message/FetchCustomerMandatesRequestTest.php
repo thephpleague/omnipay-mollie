@@ -40,7 +40,7 @@ class FetchCustomerMandatesRequestTest extends TestCase
 
         $response = $this->request->send();
 
-        $this->assertInstanceOf(FetchCustomerMandatesResponse::class, $response);
+        $this->assertInstanceOf("Omnipay\Mollie\Message\FetchCustomerMandatesResponse", $response);
 
         $mandates = $response->getMandates();
 
