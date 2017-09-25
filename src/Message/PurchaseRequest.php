@@ -1,4 +1,5 @@
 <?php
+
 namespace Omnipay\Mollie\Message;
 
 /**
@@ -43,12 +44,12 @@ class PurchaseRequest extends AbstractRequest
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
 
-        $data                = array();
-        $data['amount']      = $this->getAmount();
+        $data = array();
+        $data['amount'] = $this->getAmount();
         $data['description'] = $this->getDescription();
         $data['redirectUrl'] = $this->getReturnUrl();
-        $data['method']      = $this->getPaymentMethod();
-        $data['metadata']    = $this->getMetadata();
+        $data['method'] = $this->getPaymentMethod();
+        $data['metadata'] = $this->getMetadata();
         if ($this->getTransactionId()) {
             $data['metadata']['transactionId'] = $this->getTransactionId();
         }
@@ -63,12 +64,12 @@ class PurchaseRequest extends AbstractRequest
         }
 
         $customerReference = $this->getCustomerReference();
-        if($customerReference){
+        if ($customerReference) {
             $data['customerId'] = $customerReference;
         }
 
         $recurringType = $this->getRecurringType();
-        if($recurringType){
+        if ($recurringType) {
             $data['recurringType'] = $recurringType;
         }
 

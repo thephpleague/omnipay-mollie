@@ -48,5 +48,4 @@ class FetchCustomerMandatesRequest extends AbstractRequest
 
         return $this->response = new FetchCustomerMandatesResponse($this, $httpResponse->json());
     }
-
 }
