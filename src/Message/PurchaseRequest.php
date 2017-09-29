@@ -40,6 +40,16 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('billingEmail', $value);
     }
 
+    public function getDueDate()
+    {
+        return $this->getParameter('dueDate');
+    }
+
+    public function setDueDate($value)
+    {
+        return $this->setParameter('dueDate', $value);
+    }
+
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
@@ -70,6 +80,10 @@ class PurchaseRequest extends AbstractRequest
 
         if ($billingEmail = $this->getBillingEmail()) {
             $data['billingEmail'] = $billingEmail;
+        }
+
+        if ($dueDate = $this->getDueDate()) {
+            $data['dueDate'] = $dueDate;
         }
 
         return $data;

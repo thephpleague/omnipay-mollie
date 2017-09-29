@@ -25,6 +25,7 @@ class PurchaseRequestTest extends TestCase
             'metadata'     => 'meta',
             'locale'       => 'fr_FR',
             'billingEmail' => 'billing-email@example.com',
+            'dueDate'      => '2017-09-29',
         ));
     }
 
@@ -40,6 +41,7 @@ class PurchaseRequestTest extends TestCase
             'issuer'        => 'my bank',
             'locale'        => 'fr_FR',
             'billingEmail'  => 'billing-email@example.com',
+            'dueDate'       => '2017-09-29',
         ));
 
         $data = $this->request->getData();
@@ -52,7 +54,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('my bank', $data['issuer']);
         $this->assertSame('fr_FR', $data['locale']);
         $this->assertSame('billing-email@example.com', $data['billingEmail']);
-        $this->assertCount(8, $data);
+        $this->assertSame('2017-09-29', $data['dueDate']);
+        $this->assertCount(9, $data);
     }
 
     public function testGetDataWithWebhook()
@@ -68,6 +71,7 @@ class PurchaseRequestTest extends TestCase
             'locale'        => 'fr_FR',
             'billingEmail'  => 'billing-email@example.com',
             'notifyUrl'     => 'https://www.example.com/hook',
+            'dueDate'       => '2017-09-29',
         ));
 
         $data = $this->request->getData();
@@ -81,7 +85,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('fr_FR', $data['locale']);
         $this->assertSame('billing-email@example.com', $data['billingEmail']);
         $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
-        $this->assertCount(9, $data);
+        $this->assertSame('2017-09-29', $data['dueDate']);
+        $this->assertCount(10, $data);
     }
 
     public function testNoIssuer()
@@ -96,6 +101,7 @@ class PurchaseRequestTest extends TestCase
             'locale'        => 'fr_FR',
             'billingEmail'  => 'billing-email@example.com',
             'notifyUrl'     => 'https://www.example.com/hook',
+            'dueDate'       => '2017-09-29',
         ));
 
         $data = $this->request->getData();
@@ -108,7 +114,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('fr_FR', $data['locale']);
         $this->assertSame('billing-email@example.com', $data['billingEmail']);
         $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
-        $this->assertCount(8, $data);
+        $this->assertSame('2017-09-29', $data['dueDate']);
+        $this->assertCount(9, $data);
     }
 
     public function testSendSuccess()
