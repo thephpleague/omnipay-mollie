@@ -11,3 +11,5 @@ before_script:
   - composer install -n --dev --prefer-source
 
 script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text
+
+dist: precise
