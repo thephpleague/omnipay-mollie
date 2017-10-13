@@ -9,5 +9,4 @@ namespace Omnipay\Mollie\Message;
 
 class RevokeCustomerMandateResponse extends AbstractResponse
 {
-
 }

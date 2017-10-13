@@ -30,16 +30,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected function sendRequest($method, $endpoint, $data = null)
     {
-        $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event) {
-            /**
-             * @var \Guzzle\Http\Message\Response $response
-             */
-            $response = $event['response'];
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function (Event $event) {
+                /**
+                 * @var \Guzzle\Http\Message\Response $response
+                 */
+                $response = $event['response'];
 
-            if ($response->isError()) {
-                $event->stopPropagation();
+                if ($response->isError()) {
+                    $event->stopPropagation();
+                }
             }
-        });
+        );
 
         $httpRequest = $this->httpClient->createRequest(
             $method,
