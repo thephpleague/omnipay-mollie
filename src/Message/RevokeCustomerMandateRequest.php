@@ -64,8 +64,7 @@ class RevokeCustomerMandateRequest extends AbstractRequest
     {
         $httpResponse = $this->sendRequest(
             "DELETE",
-            "/customers/{$this->getCustomerReference()}/mandates/{$this->getMandateId()}",
-            $data
+            "/customers/{$this->getCustomerReference()}/mandates/{$this->getMandateId()}"
         );
 
         return $this->response = new RevokeCustomerMandateResponse($this, $httpResponse->json());
