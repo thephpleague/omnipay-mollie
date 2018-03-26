@@ -7,8 +7,6 @@
  */
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Common\Http\ResponseParser;
-
 class UpdateCustomerRequest extends AbstractRequest
 {
     /**
@@ -120,9 +118,9 @@ class UpdateCustomerRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('POST', '/customers/'.$this->getCustomerReference(), $data);
+        $response = $this->sendRequest('POST', '/customers/'.$this->getCustomerReference(), $data);
 
-        return $this->response = new UpdateCustomerResponse($this, ResponseParser::json($httpResponse));
+        return $this->response = new UpdateCustomerResponse($this, $response);
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Common\Http\ResponseParser;
-
 /**
  * Mollie Fetch Issuers Request
  *
@@ -21,8 +19,8 @@ class FetchIssuersRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('GET', '/issuers');
+        $response = $this->sendRequest('GET', '/issuers');
 
-        return $this->response = new FetchIssuersResponse($this, ResponseParser::json($httpResponse));
+        return $this->response = new FetchIssuersResponse($this, $response);
     }
 }

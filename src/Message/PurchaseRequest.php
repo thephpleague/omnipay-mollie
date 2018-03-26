@@ -1,8 +1,6 @@
 <?php
 namespace Omnipay\Mollie\Message;
 
-use Omnipay\Common\Http\ResponseParser;
-
 /**
  * Mollie Purchase Request
  *
@@ -77,8 +75,8 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('POST', '/payments', $data);
+        $response = $this->sendRequest('POST', '/payments', $data);
 
-        return $this->response = new PurchaseResponse($this, ResponseParser::json($httpResponse));
+        return $this->response = new PurchaseResponse($this, $response);
     }
 }
