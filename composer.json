@@ -30,7 +30,7 @@
         "psr-4": { "Omnipay\\Mollie\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "v3.0-alpha.4"
+        "omnipay/common": "^3@beta"
     },
     "require-dev": {
         "omnipay/tests": "^3",
