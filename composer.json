@@ -30,7 +30,7 @@
         "psr-4": { "Omnipay\\Mollie\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "^3@beta"
+        "omnipay/common": "^3"
     },
     "require-dev": {
         "omnipay/tests": "^3",
@@ -47,6 +47,5 @@
         "check-style": "phpcs -p --standard=PSR2 src/",
         "fix-style": "phpcbf -p --standard=PSR2 src/"
     },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }

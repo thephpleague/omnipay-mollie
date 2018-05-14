@@ -7,25 +7,16 @@
 [![Total Downloads](https://poser.pugx.org/omnipay/mollie/d/total.png)](https://packagist.org/packages/omnipay/mollie)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements Mollie support for Omnipay.
+processing library for PHP. This package implements Mollie support for Omnipay.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
-to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `omnipay/omnipay` and `omnipay/mollie` with Composer:
 
-```json
-{
-    "require": {
-        "omnipay/mollie": "~3.0"
-    }
-}
+```
+composer require omnipay/omnipay omnipay/mollie
 ```
 
-And run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
 
 ## Basic Usage
 
