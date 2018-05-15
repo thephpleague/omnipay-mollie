@@ -11,10 +11,10 @@ processing library for PHP. This package implements Mollie support for Omnipay.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `omnipay/omnipay` and `omnipay/mollie` with Composer:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `league/omnipay` and `omnipay/mollie` with Composer:
 
 ```
-composer require omnipay/omnipay omnipay/mollie
+composer require league/omnipay omnipay/mollie
 ```
 
 
