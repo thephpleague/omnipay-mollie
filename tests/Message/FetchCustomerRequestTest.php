@@ -3,10 +3,13 @@
 namespace Omnipay\Mollie\Test\Message;
 
 use Omnipay\Mollie\Message\FetchCustomerRequest;
+use Omnipay\Mollie\Message\FetchCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchCustomerRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
      * @var \Omnipay\Mollie\Message\FetchCustomerRequest
      */
@@ -34,10 +37,12 @@ class FetchCustomerRequestTest extends TestCase
     {
         $this->setMockHttpResponse('FetchCustomerSuccess.txt');
 
-        /** @var \Omnipay\Mollie\Message\FetchCustomerResponse $response */
+        /** @var FetchCustomerResponse $response */
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerResponse', $response);
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
 
         $this->assertTrue($response->isSuccessful());
@@ -47,11 +52,16 @@ class FetchCustomerRequestTest extends TestCase
     public function testSendFailure()
     {
         $this->setMockHttpResponse('FetchCustomerFailure.txt');
+
+        /** @var FetchCustomerResponse $response */
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getCustomerReference());
-        $this->assertSame("The customer id is invalid", $response->getMessage());
+        $this->assertSame('{"status":404,"title":"Not Found","detail":"No customer exists with token cst_6HUkmjwzBBa.","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/handling-errors","type":"text\/html"}}}', $response->getMessage());
     }
 }

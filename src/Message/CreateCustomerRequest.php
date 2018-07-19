@@ -102,12 +102,4 @@ class CreateCustomerRequest extends AbstractRequest
 
         return $this->response = new CreateCustomerResponse($this, $response);
     }
-
-    /**
-     * @return string
-     */
-    public function getEndpoint()
-    {
-        return $this->baseUrl.'/customers';
-    }
 }

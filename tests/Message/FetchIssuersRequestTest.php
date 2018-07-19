@@ -4,6 +4,7 @@ namespace Omnipay\Mollie\Test\Message;
 
 use Omnipay\Common\Issuer;
 use Omnipay\Mollie\Message\FetchIssuersRequest;
+use Omnipay\Mollie\Message\FetchIssuersResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchIssuersRequestTest extends TestCase
@@ -11,7 +12,7 @@ class FetchIssuersRequestTest extends TestCase
     use AssertRequestTrait;
 
     /**
-     * @var \Omnipay\Mollie\Message\FetchIssuersRequest
+     * @var FetchIssuersRequest
      */
     protected $request;
 
@@ -37,7 +38,7 @@ class FetchIssuersRequestTest extends TestCase
 
         $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"), $this->getMockClient()->getLastRequest());
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
+        $this->assertInstanceOf(FetchIssuersResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
@@ -55,7 +56,7 @@ class FetchIssuersRequestTest extends TestCase
 
         $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"), $this->getMockClient()->getLastRequest());
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
+        $this->assertInstanceOf(FetchIssuersResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());

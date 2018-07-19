@@ -99,7 +99,6 @@ class UpdateCustomerRequest extends AbstractRequest
         $this->validate('apiKey', 'customerReference');
 
         $data                = [];
-        $data['id']          = $this->getCustomerReference();
         $data['name']        = $this->getDescription();
         $data['email']       = $this->getEmail();
         $data['metadata']    = $this->getMetadata();
@@ -121,13 +120,5 @@ class UpdateCustomerRequest extends AbstractRequest
         $response = $this->sendRequest('POST', '/customers/'.$this->getCustomerReference(), $data);
 
         return $this->response = new UpdateCustomerResponse($this, $response);
-    }
-
-    /**
-     * @return string
-     */
-    public function getEndpoint()
-    {
-        return $this->baseUrl.'/customers/'.$this->getCustomerReference();
     }
 }
