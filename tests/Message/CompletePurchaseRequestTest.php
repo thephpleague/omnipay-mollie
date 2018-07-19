@@ -3,6 +3,7 @@
 namespace Omnipay\Mollie\Test\Message;
 
 use Omnipay\Mollie\Message\CompletePurchaseRequest;
+use Omnipay\Mollie\Message\CompletePurchaseResponse;
 use Omnipay\Tests\TestCase;
 
 class CompletePurchaseRequestTest extends TestCase
@@ -10,7 +11,7 @@ class CompletePurchaseRequestTest extends TestCase
     use AssertRequestTrait;
 
     /**
-     * @var \Omnipay\Mollie\Message\CompletePurchaseRequest
+     * @var CompletePurchaseRequest
      */
     protected $request;
 
@@ -54,7 +55,7 @@ class CompletePurchaseRequestTest extends TestCase
 
         $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
+        $this->assertInstanceOf(CompletePurchaseResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isOpen());
         $this->assertTrue($response->isPaid());
@@ -69,7 +70,7 @@ class CompletePurchaseRequestTest extends TestCase
 
         $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
+        $this->assertInstanceOf(CompletePurchaseResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isPaid());
         $this->assertTrue($response->isExpired());

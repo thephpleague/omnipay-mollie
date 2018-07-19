@@ -11,7 +11,7 @@ class FetchCustomerRequestTest extends TestCase
     use AssertRequestTrait;
 
     /**
-     * @var \Omnipay\Mollie\Message\FetchCustomerRequest
+     * @var FetchCustomerRequest
      */
     protected $request;
 

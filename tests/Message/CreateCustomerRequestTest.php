@@ -3,6 +3,7 @@
 namespace Omnipay\Mollie\Test\Message;
 
 use Omnipay\Mollie\Message\CreateCustomerRequest;
+use Omnipay\Mollie\Message\CreateCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class CreateCustomerRequestTest extends TestCase
@@ -11,7 +12,7 @@ class CreateCustomerRequestTest extends TestCase
 
     /**
      *
-     * @var \Omnipay\Mollie\Message\CreateCustomerRequest
+     * @var CreateCustomerRequest
      */
     protected $request;
 
@@ -48,7 +49,7 @@ class CreateCustomerRequestTest extends TestCase
     {
         $this->setMockHttpResponse('CreateCustomerSuccess.txt');
 
-        /** @var \Omnipay\Mollie\Message\CreateCustomerResponse $response */
+        /** @var CreateCustomerResponse $response */
         $response = $this->request->send();
 
         $this->assertEqualRequest(
@@ -66,7 +67,7 @@ class CreateCustomerRequestTest extends TestCase
             $this->getMockClient()->getLastRequest()
         );
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\CreateCustomerResponse', $response);
+        $this->assertInstanceOf(CreateCustomerResponse::class, $response);
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
 
         $this->assertTrue($response->isSuccessful());
@@ -80,6 +81,7 @@ class CreateCustomerRequestTest extends TestCase
 
         $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers"), $this->getMockClient()->getLastRequest());
 
+        $this->assertInstanceOf(CreateCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());

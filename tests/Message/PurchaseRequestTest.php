@@ -171,7 +171,7 @@ class PurchaseRequestTest extends TestCase
             $this->getMockClient()->getLastRequest()
         );
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
+        $this->assertInstanceOf(PurchaseResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
