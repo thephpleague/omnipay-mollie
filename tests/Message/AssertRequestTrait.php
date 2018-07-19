@@ -4,7 +4,7 @@ namespace Omnipay\Mollie\Test\Message;
 
 trait AssertRequestTrait
 {
-    abstract function assertEquals($expected, $actual, $message = null);
+    abstract function assertEquals($expected, $actual, $message = '', $delta = 0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false);
 
     abstract function assertJsonStringEqualsJsonString($expected, $actual, $message = null);
 
