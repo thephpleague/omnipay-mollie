@@ -69,7 +69,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isPaid()
     {
-        return isset($this->data['paidAt']) && !empty($this->data['paidAt']);
+        return isset($this->data['status']) && 'paid' === $this->data['status'];
     }
 
     /**

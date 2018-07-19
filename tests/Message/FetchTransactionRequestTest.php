@@ -2,11 +2,15 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Mollie\Message\FetchTransactionRequest;
+use Omnipay\Mollie\Message\FetchTransactionResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchTransactionRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
      * @var \Omnipay\Mollie\Message\FetchTransactionRequest
      */
@@ -18,7 +22,7 @@ class FetchTransactionRequestTest extends TestCase
         $this->request->initialize(
             array(
                 'apiKey'               => 'mykey',
-                'transactionReference' => 'tr_Qzin4iTWrU',
+                'transactionReference' => 'tr_WDqYK6vllg',
             )
         );
     }
@@ -27,26 +31,36 @@ class FetchTransactionRequestTest extends TestCase
     {
         $data = $this->request->getData();
 
-        $this->assertSame("tr_Qzin4iTWrU", $data['id']);
+        $this->assertSame("tr_WDqYK6vllg", $data['id']);
         $this->assertCount(1, $data);
     }
 
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('FetchTransactionSuccess.txt');
+        /** @var FetchTransactionResponse $response */
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchTransactionResponse', $response);
+        $this->assertEqualRequest(
+            new Request(
+                "GET",
+                "https://api.mollie.com/v2/payments/tr_WDqYK6vllg"
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
+
+
+        $this->assertInstanceOf(FetchTransactionResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isPaid());
         $this->assertFalse($response->isCancelled());
         $this->assertFalse($response->isPaidOut());
-        $this->assertFalse($response->isRedirect());
+        $this->assertTrue($response->isRedirect());
         $this->assertFalse($response->isRefunded());
         $this->assertFalse($response->isPartialRefunded());
         $this->assertSame("paid", $response->getStatus());
-        $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
-        $this->assertSame("100.00", $response->getAmount());
+        $this->assertSame('tr_WDqYK6vllg', $response->getTransactionReference());
+        $this->assertSame(["value" => "10.00", "currency" => "EUR"], $response->getAmount());
     }
 
     public function testSendExpired()
@@ -54,23 +68,39 @@ class FetchTransactionRequestTest extends TestCase
         $this->setMockHttpResponse('FetchTransactionExpired.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchTransactionResponse', $response);
+        $this->assertEqualRequest(
+            new Request(
+                "GET",
+                "https://api.mollie.com/v2/payments/tr_WDqYK6vllg"
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
+
+        $this->assertInstanceOf(FetchTransactionResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
+        $this->assertTrue($response->isRedirect());
+        $this->assertSame('tr_WDqYK6vllg', $response->getTransactionReference());
         $this->assertTrue($response->isExpired());
     }
 
     public function testSendFailure()
     {
-        $this->setMockHttpResponse('FetchTransactionFailure.txt');
+        $this->setMockHttpResponse('FetchTransaction404Failure.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchTransactionResponse', $response);
+        $this->assertEqualRequest(
+            new Request(
+                "GET",
+                "https://api.mollie.com/v2/payments/tr_WDqYK6vllg"
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
+
+        $this->assertInstanceOf(FetchTransactionResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getStatus());
+        $this->assertEquals(404, $response->getStatus());
         $this->assertNull($response->getAmount());
     }
 }
