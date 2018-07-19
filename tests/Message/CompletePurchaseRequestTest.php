@@ -7,6 +7,8 @@ use Omnipay\Tests\TestCase;
 
 class CompletePurchaseRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
      * @var \Omnipay\Mollie\Message\CompletePurchaseRequest
      */
@@ -50,6 +52,8 @@ class CompletePurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
+
         $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isOpen());
@@ -63,23 +67,13 @@ class CompletePurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('CompletePurchaseExpired.txt');
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
+
         $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isPaid());
         $this->assertTrue($response->isExpired());
         $this->assertFalse($response->isRedirect());
         $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
-    }
-
-    public function testSendFailure()
-    {
-        $this->setMockHttpResponse('PurchaseFailure.txt');
-        $response = $this->request->send();
-
-        $this->assertInstanceOf('Omnipay\Mollie\Message\CompletePurchaseResponse', $response);
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertSame("The issuer is invalid", $response->getMessage());
     }
 }

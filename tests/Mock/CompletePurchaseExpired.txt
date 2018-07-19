@@ -1,28 +1,28 @@
 HTTP/1.1 200 OK
-Server: nginx/1.4.4
-Date: Sun, 19 Jan 2014 13:00:23 GMT
-Content-Type: application/json; charset=utf-8
-Content-Length: 326
-Connection: keep-alive
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
-Access-Control-Max-Age: 300
-Cache-Control: no-cache, no-store
-Strict-Transport-Security: max-age=31556926; includeSubDomains
-X-Whom: dc1-web-1
+Content-Type: application/hal+json; charset=utf-8
 
 {
-  "id":"tr_Qzin4iTWrU",
-  "mode":"test",
-  "createdDatetime":"2014-01-19T11:41:54.0Z",
-  "status":"expired",
-  "expiredDatetime":"2014-01-19T11:58:01.0Z",
-  "amount":"100.00",
-  "description":"Description",
-  "method":"ideal",
-  "metadata":"meta",
-  "details":null,
-  "links":{
-    "redirectUrl":"http://www.google.nl"
-  }
+    "resource": "payment",
+    "id": "tr_Qzin4iTWrU",
+    "mode": "test",
+    "createdAt": "2018-07-19T12:04:56+00:00",
+    "amount": {
+      "value": "100.00",
+      "currency": "EUR"
+    },
+    "description": "apex.sh performance test payment",
+    "method": null,
+    "metadata": null,
+    "status": "expired",
+    "expiredAt": "2018-07-19T12:21:04+00:00",
+    "locale": "nl_NL",
+    "profileId": "pfl_7N5qjbu42V",
+    "sequenceType": "oneoff",
+    "redirectUrl": "https://www.example.org/",
+    "_links": {
+      "self": {
+        "href": "https://api.mollie.com/v2/payments/tr_wnUB738Suu",
+        "type": "application/hal+json"
+      }
+    }
 }
