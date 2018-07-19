@@ -42,7 +42,7 @@ class PurchaseRequest extends AbstractRequest
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
 
-        $data                = array();
+        $data                = [];
         $data['amount']      = $this->getAmount();
         $data['description'] = $this->getDescription();
         $data['redirectUrl'] = $this->getReturnUrl();

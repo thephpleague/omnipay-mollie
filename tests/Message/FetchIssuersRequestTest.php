@@ -1,12 +1,15 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
 use Omnipay\Common\Issuer;
+use Omnipay\Mollie\Message\FetchIssuersRequest;
 use Omnipay\Tests\TestCase;
 
 class FetchIssuersRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
      * @var \Omnipay\Mollie\Message\FetchIssuersRequest
      */
@@ -32,12 +35,17 @@ class FetchIssuersRequestTest extends TestCase
         $this->setMockHttpResponse('FetchIssuersSuccess.txt');
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"), $this->getMockClient()->getLastRequest());
+
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $expectedIssuer = new Issuer('ideal_TESTNL99', 'TBM Bank', 'ideal');
-        $this->assertEquals(array($expectedIssuer), $response->getIssuers());
+
+        $expectedIssuer = new Issuer('ideal_ABNANL2A', 'ABN AMRO', 'ideal');
+        $expectedIssuer2 = new Issuer('ideal_ASNBNL21', 'ASN Bank', 'ideal');
+
+        $this->assertEquals(array($expectedIssuer, $expectedIssuer2), $response->getIssuers());
     }
 
     public function testSendFailure()
@@ -45,11 +53,14 @@ class FetchIssuersRequestTest extends TestCase
         $this->setMockHttpResponse('FetchIssuersFailure.txt');
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"), $this->getMockClient()->getLastRequest());
+
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame('Unauthorized request', $response->getMessage());
+        $this->assertSame('{"status":401,"title":"Unauthorized Request","detail":"Missing authentication, or failed to authenticate","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/authentication","type":"text\/html"}}}', $response->getMessage());
         $this->assertNull($response->getIssuers());
     }
+
 }

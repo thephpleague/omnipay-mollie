@@ -79,7 +79,7 @@ class CreateCustomerRequest extends AbstractRequest
     {
         $this->validate('apiKey', 'description', 'email');
 
-        $data                = array();
+        $data                = [];
         $data['name']        = $this->getDescription();
         $data['email']       = $this->getEmail();
         $data['metadata']    = $this->getMetadata();
@@ -108,6 +108,6 @@ class CreateCustomerRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->endpoint.'/customers';
+        return $this->baseUrl.'/customers';
     }
 }

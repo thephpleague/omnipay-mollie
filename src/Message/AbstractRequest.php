@@ -4,7 +4,9 @@ namespace Omnipay\Mollie\Message;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $endpoint = 'https://api.mollie.nl/v1';
+    protected $apiVersion = "v2";
+
+    protected $baseUrl = 'https://api.mollie.com/';
 
     public function getApiKey()
     {
@@ -30,7 +32,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $response = $this->httpClient->request(
             $method,
-            $this->endpoint . $endpoint,
+            $this->baseUrl . $this->apiVersion . $endpoint,
             array(
                 'Authorization' => 'Bearer ' . $this->getApiKey()
             ),

@@ -33,7 +33,7 @@ class FetchCustomerRequest extends AbstractRequest
     {
         $this->validate('apiKey', 'customerReference');
 
-        return array();
+        return [];
     }
 
     /**
@@ -52,6 +52,6 @@ class FetchCustomerRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->endpoint.'/customers';
+        return $this->baseUrl.'/customers';
     }
 }

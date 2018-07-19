@@ -12,14 +12,41 @@ Strict-Transport-Security: max-age=31556926; includeSubDomains
 X-Whom: dc1-web-2
 
 {
-  "totalCount":1,
-  "offset":0,
-  "count":1,
-  "data":[
-    {
-      "id":"ideal_TESTNL99",
-      "name":"TBM Bank",
-      "method":"ideal"
-    }
-  ]
-}
+     "resource": "method",
+     "id": "ideal",
+     "description": "iDEAL",
+     "image": {
+         "size1x": "https://www.mollie.com/images/payscreen/methods/ideal.png",
+         "size2x": "https://www.mollie.com/images/payscreen/methods/ideal%402x.png"
+     },
+     "issuers": [
+         {
+             "resource": "issuer",
+             "id": "ideal_ABNANL2A",
+             "name": "ABN AMRO",
+             "image": {
+                 "size1x": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ABNANL2A.png",
+                 "size2x": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ABNANL2A.png"
+             }
+         },
+         {
+             "resource": "issuer",
+             "id": "ideal_ASNBNL21",
+             "name": "ASN Bank",
+             "image": {
+                 "size1x": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ASNBNL21.png",
+                 "size2x": "https://www.mollie.com/images/checkout/v2/ideal-issuer-icons/ASNBNL21.png"
+             }
+         }
+     ],
+     "_links": {
+         "self": {
+             "href": "https://api.mollie.com/v2/methods/ideal",
+             "type": "application/hal+json"
+         },
+         "documentation": {
+             "href": "https://docs.mollie.com/reference/v2/methods-api/get-method",
+             "type": "text/html"
+         }
+     }
+ }

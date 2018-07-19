@@ -1,6 +1,7 @@
 <?php
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
+use Omnipay\Mollie\Message\RefundRequest;
 use Omnipay\Tests\TestCase;
 
 class RefundRequestTest extends TestCase

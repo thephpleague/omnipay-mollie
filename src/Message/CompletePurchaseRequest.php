@@ -15,7 +15,7 @@ class CompletePurchaseRequest extends FetchTransactionRequest
     {
         $this->validate('apiKey');
 
-        $data = array();
+        $data = [];
         $data['id'] = $this->getTransactionReference();
 
         if (!isset($data['id'])) {

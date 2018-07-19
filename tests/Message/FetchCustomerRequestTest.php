@@ -1,7 +1,8 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
+use Omnipay\Mollie\Message\FetchCustomerRequest;
 use Omnipay\Tests\TestCase;
 
 class FetchCustomerRequestTest extends TestCase

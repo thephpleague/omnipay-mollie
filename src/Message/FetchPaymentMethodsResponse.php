@@ -15,7 +15,7 @@ class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPayme
     public function getPaymentMethods()
     {
         if (isset($this->data['data'])) {
-            $paymentMethods = array();
+            $paymentMethods = [];
             foreach ($this->data['data'] as $method) {
                 $paymentMethods[] = new PaymentMethod($method['id'], $method['description']);
             }

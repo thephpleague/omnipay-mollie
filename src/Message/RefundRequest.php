@@ -9,7 +9,7 @@ class RefundRequest extends AbstractRequest
     {
         $this->validate('apiKey', 'transactionReference');
 
-        $data = array();
+        $data = [];
         if ($this->getAmountInteger() > 0) {
             $data['amount'] = $this->getAmount();
         }

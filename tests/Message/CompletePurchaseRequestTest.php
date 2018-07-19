@@ -1,7 +1,8 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
+use Omnipay\Mollie\Message\CompletePurchaseRequest;
 use Omnipay\Tests\TestCase;
 
 class CompletePurchaseRequestTest extends TestCase

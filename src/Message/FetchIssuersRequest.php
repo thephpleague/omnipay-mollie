@@ -9,17 +9,22 @@ namespace Omnipay\Mollie\Message;
  */
 class FetchIssuersRequest extends AbstractRequest
 {
+
+    protected $endpoint = '/methods/ideal?include=issuers';
+
     /**
-     * @return null
+     * @return array
      */
     public function getData()
     {
         $this->validate('apiKey');
+
+        return [];
     }
 
     public function sendData($data)
     {
-        $response = $this->sendRequest('GET', '/issuers');
+        $response = $this->sendRequest('GET', $this->endpoint);
 
         return $this->response = new FetchIssuersResponse($this, $response);
     }
