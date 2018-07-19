@@ -12,32 +12,28 @@ Strict-Transport-Security: max-age=31556926; includeSubDomains
 X-Whom: dc1-web-2
 
 {
+    "resource": "refund",
     "id": "re_4qqhO89gsT",
-    "payment": {
-        "id": "tr_WDqYK6vllg",
-        "mode": "test",
-        "createdDatetime": "2016-08-18T03:51:53.0Z",
-        "status": "refunded",
-        "amount": "35.07",
-        "amountRefunded": "5.95",
-        "amountRemaining": "54.12",
-        "description": "Order",
-        "method": "ideal",
-        "metadata": {
-            "order_id": "33"
-        },
-        "details": {
-            "consumerName": "Hr E G H K\u00fcppers en\/of MW M.J. K\u00fcppers-Veeneman",
-            "consumerAccount": "NL53INGB0654422370",
-            "consumerBic": "INGBNL2A"
-        },
-        "locale": "nl",
-        "links": {
-            "webhookUrl": "https://webshop.example.org/payments/webhook",
-            "redirectUrl": "https://webshop.example.org/order/33/",
-            "refunds": "https://api.mollie.nl/v1/payments/tr_WDqYK6vllg/refunds"
-        }
+    "amount": {
+        "currency": "EUR",
+        "value": "5.95"
     },
-    "amount": "5.95",
-    "refundedDatetime": "2016-08-19T08:49:58.0Z"
+    "status": "pending",
+    "createdAt": "2018-03-14T17:09:02.0Z",
+    "description": "Order",
+    "paymentId": "tr_WDqYK6vllg",
+    "_links": {
+        "self": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds/re_4qqhO89gsT",
+            "type": "application/hal+json"
+        },
+        "payment": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg",
+            "type": "application/hal+json"
+        },
+        "documentation": {
+            "href": "https://docs.mollie.com/reference/v2/refunds-api/create-refund",
+            "type": "text/html"
+        }
+    }
 }

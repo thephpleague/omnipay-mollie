@@ -3,8 +3,15 @@
 
 namespace Omnipay\Mollie\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Message\ResponseInterface;
+
 class RefundRequest extends AbstractRequest
 {
+    /**
+     * @return array
+     * @throws InvalidRequestException
+     */
     public function getData()
     {
         $this->validate('apiKey', 'transactionReference');
@@ -17,6 +24,10 @@ class RefundRequest extends AbstractRequest
         return $data;
     }
 
+    /**
+     * @param array $data
+     * @return ResponseInterface|RefundResponse
+     */
     public function sendData($data)
     {
         $response = $this->sendRequest('POST', '/payments/' . $this->getTransactionReference() . '/refunds', $data);

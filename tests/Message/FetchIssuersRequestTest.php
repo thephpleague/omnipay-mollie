@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Common\Issuer;
 use Omnipay\Mollie\Message\FetchIssuersRequest;
 use Omnipay\Tests\TestCase;
@@ -35,7 +36,10 @@ class FetchIssuersRequestTest extends TestCase
         $this->setMockHttpResponse('FetchIssuersSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(
+            new Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"),
+            $this->getMockClient()->getLastRequest()
+        );
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
         $this->assertTrue($response->isSuccessful());
@@ -53,7 +57,10 @@ class FetchIssuersRequestTest extends TestCase
         $this->setMockHttpResponse('FetchIssuersFailure.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(
+            new Request("GET", "https://api.mollie.com/v2/methods/ideal?include=issuers"),
+            $this->getMockClient()->getLastRequest()
+        );
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\FetchIssuersResponse', $response);
         $this->assertFalse($response->isSuccessful());
