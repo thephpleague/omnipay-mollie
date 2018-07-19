@@ -9,9 +9,17 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
     /**
      * {@inheritdoc}
      */
+    public function getRedirectMethod()
+    {
+        return 'GET';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isRedirect()
     {
-        return isset($this->data['links']['paymentUrl']);
+        return isset($this->data['_links']['checkout']['href']);
     }
 
     /**
@@ -20,16 +28,8 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
     public function getRedirectUrl()
     {
         if ($this->isRedirect()) {
-            return $this->data['links']['paymentUrl'];
+            return $this->data['_links']['checkout']['href'];
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRedirectMethod()
-    {
-        return 'GET';
     }
 
     /**
@@ -61,7 +61,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isCancelled()
     {
-        return isset($this->data['status']) && 'cancelled' === $this->data['status'];
+        return isset($this->data['status']) && 'canceled' === $this->data['status'];
     }
 
     /**
@@ -69,7 +69,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isPaid()
     {
-        return isset($this->data['status']) && 'paid' === $this->data['status'];
+        return isset($this->data['paidAt']) && !empty($this->data['paidAt']);
     }
 
     /**
@@ -77,7 +77,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isPaidOut()
     {
-        return isset($this->data['status']) && 'paidout' === $this->data['status'];
+        return isset($this->data['_links']['settlement']);
     }
 
     /**
@@ -90,12 +90,12 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
 
     public function isRefunded()
     {
-        return isset($this->data['status']) && 'refunded' === $this->data['status'];
+        return isset($this->data['_links']['refunds']);
     }
 
     public function isPartialRefunded()
     {
-        return $this->isRefunded() && isset($this->data['amountRemaining']) && $this->data['amountRemaining'] > 0;
+        return $this->isRefunded() && isset($this->data['amountRemaining']) && $this->data['amountRemaining']['value'] > 0;
     }
 
     /**

@@ -2,14 +2,15 @@
 namespace Omnipay\Mollie\Test\Message;
 
 use Omnipay\Mollie\Message\PurchaseRequest;
+use Omnipay\Mollie\Message\PurchaseResponse;
 use Omnipay\Tests\TestCase;
 
 class PurchaseRequestTest extends TestCase
 {
+    use AssertRequestTrait;
 
     /**
-     *
-     * @var \Omnipay\Mollie\Message\PurchaseRequest
+     * @var PurchaseRequest
      */
     protected $request;
 
@@ -19,6 +20,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->initialize(array(
             'apiKey'       => 'mykey',
             'amount'       => '12.00',
+            'currency'     => 'USD',
             'issuer'       => 'my bank',
             'description'  => 'Description',
             'returnUrl'    => 'https://www.example.com/return',
@@ -31,21 +33,22 @@ class PurchaseRequestTest extends TestCase
 
     public function testGetData()
     {
-        $this->request->initialize(array(
-            'apiKey'        => 'mykey',
-            'amount'        => '12.00',
-            'description'   => 'Description',
-            'returnUrl'     => 'https://www.example.com/return',
+        $this->request->initialize([
+            'apiKey' => 'mykey',
+            'amount' => '12.00',
+            'currency' => 'USD',
+            'description' => 'Description',
+            'returnUrl' => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
-            'metadata'      => 'meta',
-            'issuer'        => 'my bank',
-            'locale'        => 'fr_FR',
-            'billingEmail'  => 'billing-email@example.com',
-        ));
+            'metadata' => 'meta',
+            'issuer' => 'my bank',
+            'locale' => 'fr_FR',
+            'billingEmail' => 'billing-email@example.com',
+        ]);
 
         $data = $this->request->getData();
 
-        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame(["value" => "12.00", "currency" => "USD"], $data['amount']);
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
@@ -61,6 +64,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->initialize(array(
             'apiKey'        => 'mykey',
             'amount'        => '12.00',
+            'currency'      => 'EUR',
             'description'   => 'Description',
             'returnUrl'     => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
@@ -73,7 +77,7 @@ class PurchaseRequestTest extends TestCase
 
         $data = $this->request->getData();
 
-        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame(["value" => "12.00", "currency" => "EUR"], $data['amount']);
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
@@ -90,6 +94,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->initialize(array(
             'apiKey'        => 'mykey',
             'amount'        => '12.00',
+            'currency'      => 'SEK',
             'description'   => 'Description',
             'returnUrl'     => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
@@ -101,7 +106,7 @@ class PurchaseRequestTest extends TestCase
 
         $data = $this->request->getData();
 
-        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame(["value" => "12.00", "currency" => "SEK"], $data['amount']);
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
@@ -117,31 +122,40 @@ class PurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('PurchaseSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
+        $this->assertEqualRequest(
+            new \GuzzleHttp\Psr7\Request(
+                "POST",
+                "https://api.mollie.com/v2/payments",
+                [],
+                '{  
+                   "amount":{  
+                      "value":"12.00",
+                      "currency":"USD"
+                   },
+                   "description":"Description",
+                   "redirectUrl":"https:\/\/www.example.com\/return",
+                   "method":null,
+                   "metadata":"meta",
+                   "issuer":"my bank",
+                   "locale":"fr_FR",
+                   "billingEmail":"billing-email@example.com"
+                }'
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
+
+
+        $this->assertInstanceOf(PurchaseResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertSame('GET', $response->getRedirectMethod());
-        $this->assertSame('https://www.mollie.nl/payscreen/pay/Qzin4iTWrU', $response->getRedirectUrl());
+        $this->assertSame('https://www.mollie.com/payscreen/select-method/7UhSN1zuXS', $response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
-        $this->assertSame('tr_Qzin4iTWrU', $response->getTransactionReference());
+        $this->assertSame('tr_7UhSN1zuXS', $response->getTransactionReference());
         $this->assertTrue($response->isOpen());
         $this->assertFalse($response->isPaid());
         $this->assertNull($response->getCode());
         $this->assertNull($response->getMessage());
-    }
-
-    public function testSendFailure()
-    {
-        $this->setMockHttpResponse('PurchaseFailure.txt');
-        $response = $this->request->send();
-
-        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getRedirectUrl());
-        $this->assertNull($response->getRedirectData());
-        $this->assertSame("The issuer is invalid", $response->getMessage());
     }
 
     public function testIssuerFailure()
@@ -149,19 +163,13 @@ class PurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('PurchaseIssuerFailure.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getRedirectUrl());
-        $this->assertNull($response->getRedirectData());
-        $this->assertSame("Issuer failure", $response->getMessage());
-    }
-
-    public function testSystemFailure()
-    {
-        $this->setMockHttpResponse('PurchaseSystemFailure.txt');
-        $response = $this->request->send();
+        $this->assertEqualRequest(
+            new \GuzzleHttp\Psr7\Request(
+                "POST",
+                "https://api.mollie.com/v2/payments"
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
         $this->assertFalse($response->isSuccessful());
@@ -169,6 +177,6 @@ class PurchaseRequestTest extends TestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
-        $this->assertSame("Payment platform for this payment method temporarily not available", $response->getMessage());
+        $this->assertSame('{"status":422,"title":"Unprocessable Entity","detail":"The payment method is invalid","field":"method","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/handling-errors","type":"text\/html"}}}', $response->getMessage());
     }
 }

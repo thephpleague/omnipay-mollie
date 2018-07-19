@@ -14,7 +14,5 @@ class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
         if (isset($this->data['title']) && isset($this->data['detail'])) {
             return json_encode($this->data);
         }
-
-        return "Request is successful.";
     }
 }
