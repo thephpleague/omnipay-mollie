@@ -1,24 +1,23 @@
 HTTP/1.1 201 Created
-Server: nginx/1.4.4
-Date: Sun, 19 Jan 2014 11:41:55 GMT
-Content-Type: application/json; charset=utf-8
-Content-Length: 344
-Connection: keep-alive
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
-Access-Control-Max-Age: 300
-Cache-Control: no-cache, no-store
-Strict-Transport-Security: max-age=31556926; includeSubDomains
-X-Whom: dc1-web-2
+Content-Type: application/hal+json; charset=utf-8
 
 {
   "resource": "customer",
   "id": "cst_bSNBBJBzdG",
-  "mode": "live",
-  "name": "Test Customer",
-  "email": "test123@example.com",
-  "locale": null,
-  "metadata": null,
-  "recentlyUsedMethods": [],
-  "createdDatetime": "2016-10-07T09:39:25.0Z"
+  "mode": "test",
+  "name": "John Doe",
+  "email": "john@doe.com",
+  "locale": "nl_NL",
+  "metadata": "Just some meta data.",
+  "createdAt": "2018-07-19T12:58:47+00:00",
+  "_links": {
+    "self": {
+      "href": "https://api.mollie.com/v2/customers/cst_6HUkmjwzBB",
+      "type": "application/hal+json"
+    },
+    "documentation": {
+      "href": "https://docs.mollie.com/reference/v2/customers-api/create-customer",
+      "type": "text/html"
+    }
+  }
 }

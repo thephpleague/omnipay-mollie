@@ -7,6 +7,8 @@ use Omnipay\Tests\TestCase;
 
 class CreateCustomerRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
      *
      * @var \Omnipay\Mollie\Message\CreateCustomerRequest
@@ -19,30 +21,25 @@ class CreateCustomerRequestTest extends TestCase
 
         $this->request->initialize(array(
             'apiKey'      => 'mykey',
-            'description' => 'Test Customer',
-            'email'       => 'test123@example.com',
+            'description' => 'John Doe',
+            'email'       => 'john@doe.com',
             'locale'      => 'nl_NL',
             'metadata'    => 'Just some meta data.',
         ));
-    }
-
-    public function testEndpoint()
-    {
-        $this->assertSame('https://api.mollie.nl/v1/customers', $this->request->getEndpoint());
     }
 
     public function testData()
     {
         $this->request->initialize(array(
             'apiKey'      => 'mykey',
-            'description' => 'Test Customer',
-            'email'       => 'test123@example.com',
+            'description' => 'John Doe',
+            'email'       => 'john@doe.com',
             'metadata'    => 'Just some meta data.',
         ));
         $data = $this->request->getData();
 
-        $this->assertSame("Test Customer", $data['name']);
-        $this->assertSame('test123@example.com', $data['email']);
+        $this->assertSame("John Doe", $data['name']);
+        $this->assertSame('john@doe.com', $data['email']);
         $this->assertSame('Just some meta data.', $data['metadata']);
         $this->assertCount(4, $data);
     }
@@ -53,6 +50,21 @@ class CreateCustomerRequestTest extends TestCase
 
         /** @var \Omnipay\Mollie\Message\CreateCustomerResponse $response */
         $response = $this->request->send();
+
+        $this->assertEqualRequest(
+            new \GuzzleHttp\Psr7\Request(
+                "GET",
+                "https://api.mollie.com/v2/customers",
+                [],
+                '{  
+                   "name":"John Doe",
+                   "email":"john@doe.com",
+                   "metadata":"Just some meta data.",
+                   "locale":"nl_NL"
+                }'
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
 
         $this->assertInstanceOf('Omnipay\Mollie\Message\CreateCustomerResponse', $response);
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
@@ -66,9 +78,11 @@ class CreateCustomerRequestTest extends TestCase
         $this->setMockHttpResponse('CreateCustomerFailure.txt');
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers"), $this->getMockClient()->getLastRequest());
+
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame('Unauthorized request', $response->getMessage());
+        $this->assertSame('{"status":401,"title":"Unauthorized Request","detail":"Missing authentication, or failed to authenticate","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/authentication","type":"text\/html"}}}', $response->getMessage());
     }
 }
