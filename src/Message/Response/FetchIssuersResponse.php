@@ -6,6 +6,9 @@ use Omnipay\Common\Issuer;
 use Omnipay\Common\Issuer as CommonIssuer;
 use Omnipay\Common\Message\FetchIssuersResponseInterface;
 
+/**
+ * @see https://docs.mollie.com/reference/v2/methods-api/get-method
+ */
 class FetchIssuersResponse extends AbstractResponse implements FetchIssuersResponseInterface
 {
     /**

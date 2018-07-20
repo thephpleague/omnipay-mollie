@@ -6,6 +6,8 @@ use Omnipay\Common\Message\AbstractRequest;
 
 /**
  * This class holds all the common things for all of Mollie requests.
+ *
+ * @see https://docs.mollie.com/index
  */
 abstract class AbstractMollieRequest extends AbstractRequest
 {

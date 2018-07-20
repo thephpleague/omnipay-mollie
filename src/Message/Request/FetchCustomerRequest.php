@@ -6,9 +6,9 @@ use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Mollie\Message\Response\FetchCustomerResponse;
 
 /**
- * Mollie Fetch Customer Request.
+ * Retrieve a single customer by its ID.
  *
- * URL: https://www.mollie.com/en/docs/reference/customers/get
+ * @see https://docs.mollie.com/reference/v2/customers-api/get-customer
  */
 class FetchCustomerRequest extends AbstractMollieRequest
 {

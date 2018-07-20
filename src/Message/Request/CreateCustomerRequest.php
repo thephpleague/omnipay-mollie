@@ -1,16 +1,17 @@
 <?php
 
-/**
- * Mollie Create Customer Request.
- *
- * URL: https://www.mollie.com/en/docs/reference/customers/create
- */
-
 namespace Omnipay\Mollie\Message\Request;
 
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Mollie\Message\Response\CreateCustomerResponse;
 
+/**
+ * Creates a simple minimal representation of a customer in the Mollie API to use for the Mollie Checkout and Recurring
+ * features. These customers will appear in your Dashboard where you can manage their details, and also see their
+ * payments and subscriptions.
+ *
+ * @see https://docs.mollie.com/reference/v2/customers-api/create-customer
+ */
 class CreateCustomerRequest extends AbstractMollieRequest
 {
     /**

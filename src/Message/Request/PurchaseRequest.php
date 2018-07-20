@@ -7,7 +7,11 @@ use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Mollie\Message\Response\PurchaseResponse;
 
 /**
- * Mollie Purchase Request
+ * Payment creation is elemental to the Mollie API: this is where most payment implementations start off. Note optional
+ * parameters are accepted for certain payment methods. To wrap your head around the payment process, an explanation and
+ * flow charts can be found in the Overview.
+ *
+ * @see https://docs.mollie.com/reference/v2/payments-api/create-payment
  *
  * @method PurchaseResponse send()
  */

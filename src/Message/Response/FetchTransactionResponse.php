@@ -4,6 +4,9 @@ namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
+/**
+ * @see https://docs.mollie.com/reference/v2/payments-api/get-payment
+ */
 class FetchTransactionResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**

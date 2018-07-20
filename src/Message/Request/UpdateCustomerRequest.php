@@ -7,9 +7,9 @@ use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Mollie\Message\Response\UpdateCustomerResponse;
 
 /**
- * Mollie Update Customer Request.
+ * Update an existing customer.
  *
- * URL: https://www.mollie.com/en/docs/reference/customers/update
+ * @see https://docs.mollie.com/reference/v2/customers-api/update-customer
  */
 class UpdateCustomerRequest extends AbstractMollieRequest
 {

@@ -7,13 +7,20 @@ use Omnipay\Mollie\Message\Response\FetchIssuersResponse;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Mollie Fetch Issuers Request
+ * Returns issuers available for the payment method (e.g. for iDEAL, KBC/CBC payment button or gift cards).
+ *
+ * @see https://docs.mollie.com/reference/v2/methods-api/get-method
  *
  * @method FetchIssuersResponse send()
  */
 class FetchIssuersRequest extends AbstractMollieRequest
 {
-
+    /**
+     * This endpoint allows you to include additional information by appending the following values via the include
+     * query string parameter.
+     *
+     * @var string
+     */
     protected $endpoint = '/methods/ideal?include=issuers';
 
     /**

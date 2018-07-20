@@ -6,7 +6,9 @@ use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Message\Response\CompletePurchaseResponse;
 
 /**
- * Mollie Complete Purchase Request
+ * Retrieve a single payment object by its payment token.
+ *
+ * @see https://docs.mollie.com/reference/v2/payments-api/get-payment
  *
  * @method \Omnipay\Mollie\Message\Response\CompletePurchaseResponse send()
  */

@@ -6,6 +6,9 @@ use Omnipay\Common\Message\FetchPaymentMethodsResponseInterface;
 use Omnipay\Common\PaymentMethod;
 use Omnipay\Common\PaymentMethod as CommonPaymentMethod;
 
+/**
+ * @see https://docs.mollie.com/reference/v2/methods-api/list-methods
+ */
 class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPaymentMethodsResponseInterface
 {
     /**

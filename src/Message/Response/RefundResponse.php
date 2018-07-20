@@ -3,6 +3,9 @@
 
 namespace Omnipay\Mollie\Message\Response;
 
+/**
+ * @see https://docs.mollie.com/reference/v2/refunds-api/create-refund
+ */
 class RefundResponse extends AbstractResponse
 {
     /**
