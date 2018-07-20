@@ -74,7 +74,7 @@ class PurchaseRequest extends AbstractMollieRequest
      */
     public function getData()
     {
-        $this->validate('apiKey', 'amount', 'description', 'returnUrl');
+        $this->validate('apiKey', 'amount', 'currency', 'description', 'returnUrl');
 
         $data = [];
         $data['amount'] = [
