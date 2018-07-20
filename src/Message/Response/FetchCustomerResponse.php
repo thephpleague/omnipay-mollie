@@ -5,7 +5,7 @@ namespace Omnipay\Mollie\Message\Response;
 /**
  * @see https://docs.mollie.com/reference/v2/customers-api/get-customer
  */
-class FetchCustomerResponse extends AbstractResponse
+class FetchCustomerResponse extends AbstractMollieResponse
 {
     /**
      * @return string|null

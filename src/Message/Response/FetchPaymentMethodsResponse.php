@@ -4,17 +4,16 @@ namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Message\FetchPaymentMethodsResponseInterface;
 use Omnipay\Common\PaymentMethod;
-use Omnipay\Common\PaymentMethod as CommonPaymentMethod;
 
 /**
  * @see https://docs.mollie.com/reference/v2/methods-api/list-methods
  */
-class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPaymentMethodsResponseInterface
+class FetchPaymentMethodsResponse extends AbstractMollieResponse implements FetchPaymentMethodsResponseInterface
 {
     /**
-     * Return available paymentmethods as an associative array.
+     * Return available payment methods as an associative array.
      *
-     * @return CommonPaymentMethod[]
+     * @return PaymentMethod[]
      */
     public function getPaymentMethods()
     {

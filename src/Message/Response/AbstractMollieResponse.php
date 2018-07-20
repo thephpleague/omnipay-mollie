@@ -2,7 +2,9 @@
 
 namespace Omnipay\Mollie\Message\Response;
 
-class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
+use Omnipay\Common\Message\AbstractResponse;
+
+class AbstractMollieResponse extends AbstractResponse
 {
     /**
      * @return bool

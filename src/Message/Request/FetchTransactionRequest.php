@@ -5,14 +5,13 @@ namespace Omnipay\Mollie\Message\Request;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Mollie\Message\Response\FetchTransactionResponse;
-use Omnipay\Mollie\Message\Response\FetchTransactionResponse as FetchTransactionMollieResponse;
 
 /**
  * Retrieve a single payment object by its payment token.
  *
  * @see https://docs.mollie.com/reference/v2/payments-api/get-payment
  *
- * @method FetchTransactionMollieResponse send()
+ * @method FetchTransactionResponse send()
  */
 class FetchTransactionRequest extends AbstractMollieRequest
 {

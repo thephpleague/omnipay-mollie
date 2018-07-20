@@ -5,7 +5,7 @@ namespace Omnipay\Mollie\Message\Response;
 /**
  * @see https://docs.mollie.com/reference/v2/customers-api/update-customer
  */
-class UpdateCustomerResponse extends AbstractResponse
+class UpdateCustomerResponse extends AbstractMollieResponse
 {
     /**
      * @return string|null

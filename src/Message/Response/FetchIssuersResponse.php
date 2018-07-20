@@ -3,18 +3,17 @@
 namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Issuer;
-use Omnipay\Common\Issuer as CommonIssuer;
 use Omnipay\Common\Message\FetchIssuersResponseInterface;
 
 /**
  * @see https://docs.mollie.com/reference/v2/methods-api/get-method
  */
-class FetchIssuersResponse extends AbstractResponse implements FetchIssuersResponseInterface
+class FetchIssuersResponse extends AbstractMollieResponse implements FetchIssuersResponseInterface
 {
     /**
      * Return available issuers as an associative array.
      *
-     * @return CommonIssuer[]
+     * @return Issuer[]
      */
     public function getIssuers()
     {
