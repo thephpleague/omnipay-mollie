@@ -167,7 +167,10 @@ class PurchaseRequestTest extends TestCase
         $this->assertTrue($response->isOpen());
         $this->assertFalse($response->isPaid());
         $this->assertNull($response->getCode());
-        $this->assertNull($response->getMessage());
+        $this->assertJsonStringEqualsJsonString(
+            '{"resource":"payment","id":"tr_7UhSN1zuXS","mode":"test","createdAt":"2018-03-20T09:13:37+00:00","amount":{"value":"10.00","currency":"EUR"},"description":"My first payment","method":null,"metadata":{"order_id":"12345"},"status":"open","isCancelable":false,"expiresAt":"2018-03-20T09:28:37+00:00","details":null,"profileId":"pfl_QkEhN94Ba","sequenceType":"oneoff","redirectUrl":"https:\/\/webshop.example.org\/order\/12345\/","webhookUrl":"https:\/\/webshop.example.org\/payments\/webhook\/","_links":{"self":{"href":"https:\/\/api.mollie.com\/v2\/payments\/tr_7UhSN1zuXS","type":"application\/json"},"checkout":{"href":"https:\/\/www.mollie.com\/payscreen\/select-method\/7UhSN1zuXS","type":"text\/html"},"documentation":{"href":"https:\/\/docs.mollie.com\/reference\/v2\/payments-api\/create-payment","type":"text\/html"}}}',
+            $response->getMessage()
+        );
     }
 
     public function testIssuerFailure()

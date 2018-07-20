@@ -97,7 +97,9 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
 
     public function isPartialRefunded()
     {
-        return $this->isRefunded() && isset($this->data['amountRemaining']) && $this->data['amountRemaining']['value'] > 0;
+        return $this->isRefunded()
+            && isset($this->data['amountRemaining'])
+            && $this->data['amountRemaining']['value'] > 0;
     }
 
     /**

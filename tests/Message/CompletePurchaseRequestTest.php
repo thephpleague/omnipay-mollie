@@ -2,7 +2,6 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Response\CompletePurchaseResponse;
 use Omnipay\Tests\TestCase;
@@ -29,7 +28,7 @@ class CompletePurchaseRequestTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidRequestException
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      * @expectedExceptionMessage The transactionReference parameter is required
      */
     public function testGetDataWithoutIDParameter()
@@ -42,7 +41,7 @@ class CompletePurchaseRequestTest extends TestCase
     }
 
     /**
-     * @throws InvalidRequestException
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function testGetData()
     {

@@ -6,7 +6,7 @@ class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
 {
     public function isSuccessful()
     {
-        if(isset($this->data['status']) && isset($this->data['detail'])) {
+        if (isset($this->data['status']) && isset($this->data['detail'])) {
             return $this->data['status'] >= 200 && $this->data['status'] < 300;
         }
 

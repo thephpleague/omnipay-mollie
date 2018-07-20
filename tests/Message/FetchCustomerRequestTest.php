@@ -50,7 +50,10 @@ class FetchCustomerRequestTest extends TestCase
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getMessage());
+        $this->assertJsonStringEqualsJsonString(
+            '{"resource":"customer","id":"cst_bSNBBJBzdG","mode":"test","name":"John Doe","email":"john@doe.com","locale":"nl_NL","metadata":null,"createdAt":"2018-07-19T12:58:47+00:00","_links":{"self":{"href":"https:\/\/api.mollie.com\/v2\/customers\/cst_6HUkmjwzBB","type":"application\/hal+json"},"documentation":{"href":"https:\/\/docs.mollie.com\/reference\/v2\/customers-api\/get-customer","type":"text\/html"}}}',
+            $response->getMessage()
+        );
     }
 
     public function testSendFailure()

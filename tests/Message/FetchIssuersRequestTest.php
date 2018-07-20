@@ -72,7 +72,7 @@ class FetchIssuersRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('{"status":401,"title":"Unauthorized Request","detail":"Missing authentication, or failed to authenticate","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/authentication","type":"text\/html"}}}', $response->getMessage());
-        $this->assertNull($response->getIssuers());
+        $this->assertEmpty($response->getIssuers());
     }
 
 }
