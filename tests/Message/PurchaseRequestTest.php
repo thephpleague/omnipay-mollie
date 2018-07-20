@@ -1,6 +1,7 @@
 <?php
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Message\Request\PurchaseRequest;
 use Omnipay\Mollie\Message\Response\PurchaseResponse;
@@ -133,7 +134,7 @@ class PurchaseRequestTest extends TestCase
         $response = $this->request->send();
 
         $this->assertEqualRequest(
-            new \GuzzleHttp\Psr7\Request(
+            new Request(
                 "POST",
                 "https://api.mollie.com/v2/payments",
                 [],
@@ -179,7 +180,7 @@ class PurchaseRequestTest extends TestCase
         $response = $this->request->send();
 
         $this->assertEqualRequest(
-            new \GuzzleHttp\Psr7\Request(
+            new Request(
                 "POST",
                 "https://api.mollie.com/v2/payments"
             ),

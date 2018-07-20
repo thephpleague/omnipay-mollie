@@ -147,15 +147,4 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest(FetchCustomerRequest::class, $parameters);
     }
-
-    public function __call($name, $arguments)
-    {
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface authorize(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface capture(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface void(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface createCard(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = array())
-    }
 }

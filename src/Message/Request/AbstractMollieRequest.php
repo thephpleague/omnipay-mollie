@@ -69,9 +69,9 @@ abstract class AbstractMollieRequest extends AbstractRequest
         $response = $this->httpClient->request(
             $method,
             $this->baseUrl . $this->apiVersion . $endpoint,
-            array(
+            [
                 'Authorization' => 'Bearer ' . $this->getApiKey()
-            ),
+            ],
             json_encode($data)
         );
 

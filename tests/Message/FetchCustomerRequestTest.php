@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
 use Omnipay\Mollie\Message\Response\FetchCustomerResponse;
@@ -44,7 +45,7 @@ class FetchCustomerRequestTest extends TestCase
         /** @var FetchCustomerResponse $response */
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
@@ -63,7 +64,7 @@ class FetchCustomerRequestTest extends TestCase
         /** @var FetchCustomerResponse $response */
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());

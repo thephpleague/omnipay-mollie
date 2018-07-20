@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\PaymentMethod;
 use Omnipay\Mollie\Message\Request\FetchPaymentMethodsRequest;
@@ -40,7 +41,7 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $this->setMockHttpResponse('FetchPaymentMethodsSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/methods"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(FetchPaymentMethodsResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
@@ -59,7 +60,7 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $this->setMockHttpResponse('FetchPaymentMethodsFailure.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/methods"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/methods"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(FetchPaymentMethodsResponse::class, $response);
         $this->assertFalse($response->isSuccessful());

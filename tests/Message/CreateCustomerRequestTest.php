@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
 use Omnipay\Mollie\Message\Response\CreateCustomerResponse;
@@ -57,8 +58,8 @@ class CreateCustomerRequestTest extends TestCase
         $response = $this->request->send();
 
         $this->assertEqualRequest(
-            new \GuzzleHttp\Psr7\Request(
-                "GET",
+            new Request(
+                "POST",
                 "https://api.mollie.com/v2/customers",
                 [],
                 '{  
@@ -86,7 +87,7 @@ class CreateCustomerRequestTest extends TestCase
         $this->setMockHttpResponse('CreateCustomerFailure.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/customers"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("POST", "https://api.mollie.com/v2/customers"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(CreateCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());

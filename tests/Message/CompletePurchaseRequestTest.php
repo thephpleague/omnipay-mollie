@@ -2,6 +2,7 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Response\CompletePurchaseResponse;
 use Omnipay\Tests\TestCase;
@@ -56,7 +57,7 @@ class CompletePurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(CompletePurchaseResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
@@ -71,7 +72,7 @@ class CompletePurchaseRequestTest extends TestCase
         $this->setMockHttpResponse('CompletePurchaseExpired.txt');
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new \GuzzleHttp\Psr7\Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/payments/tr_Qzin4iTWrU"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(CompletePurchaseResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
