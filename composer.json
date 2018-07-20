@@ -38,7 +38,10 @@
     "require-dev": {
         "omnipay/tests": "^3",
         "squizlabs/php_codesniffer": "^3",
-        "phpro/grumphp": "^0.14"
+        "phpro/grumphp": "^0.14",
+        "phpmd/phpmd": "@stable",
+        "overtrue/phplint": "@stable",
+        "jakub-onderka/php-parallel-lint": "@stable"
     },
     "extra": {
         "branch-alias": {
