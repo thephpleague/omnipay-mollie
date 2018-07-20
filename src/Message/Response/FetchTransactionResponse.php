@@ -103,7 +103,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
     }
 
     /**
-     * @return string:null
+     * @return string|null
      */
     public function getTransactionReference()
     {

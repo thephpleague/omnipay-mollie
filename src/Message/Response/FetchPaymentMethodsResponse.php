@@ -15,15 +15,15 @@ class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPayme
      */
     public function getPaymentMethods()
     {
-        if (isset($this->data['_embedded']["methods"])) {
-            $paymentMethods = [];
-            foreach ($this->data['_embedded']["methods"] as $method) {
-                $paymentMethods[] = new PaymentMethod($method['id'], $method['description']);
-            }
-
-            return $paymentMethods;
+        if (isset($this->data['_embedded']["methods"]) === false) {
+            return [];
         }
 
-        return [];
+        $paymentMethods = [];
+        foreach ($this->data['_embedded']["methods"] as $method) {
+            $paymentMethods[] = new PaymentMethod($method['id'], $method['description']);
+        }
+
+        return $paymentMethods;
     }
 }

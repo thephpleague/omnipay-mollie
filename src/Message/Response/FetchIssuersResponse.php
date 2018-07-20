@@ -15,15 +15,15 @@ class FetchIssuersResponse extends AbstractResponse implements FetchIssuersRespo
      */
     public function getIssuers()
     {
-        if (isset($this->data['issuers'])) {
-            $issuers = [];
-            foreach ($this->data['issuers'] as $issuer) {
-                $issuers[] = new Issuer($issuer['id'], $issuer['name'], $this->data['id']);
-            }
-
-            return $issuers;
+        if (isset($this->data['issuers']) === false) {
+            return [];
         }
 
-        return [];
+        $issuers = [];
+        foreach ($this->data['issuers'] as $issuer) {
+            $issuers[] = new Issuer($issuer['id'], $issuer['name'], $this->data['id']);
+        }
+
+        return $issuers;
     }
 }
