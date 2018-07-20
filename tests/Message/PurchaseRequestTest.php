@@ -1,8 +1,9 @@
 <?php
 namespace Omnipay\Mollie\Test\Message;
 
-use Omnipay\Mollie\Message\PurchaseRequest;
-use Omnipay\Mollie\Message\PurchaseResponse;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\PurchaseRequest;
+use Omnipay\Mollie\Message\Response\PurchaseResponse;
 use Omnipay\Tests\TestCase;
 
 class PurchaseRequestTest extends TestCase
@@ -25,12 +26,15 @@ class PurchaseRequestTest extends TestCase
             'description'  => 'Description',
             'returnUrl'    => 'https://www.example.com/return',
             'method'       => 'ideal',
-            'metadata'     => 'meta',
+            'metadata' => ['meta'],
             'locale'       => 'fr_FR',
             'billingEmail' => 'billing-email@example.com',
         ));
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetData()
     {
         $this->request->initialize([
@@ -40,7 +44,7 @@ class PurchaseRequestTest extends TestCase
             'description' => 'Description',
             'returnUrl' => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
-            'metadata' => 'meta',
+            'metadata' => ['meta'],
             'issuer' => 'my bank',
             'locale' => 'fr_FR',
             'billingEmail' => 'billing-email@example.com',
@@ -52,13 +56,16 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
-        $this->assertSame('meta', $data['metadata']);
+        $this->assertSame(['meta'], $data['metadata']);
         $this->assertSame('my bank', $data['issuer']);
         $this->assertSame('fr_FR', $data['locale']);
         $this->assertSame('billing-email@example.com', $data['billingEmail']);
         $this->assertCount(8, $data);
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetDataWithWebhook()
     {
         $this->request->initialize(array(
@@ -68,7 +75,7 @@ class PurchaseRequestTest extends TestCase
             'description'   => 'Description',
             'returnUrl'     => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
-            'metadata'      => 'meta',
+            'metadata' => ['meta'],
             'issuer'        => 'my bank',
             'locale'        => 'fr_FR',
             'billingEmail'  => 'billing-email@example.com',
@@ -81,7 +88,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
-        $this->assertSame('meta', $data['metadata']);
+        $this->assertSame(['meta'], $data['metadata']);
         $this->assertSame('my bank', $data['issuer']);
         $this->assertSame('fr_FR', $data['locale']);
         $this->assertSame('billing-email@example.com', $data['billingEmail']);
@@ -89,6 +96,9 @@ class PurchaseRequestTest extends TestCase
         $this->assertCount(9, $data);
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testNoIssuer()
     {
         $this->request->initialize(array(
@@ -98,7 +108,7 @@ class PurchaseRequestTest extends TestCase
             'description'   => 'Description',
             'returnUrl'     => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
-            'metadata'      => 'meta',
+            'metadata' => ['meta'],
             'locale'        => 'fr_FR',
             'billingEmail'  => 'billing-email@example.com',
             'notifyUrl'     => 'https://www.example.com/hook',
@@ -110,7 +120,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('Description', $data['description']);
         $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
         $this->assertSame('ideal', $data['method']);
-        $this->assertSame('meta', $data['metadata']);
+        $this->assertSame(['meta'], $data['metadata']);
         $this->assertSame('fr_FR', $data['locale']);
         $this->assertSame('billing-email@example.com', $data['billingEmail']);
         $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
@@ -135,7 +145,9 @@ class PurchaseRequestTest extends TestCase
                    "description":"Description",
                    "redirectUrl":"https:\/\/www.example.com\/return",
                    "method":null,
-                   "metadata":"meta",
+                   "metadata":[
+                        "meta"
+                    ],
                    "issuer":"my bank",
                    "locale":"fr_FR",
                    "billingEmail":"billing-email@example.com"

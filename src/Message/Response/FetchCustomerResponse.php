@@ -1,16 +1,18 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
-class CreateCustomerResponse extends AbstractResponse
+class FetchCustomerResponse extends AbstractResponse
 {
     /**
-     * @return string
+     * @return string|null
      */
     public function getCustomerReference()
     {
         if (isset($this->data['id'])) {
             return $this->data['id'];
         }
+
+        return null;
     }
 }

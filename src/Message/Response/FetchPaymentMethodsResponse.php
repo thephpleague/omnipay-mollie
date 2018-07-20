@@ -1,16 +1,17 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Message\FetchPaymentMethodsResponseInterface;
 use Omnipay\Common\PaymentMethod;
+use Omnipay\Common\PaymentMethod as CommonPaymentMethod;
 
 class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPaymentMethodsResponseInterface
 {
     /**
      * Return available paymentmethods as an associative array.
      *
-     * @return \Omnipay\Common\PaymentMethod[]
+     * @return CommonPaymentMethod[]
      */
     public function getPaymentMethods()
     {
@@ -22,5 +23,7 @@ class FetchPaymentMethodsResponse extends AbstractResponse implements FetchPayme
 
             return $paymentMethods;
         }
+
+        return [];
     }
 }

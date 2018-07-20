@@ -1,8 +1,9 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Issuer;
+use Omnipay\Common\Issuer as CommonIssuer;
 use Omnipay\Common\Message\FetchIssuersResponseInterface;
 
 class FetchIssuersResponse extends AbstractResponse implements FetchIssuersResponseInterface
@@ -10,7 +11,7 @@ class FetchIssuersResponse extends AbstractResponse implements FetchIssuersRespo
     /**
      * Return available issuers as an associative array.
      *
-     * @return \Omnipay\Common\Issuer[]
+     * @return CommonIssuer[]
      */
     public function getIssuers()
     {
@@ -22,5 +23,7 @@ class FetchIssuersResponse extends AbstractResponse implements FetchIssuersRespo
 
             return $issuers;
         }
+
+        return [];
     }
 }

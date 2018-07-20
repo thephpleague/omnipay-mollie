@@ -2,8 +2,9 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
-use Omnipay\Mollie\Message\CreateCustomerRequest;
-use Omnipay\Mollie\Message\CreateCustomerResponse;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
+use Omnipay\Mollie\Message\Response\CreateCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class CreateCustomerRequestTest extends TestCase
@@ -29,6 +30,9 @@ class CreateCustomerRequestTest extends TestCase
         ));
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testData()
     {
         $this->request->initialize(array(

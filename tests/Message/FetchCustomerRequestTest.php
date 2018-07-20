@@ -2,8 +2,9 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
-use Omnipay\Mollie\Message\FetchCustomerRequest;
-use Omnipay\Mollie\Message\FetchCustomerResponse;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
+use Omnipay\Mollie\Message\Response\FetchCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchCustomerRequestTest extends TestCase
@@ -26,6 +27,9 @@ class FetchCustomerRequestTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetData()
     {
         $data = $this->request->getData();

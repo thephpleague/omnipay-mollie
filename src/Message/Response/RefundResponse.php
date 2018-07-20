@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
 class RefundResponse extends AbstractResponse
 {

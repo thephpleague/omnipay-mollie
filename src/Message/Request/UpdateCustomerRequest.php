@@ -1,14 +1,37 @@
 <?php
 
-/**
- * Mollie Create Customer Request.
- *
- * URL: https://www.mollie.com/en/docs/reference/customers/create
- */
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Request;
 
-class CreateCustomerRequest extends AbstractRequest
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Mollie\Message\Response\UpdateCustomerResponse;
+
+/**
+ * Mollie Update Customer Request.
+ *
+ * URL: https://www.mollie.com/en/docs/reference/customers/update
+ */
+class UpdateCustomerRequest extends AbstractMollieRequest
 {
+    /**
+     * Get the customer's reference id.
+     *
+     * @return string
+     */
+    public function getCustomerReference()
+    {
+        return $this->getParameter('customerReference');
+    }
+
+    /**
+     * @param string $value
+     * @return AbstractRequest
+     */
+    public function setCustomerReference($value)
+    {
+        return $this->setParameter('customerReference', $value);
+    }
+
     /**
      * Get the customer's email address.
      *
@@ -20,8 +43,8 @@ class CreateCustomerRequest extends AbstractRequest
     }
 
     /**
-     * @param $value
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @param string $value
+     * @return AbstractRequest
      */
     public function setEmail($value)
     {
@@ -43,8 +66,8 @@ class CreateCustomerRequest extends AbstractRequest
     /**
      * Optional value.
      *
-     * @param $value
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @param string $value
+     * @return AbstractRequest
      */
     public function setLocale($value)
     {
@@ -54,7 +77,7 @@ class CreateCustomerRequest extends AbstractRequest
     /**
      * Get the customer's metadata.
      *
-     * @return string
+     * @return array
      */
     public function getMetadata()
     {
@@ -64,8 +87,8 @@ class CreateCustomerRequest extends AbstractRequest
     /**
      * Optional value.
      *
-     * @param $value
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @param array $value
+     * @return AbstractRequest
      */
     public function setMetadata($value)
     {
@@ -74,15 +97,15 @@ class CreateCustomerRequest extends AbstractRequest
 
     /**
      * @return array
+     * @throws InvalidRequestException
      */
     public function getData()
     {
-        $this->validate('apiKey', 'description', 'email');
+        $this->validate('apiKey', 'customerReference');
 
         $data                = [];
         $data['name']        = $this->getDescription();
         $data['email']       = $this->getEmail();
-        $data['metadata']    = $this->getMetadata();
         $data['locale']      = $this->getLocale();
 
         if ($this->getMetadata()) {
@@ -93,13 +116,13 @@ class CreateCustomerRequest extends AbstractRequest
     }
 
     /**
-     * @param mixed $data
-     * @return CreateCustomerResponse
+     * @param array $data
+     * @return UpdateCustomerResponse
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest('POST', '/customers', $data);
+        $response = $this->sendRequest(self::POST, '/customers/' . $this->getCustomerReference(), $data);
 
-        return $this->response = new CreateCustomerResponse($this, $response);
+        return $this->response = new UpdateCustomerResponse($this, $response);
     }
 }

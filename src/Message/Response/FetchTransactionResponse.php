@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
@@ -30,6 +30,8 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
         if ($this->isRedirect()) {
             return $this->data['_links']['checkout']['href'];
         }
+
+        return null;
     }
 
     /**
@@ -99,52 +101,62 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
     }
 
     /**
-     * @return mixed
+     * @return string:null
      */
     public function getTransactionReference()
     {
         if (isset($this->data['id'])) {
             return $this->data['id'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getTransactionId()
     {
         if (isset($this->data['metadata']['transactionId'])) {
             return $this->data['metadata']['transactionId'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getStatus()
     {
         if (isset($this->data['status'])) {
             return $this->data['status'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getAmount()
     {
         if (isset($this->data['amount'])) {
             return $this->data['amount'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
     public function getMetadata()
     {
         if (isset($this->data['metadata'])) {
             return $this->data['metadata'];
         }
+
+        return null;
     }
 }

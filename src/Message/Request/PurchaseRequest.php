@@ -1,43 +1,73 @@
 <?php
-namespace Omnipay\Mollie\Message;
+
+namespace Omnipay\Mollie\Message\Request;
+
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Mollie\Message\Response\PurchaseResponse;
 
 /**
  * Mollie Purchase Request
  *
- * @method \Omnipay\Mollie\Message\PurchaseResponse send()
+ * @method PurchaseResponse send()
  */
-class PurchaseRequest extends AbstractRequest
+class PurchaseRequest extends AbstractMollieRequest
 {
+    /**
+     * @return array
+     */
     public function getMetadata()
     {
         return $this->getParameter('metadata');
     }
 
-    public function setMetadata($value)
+    /**
+     * @param array $value
+     * @return $this
+     */
+    public function setMetadata(array $value)
     {
         return $this->setParameter('metadata', $value);
     }
 
+    /**
+     * @return string
+     */
     public function getLocale()
     {
         return $this->getParameter('locale');
     }
 
+    /**
+     * @param string $value
+     * @return $this
+     */
     public function setLocale($value)
     {
         return $this->setParameter('locale', $value);
     }
 
+    /**
+     * @return string
+     */
     public function getBillingEmail()
     {
         return $this->getParameter('billingEmail');
     }
 
+    /**
+     * @param string $value
+     * @return $this
+     */
     public function setBillingEmail($value)
     {
         return $this->setParameter('billingEmail', $value);
     }
 
+    /**
+     * @return array
+     * @throws InvalidRequestException
+     */
     public function getData()
     {
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
@@ -76,9 +106,13 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
+    /**
+     * @param array $data
+     * @return ResponseInterface|PurchaseResponse
+     */
     public function sendData($data)
     {
-        $response = $this->sendRequest('POST', '/payments', $data);
+        $response = $this->sendRequest(self::POST, '/payments', $data);
 
         return $this->response = new PurchaseResponse($this, $response);
     }

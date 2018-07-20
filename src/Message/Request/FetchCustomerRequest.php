@@ -1,13 +1,16 @@
 <?php
 
+namespace Omnipay\Mollie\Message\Request;
+
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Mollie\Message\Response\FetchCustomerResponse;
+
 /**
  * Mollie Fetch Customer Request.
  *
  * URL: https://www.mollie.com/en/docs/reference/customers/get
  */
-namespace Omnipay\Mollie\Message;
-
-class FetchCustomerRequest extends AbstractRequest
+class FetchCustomerRequest extends AbstractMollieRequest
 {
     /**
      * @return string
@@ -18,8 +21,8 @@ class FetchCustomerRequest extends AbstractRequest
     }
 
     /**
-     * @param $value
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @param string $value
+     * @return AbstractRequest
      */
     public function setCustomerReference($value)
     {
@@ -28,6 +31,7 @@ class FetchCustomerRequest extends AbstractRequest
 
     /**
      * @return array
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
     {
@@ -37,12 +41,12 @@ class FetchCustomerRequest extends AbstractRequest
     }
 
     /**
-     * @param mixed $data
+     * @param array $data
      * @return FetchCustomerResponse
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest('GET', '/customers/' . $this->getCustomerReference(), $data);
+        $response = $this->sendRequest(self::GET, '/customers/' . $this->getCustomerReference(), $data);
 
         return $this->response = new FetchCustomerResponse($this, $response);
     }
@@ -52,6 +56,6 @@ class FetchCustomerRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->baseUrl.'/customers';
+        return $this->baseUrl . '/customers';
     }
 }

@@ -2,16 +2,17 @@
 
 namespace Omnipay\Mollie\Test;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Gateway;
-use Omnipay\Mollie\Message\CompletePurchaseRequest;
-use Omnipay\Mollie\Message\CreateCustomerRequest;
-use Omnipay\Mollie\Message\FetchCustomerRequest;
-use Omnipay\Mollie\Message\FetchIssuersRequest;
-use Omnipay\Mollie\Message\FetchPaymentMethodsRequest;
-use Omnipay\Mollie\Message\FetchTransactionRequest;
-use Omnipay\Mollie\Message\PurchaseRequest;
-use Omnipay\Mollie\Message\RefundRequest;
-use Omnipay\Mollie\Message\UpdateCustomerRequest;
+use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
+use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
+use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
+use Omnipay\Mollie\Message\Request\FetchIssuersRequest;
+use Omnipay\Mollie\Message\Request\FetchPaymentMethodsRequest;
+use Omnipay\Mollie\Message\Request\FetchTransactionRequest;
+use Omnipay\Mollie\Message\Request\PurchaseRequest;
+use Omnipay\Mollie\Message\Request\RefundRequest;
+use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -42,6 +43,9 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf(FetchPaymentMethodsRequest::class, $request);
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testPurchase()
     {
         $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'EUR'));
@@ -51,6 +55,9 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('EUR', $request->getCurrency());
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testPurchaseReturn()
     {
         $request = $this->gateway->completePurchase(array('amount' => '10.00', 'currency' => 'EUR'));

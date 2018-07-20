@@ -3,20 +3,29 @@
 namespace Omnipay\Mollie;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Mollie\Message\CompletePurchaseRequest;
-use Omnipay\Mollie\Message\CreateCustomerRequest;
-use Omnipay\Mollie\Message\FetchCustomerRequest;
-use Omnipay\Mollie\Message\FetchIssuersRequest;
-use Omnipay\Mollie\Message\FetchPaymentMethodsRequest;
-use Omnipay\Mollie\Message\FetchTransactionRequest;
-use Omnipay\Mollie\Message\PurchaseRequest;
-use Omnipay\Mollie\Message\RefundRequest;
-use Omnipay\Mollie\Message\UpdateCustomerRequest;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
+use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
+use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
+use Omnipay\Mollie\Message\Request\FetchIssuersRequest;
+use Omnipay\Mollie\Message\Request\FetchPaymentMethodsRequest;
+use Omnipay\Mollie\Message\Request\FetchTransactionRequest;
+use Omnipay\Mollie\Message\Request\PurchaseRequest;
+use Omnipay\Mollie\Message\Request\RefundRequest;
+use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
 
 /**
  * Mollie (iDeal) Gateway
  *
  * @link https://www.mollie.com/en/developers
+ * @method RequestInterface authorize(array $options = array())
+ * @method RequestInterface completeAuthorize(array $options = array())
+ * @method RequestInterface capture(array $options = array())
+ * @method RequestInterface void(array $options = array())
+ * @method RequestInterface createCard(array $options = array())
+ * @method RequestInterface updateCard(array $options = array())
+ * @method RequestInterface deleteCard(array $options = array())
  */
 class Gateway extends AbstractGateway
 {
@@ -57,7 +66,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return FetchIssuersRequest
+     * @return AbstractRequest|FetchIssuersRequest
      */
     public function fetchIssuers(array $parameters = [])
     {
@@ -66,7 +75,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return FetchPaymentMethodsRequest
+     * @return AbstractRequest|FetchPaymentMethodsRequest
      */
     public function fetchPaymentMethods(array $parameters = [])
     {
@@ -75,7 +84,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return FetchTransactionRequest
+     * @return AbstractRequest|FetchTransactionRequest
      */
     public function fetchTransaction(array $parameters = [])
     {
@@ -84,7 +93,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return PurchaseRequest
+     * @return AbstractRequest|PurchaseRequest
      */
     public function purchase(array $parameters = [])
     {
@@ -93,7 +102,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return CompletePurchaseRequest
+     * @return AbstractRequest|CompletePurchaseRequest
      */
     public function completePurchase(array $parameters = [])
     {
@@ -102,7 +111,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return RefundRequest
+     * @return AbstractRequest|RefundRequest
      */
     public function refund(array $parameters = [])
     {
@@ -111,7 +120,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return CreateCustomerRequest
+     * @return AbstractRequest
      */
     public function createCustomer(array $parameters = [])
     {
@@ -120,7 +129,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return UpdateCustomerRequest
+     * @return AbstractRequest|UpdateCustomerRequest
      */
     public function updateCustomer(array $parameters = [])
     {
@@ -129,7 +138,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return FetchCustomerRequest
+     * @return AbstractRequest|FetchCustomerRequest
      */
     public function fetchCustomer(array $parameters = [])
     {

@@ -3,9 +3,10 @@
 namespace Omnipay\Mollie\Test\Message;
 
 use GuzzleHttp\Psr7\Request;
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Issuer;
-use Omnipay\Mollie\Message\FetchIssuersRequest;
-use Omnipay\Mollie\Message\FetchIssuersResponse;
+use Omnipay\Mollie\Message\Request\FetchIssuersRequest;
+use Omnipay\Mollie\Message\Response\FetchIssuersResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchIssuersRequestTest extends TestCase
@@ -25,6 +26,9 @@ class FetchIssuersRequestTest extends TestCase
         ));
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetData()
     {
         $data = $this->request->getData();

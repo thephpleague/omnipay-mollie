@@ -1,34 +1,68 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Request;
 
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+use Omnipay\Common\Message\AbstractRequest;
+
+/**
+ * This class holds all the common things for all of Mollie requests.
+ */
+abstract class AbstractMollieRequest extends AbstractRequest
 {
+    const POST = 'POST';
+    const GET = 'GET';
+
+    /**
+     * @var string
+     */
     protected $apiVersion = "v2";
 
+    /**
+     * @var string
+     */
     protected $baseUrl = 'https://api.mollie.com/';
 
+    /**
+     * @return string
+     */
     public function getApiKey()
     {
         return $this->getParameter('apiKey');
     }
 
+    /**
+     * @param string $value
+     * @return $this
+     */
     public function setApiKey($value)
     {
         return $this->setParameter('apiKey', $value);
     }
 
+    /**
+     * @param string $value
+     * @return $this
+     */
     public function setTransactionId($value)
     {
         return $this->setParameter('transactionId', $value);
     }
 
+    /**
+     * @return string
+     */
     public function getTransactionId()
     {
         return $this->getParameter('transactionId');
     }
 
-    protected function sendRequest($method, $endpoint, $data = null)
+    /**
+     * @param string $method
+     * @param string $endpoint
+     * @param array $data
+     * @return array
+     */
+    protected function sendRequest($method, $endpoint, array $data = null)
     {
         $response = $this->httpClient->request(
             $method,

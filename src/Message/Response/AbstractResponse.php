@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
 class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
 {
@@ -15,8 +15,6 @@ class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
 
     public function getMessage()
     {
-        if (isset($this->data['title']) && isset($this->data['detail'])) {
-            return json_encode($this->data);
-        }
+        return json_encode($this->data);
     }
 }

@@ -2,8 +2,9 @@
 
 namespace Omnipay\Mollie\Test\Message;
 
-use Omnipay\Mollie\Message\UpdateCustomerRequest;
-use Omnipay\Mollie\Message\UpdateCustomerResponse;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
+use Omnipay\Mollie\Message\Response\UpdateCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class UpdateCustomerRequestTest extends TestCase
@@ -12,7 +13,7 @@ class UpdateCustomerRequestTest extends TestCase
 
     /**
      *
-     * @var \Omnipay\Mollie\Message\UpdateCustomerRequest
+     * @var UpdateCustomerRequest
      */
     protected $request;
 
@@ -30,6 +31,9 @@ class UpdateCustomerRequestTest extends TestCase
         ));
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testData()
     {
         $this->request->initialize(array(

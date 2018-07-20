@@ -3,8 +3,9 @@
 namespace Omnipay\Mollie\Test\Message;
 
 use GuzzleHttp\Psr7\Request;
-use Omnipay\Mollie\Message\FetchTransactionRequest;
-use Omnipay\Mollie\Message\FetchTransactionResponse;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\FetchTransactionRequest;
+use Omnipay\Mollie\Message\Response\FetchTransactionResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchTransactionRequestTest extends TestCase
@@ -12,7 +13,7 @@ class FetchTransactionRequestTest extends TestCase
     use AssertRequestTrait;
 
     /**
-     * @var \Omnipay\Mollie\Message\FetchTransactionRequest
+     * @var FetchTransactionRequest
      */
     protected $request;
 
@@ -27,6 +28,9 @@ class FetchTransactionRequestTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetData()
     {
         $data = $this->request->getData();
