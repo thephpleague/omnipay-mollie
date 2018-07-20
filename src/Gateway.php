@@ -16,9 +16,12 @@ use Omnipay\Mollie\Message\Request\RefundRequest;
 use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
 
 /**
- * Mollie (iDeal) Gateway
+ * Mollie Gateway provides a wrapper for Mollie API.
+ * Please have a look at links below to have a high-level overview and see the API specification
  *
- * @link https://www.mollie.com/en/developers
+ * @see https://www.mollie.com/en/developers
+ * @see https://docs.mollie.com/index
+ *
  * @method RequestInterface authorize(array $options = array())
  * @method RequestInterface completeAuthorize(array $options = array())
  * @method RequestInterface capture(array $options = array())
