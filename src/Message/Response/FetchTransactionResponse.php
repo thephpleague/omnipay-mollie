@@ -146,7 +146,7 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
      */
     public function getAmount()
     {
-        if (is_array($this->data['amount'])) {
+        if ($this->isSuccessful() && is_array($this->data['amount'])) {
             /**
              * $this->data['amount'] = [
              *      "currency" => "EUR",
@@ -161,7 +161,7 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
 
     public function getCurrency()
     {
-        if (is_array($this->data['amount'])) {
+        if ($this->isSuccessful() && is_array($this->data['amount'])) {
             /**
              * $this->data['amount'] = [
              *      "currency" => "EUR",
