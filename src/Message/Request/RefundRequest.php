@@ -31,7 +31,7 @@ class RefundRequest extends AbstractMollieRequest
             "currency" => $this->getCurrency()
         ];
 
-        if(is_string($this->getParameter('description'))) {
+        if (is_string($this->getParameter('description'))) {
             $data['description'] = $this->getParameter('description');
         }
 
