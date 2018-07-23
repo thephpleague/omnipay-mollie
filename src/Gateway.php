@@ -3,7 +3,6 @@
 namespace Omnipay\Mollie;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
@@ -69,82 +68,109 @@ class Gateway extends AbstractGateway
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|FetchIssuersRequest
+     * @return FetchIssuersRequest
      */
     public function fetchIssuers(array $parameters = [])
     {
-        return $this->createRequest(FetchIssuersRequest::class, $parameters);
+        /** @var FetchIssuersRequest $request */
+        $request = $this->createRequest(FetchIssuersRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|FetchPaymentMethodsRequest
+     * @return FetchPaymentMethodsRequest
      */
     public function fetchPaymentMethods(array $parameters = [])
     {
-        return $this->createRequest(FetchPaymentMethodsRequest::class, $parameters);
+        /** @var FetchPaymentMethodsRequest $request */
+        $request = $this->createRequest(FetchPaymentMethodsRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|FetchTransactionRequest
+     * @return FetchTransactionRequest
      */
     public function fetchTransaction(array $parameters = [])
     {
-        return $this->createRequest(FetchTransactionRequest::class, $parameters);
+        /** @var FetchTransactionRequest $request */
+        $request = $this->createRequest(FetchTransactionRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|PurchaseRequest
+     * @return PurchaseRequest
      */
     public function purchase(array $parameters = [])
     {
-        return $this->createRequest(PurchaseRequest::class, $parameters);
+        /** @var PurchaseRequest $request */
+        $request = $this->createRequest(PurchaseRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|CompletePurchaseRequest
+     * @return CompletePurchaseRequest
      */
     public function completePurchase(array $parameters = [])
     {
-        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
+        /** @var CompletePurchaseRequest $request */
+        $request = $this->createRequest(CompletePurchaseRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|RefundRequest
+     * @return RefundRequest
      */
     public function refund(array $parameters = [])
     {
-        return $this->createRequest(RefundRequest::class, $parameters);
+        /** @var RefundRequest $request */
+        $request = $this->createRequest(RefundRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest
+     * @return CreateCustomerRequest
      */
     public function createCustomer(array $parameters = [])
     {
-        return $this->createRequest(CreateCustomerRequest::class, $parameters);
+        /** @var CreateCustomerRequest $request */
+        $request = $this->createRequest(CreateCustomerRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|UpdateCustomerRequest
+     * @return UpdateCustomerRequest
      */
     public function updateCustomer(array $parameters = [])
     {
-        return $this->createRequest(UpdateCustomerRequest::class, $parameters);
+        /** @var UpdateCustomerRequest $request */
+        $request = $this->createRequest(UpdateCustomerRequest::class, $parameters);
+
+        return $request;
     }
 
     /**
      * @param  array $parameters
-     * @return AbstractRequest|FetchCustomerRequest
+     * @return FetchCustomerRequest
      */
     public function fetchCustomer(array $parameters = [])
     {
-        return $this->createRequest(FetchCustomerRequest::class, $parameters);
+        /** @var FetchCustomerRequest $request */
+        $request = $this->createRequest(FetchCustomerRequest::class, $parameters);
+
+        return $request;
     }
 }
