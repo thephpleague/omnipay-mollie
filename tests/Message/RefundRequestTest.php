@@ -19,12 +19,12 @@ class RefundRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RefundRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(
-            array(
-                'apiKey'               => 'mykey',
-                'transactionReference' => 'tr_WDqYK6vllg'
-            )
-        );
+        $this->request->initialize([
+            'apiKey' => 'mykey',
+            'transactionReference' => 'tr_WDqYK6vllg',
+            'amount' => '12.00',
+            'currency' => 'EUR',
+        ]);
     }
 
     /**
@@ -32,30 +32,29 @@ class RefundRequestTest extends TestCase
      */
     public function testGetData()
     {
-        $this->request->initialize(
-            array(
-                'apiKey'               => 'mykey',
-                'amount'               => '12.00',
-                'transactionReference' => 'tr_WDqYK6vllg'
-            )
-        );
+        $this->request->initialize([
+            'apiKey' => 'mykey',
+            'amount' => '12.00',
+            'currency' => 'EUR',
+            'transactionReference' => 'tr_WDqYK6vllg'
+        ]);
 
         $data = $this->request->getData();
 
-        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame(["value" => "12.00", "currency" => "EUR"], $data['amount']);
         $this->assertCount(1, $data);
     }
 
     /**
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      */
     public function testGetDataWithoutAmount()
     {
         $this->request->initialize(
-            array(
+            [
                 'apiKey'               => 'mykey',
-                'transactionReference' => 'tr_WDqYK6vllg'
-            )
+                'transactionReference' => 'tr_WDqYK6vllg',
+            ]
         );
 
         $data = $this->request->getData();
@@ -70,7 +69,12 @@ class RefundRequestTest extends TestCase
         $response = $this->request->send();
 
         $this->assertEqualRequest(
-            new Request("POST", "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds", [], '{}'),
+            new Request(
+                "POST",
+                "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds",
+                [],
+                '{"amount":{"value":"12.00","currency":"EUR"}}'
+            ),
             $this->getMockClient()->getLastRequest()
         );
 
@@ -89,7 +93,7 @@ class RefundRequestTest extends TestCase
         $response = $this->request->send();
 
         $this->assertEqualRequest(
-            new Request("POST", "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds", [], '{}'),
+            new Request("POST", "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds", [], ''),
             $this->getMockClient()->getLastRequest()
         );
 
@@ -105,7 +109,12 @@ class RefundRequestTest extends TestCase
         $response = $this->request->send();
 
         $this->assertEqualRequest(
-            new Request("POST", "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds", [], '{}'),
+            new Request(
+                "POST",
+                "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/refunds",
+                [],
+                '{"amount":{"value":"12.00","currency":"EUR"}}'
+            ),
             $this->getMockClient()->getLastRequest()
         );
 

@@ -64,7 +64,7 @@ class FetchTransactionRequestTest extends TestCase
         $this->assertFalse($response->isPartialRefunded());
         $this->assertSame("paid", $response->getStatus());
         $this->assertSame('tr_WDqYK6vllg', $response->getTransactionReference());
-        $this->assertSame(["value" => "10.00", "currency" => "EUR"], $response->getAmount());
+        $this->assertSame("10.00", $response->getAmount());
     }
 
     public function testSendExpired()

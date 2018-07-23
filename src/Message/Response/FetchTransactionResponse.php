@@ -146,8 +146,29 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
      */
     public function getAmount()
     {
-        if (isset($this->data['amount'])) {
-            return $this->data['amount'];
+        if (is_array($this->data['amount'])) {
+            /**
+             * $this->data['amount'] = [
+             *      "currency" => "EUR",
+             *      "value" => "50",
+             * ]
+             */
+            return $this->data['amount']['value'];
+        }
+
+        return null;
+    }
+
+    public function getCurrency()
+    {
+        if (is_array($this->data['amount'])) {
+            /**
+             * $this->data['amount'] = [
+             *      "currency" => "EUR",
+             *      "value" => "50",
+             * ]
+             */
+            return $this->data['amount']['currency'];
         }
 
         return null;

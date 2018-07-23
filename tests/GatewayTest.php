@@ -72,16 +72,6 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->refund(
             array(
                 'apiKey'               => 'key',
-                'transactionReference' => 'tr_Qzin4iTWrU'
-            )
-        );
-
-        $this->assertInstanceOf(RefundRequest::class, $request);
-        $data = $request->getData();
-        $this->assertFalse(array_key_exists('amount', $data));
-        $request = $this->gateway->refund(
-            array(
-                'apiKey'               => 'key',
                 'transactionReference' => 'tr_Qzin4iTWrU',
                 'amount'               => '10.00',
                 'currency'             => 'EUR'
@@ -90,7 +80,29 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf(RefundRequest::class, $request);
         $data = $request->getData();
-        $this->assertSame('10.00', $data['amount']);
+        $this->assertSame(
+            [
+                'value' => '10.00',
+                'currency' => 'EUR'
+            ],
+            $data['amount']
+        );
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testThatRefundDoesntWorkWithoutAmount()
+    {
+        $request = $this->gateway->refund(
+            array(
+                'apiKey'               => 'key',
+                'transactionReference' => 'tr_Qzin4iTWrU'
+            )
+        );
+
+        $this->assertInstanceOf(RefundRequest::class, $request);
+        $request->getData();
     }
 
     public function testFetchTransaction()

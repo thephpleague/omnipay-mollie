@@ -3,6 +3,7 @@
 
 namespace Omnipay\Mollie\Message\Request;
 
+use function is_string;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Mollie\Message\Response\RefundResponse;
@@ -21,11 +22,17 @@ class RefundRequest extends AbstractMollieRequest
      */
     public function getData()
     {
-        $this->validate('apiKey', 'transactionReference');
+        $this->validate('apiKey', 'transactionReference', 'amount', 'currency');
 
         $data = [];
-        if ($this->getAmountInteger() > 0) {
-            $data['amount'] = $this->getAmount();
+
+        $data['amount'] = [
+            "value" => $this->getAmount(),
+            "currency" => $this->getCurrency()
+        ];
+
+        if(is_string($this->getParameter('description'))) {
+            $data['description'] = $this->getParameter('description');
         }
 
         return $data;
