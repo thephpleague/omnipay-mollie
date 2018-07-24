@@ -27,6 +27,40 @@ The following gateways are provided by this package:
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
 
+### Basic purchase example
+
+```php
+$gateway = \Omnipay\Omnipay::create('Mollie');  
+$gateway->setApiKey('test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM');
+
+$response = $gateway->purchase(
+    [
+        "amount" => "10.00",
+        "currency" => "EUR",
+        "description" => "My first Payment",
+        "returnUrl" => "https://webshop.example.org/mollie-return.php"
+    ]
+)->send();
+
+// Process response
+if ($response->isSuccessful()) {
+
+    // Payment was successful
+    print_r($response);
+
+} elseif ($response->isRedirect()) {
+
+    // Redirect to offsite payment gateway
+    $response->redirect();
+
+} else {
+
+    // Payment failed
+    echo $response->getMessage();
+}
+```
+
+
 ## Support
 
 If you are having general issues with Omnipay, we suggest posting on

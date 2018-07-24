@@ -33,7 +33,7 @@
         "psr-4": { "Omnipay\\Mollie\\Test\\": "tests/" }
     },
     "require": {
-        "omnipay/common": "3.0.2"
+        "omnipay/common": "^3.0.1"
     },
     "require-dev": {
         "omnipay/tests": "^3.1",
