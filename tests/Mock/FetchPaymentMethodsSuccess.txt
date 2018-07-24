@@ -1,67 +1,200 @@
 HTTP/1.1 200 OK
-Server: nginx/1.4.4
-Date: Tue, 18 Mar 2014 20:44:01 GMT
-Content-Type: application/json; charset=utf-8
-Connection: keep-alive
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
-Access-Control-Max-Age: 300
-Cache-Control: no-cache, no-store
-Strict-Transport-Security: max-age=31556926; includeSubDomains
-X-Whom: dc1-web-1
+Content-Type: application/hal+json; charset=utf-8
 
 {
-  "totalCount":4,
-  "offset":0,
-  "count":4,
-  "data":[
-    {
-      "id":"ideal",
-      "description":"iDEAL",
-      "amount":{
-        "minimum":"0.43",
-        "maximum":"50000.00"
+  "_embedded": {
+    "methods": [
+      {
+        "resource": "method",
+        "id": "ideal",
+        "description": "iDEAL",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/ideal.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/ideal%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/ideal",
+            "type": "application/hal+json"
+          }
+        }
       },
-      "image":{
-        "normal":"https://www.mollie.nl/images/payscreen/methods/ideal.png",
-        "bigger":"https://www.mollie.nl/images/payscreen/methods/ideal@2x.png"
+      {
+        "resource": "method",
+        "id": "creditcard",
+        "description": "Credit card",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/creditcard.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/creditcard%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/creditcard",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "paypal",
+        "description": "PayPal",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/paypal.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/paypal%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/paypal",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "bancontact",
+        "description": "Bancontact",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/mistercash.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/mistercash%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/mistercash",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "banktransfer",
+        "description": "Bank transfer",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/banktransfer.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/banktransfer%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/banktransfer",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "sofort",
+        "description": "SOFORT Banking",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/sofort.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/sofort%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/sofort",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "eps",
+        "description": "eps",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/eps.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/eps%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/eps",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "giropay",
+        "description": "Giropay",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/giropay.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/giropay%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/giropay",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "kbc",
+        "description": "KBC/CBC Payment Button",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/kbc.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/kbc%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/kbc",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "belfius",
+        "description": "Belfius Pay Button",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/belfius.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/belfius%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/belfius",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "inghomepay",
+        "description": "ING Home'Pay",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/inghomepay.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/inghomepay%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/inghomepay",
+            "type": "application/hal+json"
+          }
+        }
+      },
+      {
+        "resource": "method",
+        "id": "bitcoin",
+        "description": "Bitcoin",
+        "image": {
+          "size1x": "https://www.mollie.com/images/payscreen/methods/bitcoin.png",
+          "size2x": "https://www.mollie.com/images/payscreen/methods/bitcoin%402x.png"
+        },
+        "_links": {
+          "self": {
+            "href": "https://api.mollie.com/v2/methods/bitcoin",
+            "type": "application/hal+json"
+          }
+        }
       }
+    ]
+  },
+  "count": 12,
+  "_links": {
+    "documentation": {
+      "href": "https://docs.mollie.com/reference/v2/methods-api/list-methods",
+      "type": "text/html"
     },
-    {
-      "id":"creditcard",
-      "description":"Creditcard",
-      "amount":{
-        "minimum":"0.32",
-        "maximum":"10000.00"
-      },
-      "image":{
-        "normal":"https://www.mollie.nl/images/payscreen/methods/creditcard.png",
-        "bigger":"https://www.mollie.nl/images/payscreen/methods/creditcard@2x.png"
-      }
-    },
-    {
-      "id":"mistercash",
-      "description":"Mister Cash",
-      "amount":{
-        "minimum":"0.31",
-        "maximum":"10000.00"
-      },
-      "image":{
-        "normal":"https://www.mollie.nl/images/payscreen/methods/mistercash.png",
-        "bigger":"https://www.mollie.nl/images/payscreen/methods/mistercash@2x.png"
-      }
-    },
-    {
-      "id":"banktransfer",
-      "description":"Bank transfer",
-      "amount":{
-        "minimum":"0.31",
-        "maximum":"50000.00"
-      },
-      "image":{
-        "normal":"https://www.mollie.nl/images/payscreen/methods/banktransfer.png",
-        "bigger":"https://www.mollie.nl/images/payscreen/methods/banktransfer@2x.png"
-      }
+    "self": {
+      "href": "https://api.mollie.nl/v2/methods",
+      "type": "application/hal+json"
     }
-  ]
+  }
 }

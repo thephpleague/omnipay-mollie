@@ -1,14 +1,20 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
+use Omnipay\Mollie\Message\Response\CreateCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class CreateCustomerRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
      *
-     * @var \Omnipay\Mollie\Message\CreateCustomerRequest
+     * @var CreateCustomerRequest
      */
     protected $request;
 
@@ -18,30 +24,28 @@ class CreateCustomerRequestTest extends TestCase
 
         $this->request->initialize(array(
             'apiKey'      => 'mykey',
-            'description' => 'Test Customer',
-            'email'       => 'test123@example.com',
+            'description' => 'John Doe',
+            'email'       => 'john@doe.com',
             'locale'      => 'nl_NL',
             'metadata'    => 'Just some meta data.',
         ));
     }
 
-    public function testEndpoint()
-    {
-        $this->assertSame('https://api.mollie.nl/v1/customers', $this->request->getEndpoint());
-    }
-
+    /**
+     * @throws InvalidRequestException
+     */
     public function testData()
     {
         $this->request->initialize(array(
             'apiKey'      => 'mykey',
-            'description' => 'Test Customer',
-            'email'       => 'test123@example.com',
+            'description' => 'John Doe',
+            'email'       => 'john@doe.com',
             'metadata'    => 'Just some meta data.',
         ));
         $data = $this->request->getData();
 
-        $this->assertSame("Test Customer", $data['name']);
-        $this->assertSame('test123@example.com', $data['email']);
+        $this->assertSame("John Doe", $data['name']);
+        $this->assertSame('john@doe.com', $data['email']);
         $this->assertSame('Just some meta data.', $data['metadata']);
         $this->assertCount(4, $data);
     }
@@ -50,14 +54,32 @@ class CreateCustomerRequestTest extends TestCase
     {
         $this->setMockHttpResponse('CreateCustomerSuccess.txt');
 
-        /** @var \Omnipay\Mollie\Message\CreateCustomerResponse $response */
+        /** @var CreateCustomerResponse $response */
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\CreateCustomerResponse', $response);
+        $this->assertEqualRequest(
+            new Request(
+                "POST",
+                "https://api.mollie.com/v2/customers",
+                [],
+                '{  
+                   "name":"John Doe",
+                   "email":"john@doe.com",
+                   "metadata":"Just some meta data.",
+                   "locale":"nl_NL"
+                }'
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
+
+        $this->assertInstanceOf(CreateCustomerResponse::class, $response);
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getMessage());
+        $this->assertJsonStringEqualsJsonString(
+            '{"resource":"customer","id":"cst_bSNBBJBzdG","mode":"test","name":"John Doe","email":"john@doe.com","locale":"nl_NL","metadata":"Just some meta data.","createdAt":"2018-07-19T12:58:47+00:00","_links":{"self":{"href":"https:\/\/api.mollie.com\/v2\/customers\/cst_6HUkmjwzBB","type":"application\/hal+json"},"documentation":{"href":"https:\/\/docs.mollie.com\/reference\/v2\/customers-api\/create-customer","type":"text\/html"}}}',
+            $response->getMessage()
+        );
     }
 
     public function testSendFailure()
@@ -65,9 +87,12 @@ class CreateCustomerRequestTest extends TestCase
         $this->setMockHttpResponse('CreateCustomerFailure.txt');
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new Request("POST", "https://api.mollie.com/v2/customers"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(CreateCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame('Unauthorized request', $response->getMessage());
+        $this->assertSame('{"status":401,"title":"Unauthorized Request","detail":"Missing authentication, or failed to authenticate","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/authentication","type":"text\/html"}}}', $response->getMessage());
     }
 }

@@ -1,17 +1,28 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
-class FetchTransactionResponse extends AbstractResponse implements RedirectResponseInterface
+/**
+ * @see https://docs.mollie.com/reference/v2/payments-api/get-payment
+ */
+class FetchTransactionResponse extends AbstractMollieResponse implements RedirectResponseInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getRedirectMethod()
+    {
+        return 'GET';
+    }
+
     /**
      * {@inheritdoc}
      */
     public function isRedirect()
     {
-        return isset($this->data['links']['paymentUrl']);
+        return isset($this->data['_links']['checkout']['href']);
     }
 
     /**
@@ -20,16 +31,10 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
     public function getRedirectUrl()
     {
         if ($this->isRedirect()) {
-            return $this->data['links']['paymentUrl'];
+            return $this->data['_links']['checkout']['href'];
         }
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getRedirectMethod()
-    {
-        return 'GET';
+        return null;
     }
 
     /**
@@ -61,7 +66,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isCancelled()
     {
-        return isset($this->data['status']) && 'cancelled' === $this->data['status'];
+        return isset($this->data['status']) && 'canceled' === $this->data['status'];
     }
 
     /**
@@ -77,7 +82,7 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
      */
     public function isPaidOut()
     {
-        return isset($this->data['status']) && 'paidout' === $this->data['status'];
+        return isset($this->data['_links']['settlement']);
     }
 
     /**
@@ -90,61 +95,94 @@ class FetchTransactionResponse extends AbstractResponse implements RedirectRespo
 
     public function isRefunded()
     {
-        return isset($this->data['status']) && 'refunded' === $this->data['status'];
+        return isset($this->data['_links']['refunds']);
     }
 
     public function isPartialRefunded()
     {
-        return $this->isRefunded() && isset($this->data['amountRemaining']) && $this->data['amountRemaining'] > 0;
+        return $this->isRefunded()
+            && isset($this->data['amountRemaining'])
+            && $this->data['amountRemaining']['value'] > 0;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getTransactionReference()
     {
         if (isset($this->data['id'])) {
             return $this->data['id'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getTransactionId()
     {
         if (isset($this->data['metadata']['transactionId'])) {
             return $this->data['metadata']['transactionId'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getStatus()
     {
         if (isset($this->data['status'])) {
             return $this->data['status'];
         }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getAmount()
     {
-        if (isset($this->data['amount'])) {
-            return $this->data['amount'];
+        if ($this->isSuccessful() && is_array($this->data['amount'])) {
+            /**
+             * $this->data['amount'] = [
+             *      "currency" => "EUR",
+             *      "value" => "50",
+             * ]
+             */
+            return $this->data['amount']['value'];
         }
+
+        return null;
+    }
+
+    public function getCurrency()
+    {
+        if ($this->isSuccessful() && is_array($this->data['amount'])) {
+            /**
+             * $this->data['amount'] = [
+             *      "currency" => "EUR",
+             *      "value" => "50",
+             * ]
+             */
+            return $this->data['amount']['currency'];
+        }
+
+        return null;
     }
 
     /**
-     * @return mixed
+     * @return array|null
      */
     public function getMetadata()
     {
         if (isset($this->data['metadata'])) {
             return $this->data['metadata'];
         }
+
+        return null;
     }
 }

@@ -4,7 +4,7 @@ Content-Type: application/hal+json; charset=utf-8
 {
   "status": 404,
   "title": "Not Found",
-  "detail": "No customer exists with token cst_6HUkmjwzBBa.",
+  "detail": "No transaction exists with token tr_Qzin4iTWrU.",
   "_links": {
     "documentation": {
       "href": "https://docs.mollie.com/guides/handling-errors",

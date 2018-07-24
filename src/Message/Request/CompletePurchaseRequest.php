@@ -1,21 +1,26 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Request;
 
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Response\CompletePurchaseResponse;
 
 /**
- * Mollie Complete Purchase Request
+ * Retrieve a single payment object by its payment token.
  *
- * @method \Omnipay\Mollie\Message\CompletePurchaseResponse send()
+ * @see https://docs.mollie.com/reference/v2/payments-api/get-payment
  */
 class CompletePurchaseRequest extends FetchTransactionRequest
 {
+    /**
+     * @return array
+     * @throws InvalidRequestException
+     */
     public function getData()
     {
         $this->validate('apiKey');
 
-        $data = array();
+        $data = [];
         $data['id'] = $this->getTransactionReference();
 
         if (!isset($data['id'])) {
@@ -29,9 +34,13 @@ class CompletePurchaseRequest extends FetchTransactionRequest
         return $data;
     }
 
+    /**
+     * @param array $data
+     * @return CompletePurchaseResponse
+     */
     public function sendData($data)
     {
-        $response = $this->sendRequest('GET', '/payments/' . $data['id']);
+        $response = $this->sendRequest(self::GET, '/payments/' . $data['id']);
 
         return $this->response = new CompletePurchaseResponse($this, $response);
     }

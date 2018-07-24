@@ -1,7 +1,10 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Message\Response;
 
+/**
+ * @see https://docs.mollie.com/reference/v2/payments-api/create-payment
+ */
 class PurchaseResponse extends FetchTransactionResponse
 {
     /**

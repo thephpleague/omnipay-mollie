@@ -1,14 +1,20 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\PaymentMethod;
+use Omnipay\Mollie\Message\Request\FetchPaymentMethodsRequest;
+use Omnipay\Mollie\Message\Response\FetchPaymentMethodsResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchPaymentMethodsRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
-     * @var \Omnipay\Mollie\Message\FetchPaymentMethodsRequest
+     * @var FetchPaymentMethodsRequest
      */
     protected $request;
 
@@ -20,6 +26,9 @@ class FetchPaymentMethodsRequestTest extends TestCase
         ));
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetData()
     {
         $data = $this->request->getData();
@@ -32,12 +41,14 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $this->setMockHttpResponse('FetchPaymentMethodsSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchPaymentMethodsResponse', $response);
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/methods"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(FetchPaymentMethodsResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $paymentMethods = $response->getPaymentMethods();
-        $this->assertCount(4, $paymentMethods);
+        $this->assertCount(12, $paymentMethods);
 
         $expectedPaymentMethod = new PaymentMethod('ideal', 'iDEAL');
 
@@ -49,11 +60,13 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $this->setMockHttpResponse('FetchPaymentMethodsFailure.txt');
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchPaymentMethodsResponse', $response);
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/methods"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(FetchPaymentMethodsResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame('Unauthorized request', $response->getMessage());
-        $this->assertNull($response->getPaymentMethods());
+        $this->assertSame('{"status":401,"title":"Unauthorized Request","detail":"Missing authentication, or failed to authenticate","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/authentication","type":"text\/html"}}}', $response->getMessage());
+        $this->assertEmpty($response->getPaymentMethods());
     }
 }

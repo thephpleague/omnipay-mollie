@@ -1,13 +1,19 @@
 <?php
 
-namespace Omnipay\Mollie\Message;
+namespace Omnipay\Mollie\Test\Message;
 
+use GuzzleHttp\Psr7\Request;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
+use Omnipay\Mollie\Message\Response\FetchCustomerResponse;
 use Omnipay\Tests\TestCase;
 
 class FetchCustomerRequestTest extends TestCase
 {
+    use AssertRequestTrait;
+
     /**
-     * @var \Omnipay\Mollie\Message\FetchCustomerRequest
+     * @var FetchCustomerRequest
      */
     protected $request;
 
@@ -22,6 +28,9 @@ class FetchCustomerRequestTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function testGetData()
     {
         $data = $this->request->getData();
@@ -33,24 +42,34 @@ class FetchCustomerRequestTest extends TestCase
     {
         $this->setMockHttpResponse('FetchCustomerSuccess.txt');
 
-        /** @var \Omnipay\Mollie\Message\FetchCustomerResponse $response */
+        /** @var FetchCustomerResponse $response */
         $response = $this->request->send();
 
-        $this->assertInstanceOf('Omnipay\Mollie\Message\FetchCustomerResponse', $response);
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertSame('cst_bSNBBJBzdG', $response->getCustomerReference());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getMessage());
+        $this->assertJsonStringEqualsJsonString(
+            '{"resource":"customer","id":"cst_bSNBBJBzdG","mode":"test","name":"John Doe","email":"john@doe.com","locale":"nl_NL","metadata":null,"createdAt":"2018-07-19T12:58:47+00:00","_links":{"self":{"href":"https:\/\/api.mollie.com\/v2\/customers\/cst_6HUkmjwzBB","type":"application\/hal+json"},"documentation":{"href":"https:\/\/docs.mollie.com\/reference\/v2\/customers-api\/get-customer","type":"text\/html"}}}',
+            $response->getMessage()
+        );
     }
 
     public function testSendFailure()
     {
         $this->setMockHttpResponse('FetchCustomerFailure.txt');
+
+        /** @var FetchCustomerResponse $response */
         $response = $this->request->send();
 
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/customers/cst_bSNBBJBzdG"), $this->getMockClient()->getLastRequest());
+
+        $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getCustomerReference());
-        $this->assertSame("The customer id is invalid", $response->getMessage());
+        $this->assertSame('{"status":404,"title":"Not Found","detail":"No customer exists with token cst_6HUkmjwzBBa.","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/handling-errors","type":"text\/html"}}}', $response->getMessage());
     }
 }
