@@ -42,6 +42,23 @@ abstract class AbstractMollieRequest extends AbstractRequest
     }
 
     /**
+     * @return string
+     */
+    public function getProfileId()
+    {
+        return $this->getParameter('profileId');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setProfileId($value)
+    {
+        return $this->setParameter('profileId', $value);
+    }
+
+    /**
      * @param string $value
      * @return $this
      */
