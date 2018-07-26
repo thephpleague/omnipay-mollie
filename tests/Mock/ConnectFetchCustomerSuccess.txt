@@ -1,0 +1,23 @@
+HTTP/1.1 201 Created
+Content-Type: application/hal+json; charset=utf-8
+
+{
+   "resource":"customer",
+   "id":"cst_EEbQf6Q4hM",
+   "mode":"test",
+   "name":"Jane Roe - Mollie Connect",
+   "email":"john@doe.com",
+   "locale":null,
+   "metadata":"Just some meta data.",
+   "createdAt":"2018-07-26T13:44:48+00:00",
+   "_links":{
+      "self":{
+         "href":"https://api.mollie.com/v2/customers/cst_EEbQf6Q4hM?testmode=true",
+         "type":"application/hal+json"
+      },
+      "documentation":{
+         "href":"https://docs.mollie.com/reference/v2/customers-api/get-customer",
+         "type":"text/html"
+      }
+   }
+}

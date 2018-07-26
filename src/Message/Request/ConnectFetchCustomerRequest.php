@@ -22,6 +22,8 @@ class ConnectFetchCustomerRequest extends FetchCustomerRequest
     {
         $this->validate('apiKey', 'customerReference');
 
+        $data = [];
+
         if ($this->getTestMode()) {
             $data['testmode'] = var_export($this->getTestMode(), true);
         }
