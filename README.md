@@ -23,6 +23,7 @@ composer require league/omnipay omnipay/mollie
 The following gateways are provided by this package:
 
 * Mollie
+* Mollie_Connect
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.

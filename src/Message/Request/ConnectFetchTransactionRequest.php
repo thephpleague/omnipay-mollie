@@ -26,7 +26,7 @@ class ConnectFetchTransactionRequest extends FetchTransactionRequest
         $data['id'] = $this->getTransactionReference();
 
         if ($this->getTestMode()) {
-           $data['testmode'] = $this->getTestMode();
+            $data['testmode'] = $this->getTestMode();
         }
 
         return $data;
