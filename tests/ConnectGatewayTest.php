@@ -129,7 +129,7 @@ class ConnectGatewayTest extends GatewayTestCase
 
         $data = $request->getData();
         $this->assertSame('tr_Qzin4iTWrU', $data['id']);
-        $this->assertSame('true', $data['testmode']);
+        $this->assertSame(true, $data['testmode']);
     }
 
     public function testCreateCustomer()
@@ -185,6 +185,6 @@ class ConnectGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf(ConnectFetchCustomerRequest::class, $request);
 
-        $this->assertSame('true', $data['testmode']);
+        $this->assertSame(true, $data['testmode']);
     }
 }

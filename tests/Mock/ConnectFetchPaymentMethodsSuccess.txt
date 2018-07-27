@@ -1,0 +1,50 @@
+HTTP/1.1 200 OK
+Content-Type: application/hal+json; charset=utf-8
+
+{
+   "_embedded":{
+      "methods":[
+         {
+            "resource":"method",
+            "id":"ideal",
+            "description":"iDEAL",
+            "image":{
+               "size1x":"https://www.mollie.com/images/payscreen/methods/ideal.png",
+               "size2x":"https://www.mollie.com/images/payscreen/methods/ideal%402x.png"
+            },
+            "_links":{
+               "self":{
+                  "href":"https://api.mollie.com/v2/methods/ideal",
+                  "type":"application/hal+json"
+               }
+            }
+         },
+         {
+            "resource":"method",
+            "id":"banktransfer",
+            "description":"Bank transfer",
+            "image":{
+               "size1x":"https://www.mollie.com/images/payscreen/methods/banktransfer.png",
+               "size2x":"https://www.mollie.com/images/payscreen/methods/banktransfer%402x.png"
+            },
+            "_links":{
+               "self":{
+                  "href":"https://api.mollie.com/v2/methods/banktransfer",
+                  "type":"application/hal+json"
+               }
+            }
+         }
+      ]
+   },
+   "count":2,
+   "_links":{
+      "documentation":{
+         "href":"https://docs.mollie.com/reference/v2/methods-api/list-methods",
+         "type":"text/html"
+      },
+      "self":{
+         "href":"https://api.mollie.com/v2/methods?profileId=pfl_3RkSN1zuPE&testmode=true",
+         "type":"application/hal+json"
+      }
+   }
+}

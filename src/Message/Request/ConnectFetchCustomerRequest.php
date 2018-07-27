@@ -25,7 +25,7 @@ class ConnectFetchCustomerRequest extends FetchCustomerRequest
         $data = [];
 
         if ($this->getTestMode()) {
-            $data['testmode'] = var_export($this->getTestMode(), true);
+            $data['testmode'] = $this->getTestMode();
         }
 
         return $data;
@@ -37,7 +37,7 @@ class ConnectFetchCustomerRequest extends FetchCustomerRequest
      */
     public function sendData($data)
     {
-        $queryString = isset($data['testmode']) ? '?testmode=' . $data['testmode'] : '';
+        $queryString = isset($data['testmode']) ? '?testmode=' . var_export($data['testmode'], true) : '';
 
         $response = $this->sendRequest(self::GET, '/customers/' . $this->getCustomerReference() . $queryString);
 

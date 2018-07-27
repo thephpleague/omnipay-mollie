@@ -1,0 +1,13 @@
+HTTP/1.1 401 Authorization Required
+
+{
+  "status": 401,
+  "title": "Unauthorized Request",
+  "detail": "Missing authentication, or failed to authenticate",
+  "_links": {
+    "documentation": {
+      "href": "https://docs.mollie.com/guides/authentication",
+      "type": "text/html"
+    }
+  }
+}

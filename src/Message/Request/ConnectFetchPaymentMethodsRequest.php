@@ -26,7 +26,7 @@ class ConnectFetchPaymentMethodsRequest extends FetchPaymentMethodsRequest
         $data['profileId'] = $this->getProfileId();
 
         if ($this->getTestMode()) {
-            $data['testmode'] = var_export($this->getTestMode(), true);
+            $data['testmode'] = $this->getTestMode();
         }
 
         if (empty($data['profileId'])) {
@@ -42,7 +42,8 @@ class ConnectFetchPaymentMethodsRequest extends FetchPaymentMethodsRequest
      */
     public function sendData($data)
     {
-        $queryString = isset($data['testmode']) ? '?testmode='.$data['testmode'] : '';
+        $queryString = "?profileId=" . $data['profileId'];
+        $queryString .= isset($data['testmode']) ? '&testmode=' . var_export($data['testmode'], true) : '';
 
         $response = $this->sendRequest(self::GET, '/methods' . $queryString);
 

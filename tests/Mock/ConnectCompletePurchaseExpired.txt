@@ -1,0 +1,31 @@
+HTTP/1.1 200 OK
+Content-Type: application/hal+json; charset=utf-8
+
+{
+   "resource":"payment",
+   "id":"tr_98nUH7v5bT",
+   "mode":"test",
+   "createdAt":"2018-07-27T07:10:14+00:00",
+   "amount":{
+      "value":"10.00",
+      "currency":"EUR"
+   },
+   "description":"My first Payment",
+   "method":null,
+   "metadata":null,
+   "status":"expired",
+   "expiredAt":"2018-07-27T07:27:04+00:00",
+   "profileId":"pfl_3RkSN1zuPE",
+   "sequenceType":"oneoff",
+   "redirectUrl":"https://webshop.example.org/mollie-return.php",
+   "_links":{
+      "self":{
+         "href":"https://api.mollie.com/v2/payments/tr_98nUH7v5bT?testmode=true",
+         "type":"application/hal+json"
+      },
+      "documentation":{
+         "href":"https://docs.mollie.com/reference/v2/payments-api/get-payment",
+         "type":"text/html"
+      }
+   }
+}

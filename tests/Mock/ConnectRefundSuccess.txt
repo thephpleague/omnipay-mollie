@@ -1,0 +1,33 @@
+HTTP/1.1 201 Created
+Content-Type: application/hal+json; charset=utf-8
+
+{
+   "resource":"refund",
+   "id":"re_c5rGsnjbxz",
+   "amount":{
+      "value":"10.00",
+      "currency":"EUR"
+   },
+   "status":"pending",
+   "createdAt":"2018-07-27T07:39:21+00:00",
+   "description":"My first Payment",
+   "paymentId":"tr_98nUH7v5bT",
+   "settlementAmount":{
+      "value":"-10.00",
+      "currency":"EUR"
+   },
+   "_links":{
+      "self":{
+         "href":"https://api.mollie.com/v2/payments/tr_98nUH7v5bT/refunds/re_c5rGsnjbxz",
+         "type":"application/hal+json"
+      },
+      "payment":{
+         "href":"https://api.mollie.com/v2/payments/tr_98nUH7v5bT",
+         "type":"application/hal+json"
+      },
+      "documentation":{
+         "href":"https://docs.mollie.com/reference/v2/refunds-api/create-refund",
+         "type":"text/html"
+      }
+   }
+}

@@ -1,0 +1,15 @@
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/hal+json; charset=utf-8
+
+{
+  "status": 422,
+  "title": "Unprocessable Entity",
+  "detail": "The payment method is invalid",
+  "field": "method",
+  "_links": {
+    "documentation": {
+      "href": "https://docs.mollie.com/guides/handling-errors",
+      "type": "text/html"
+    }
+  }
+}

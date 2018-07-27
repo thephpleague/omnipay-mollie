@@ -25,7 +25,7 @@ class ConnectCompletePurchaseRequest extends CompletePurchaseRequest
         $data['id'] = $this->getTransactionReference();
 
         if ($this->getTestMode()) {
-            $data['testmode'] = var_export($this->getTestMode(), true);
+            $data['testmode'] = $this->getTestMode();
         }
 
         if (!isset($data['id'])) {
@@ -45,7 +45,7 @@ class ConnectCompletePurchaseRequest extends CompletePurchaseRequest
      */
     public function sendData($data)
     {
-        $queryString = isset($data['testmode']) ? '?testmode='.$data['testmode'] : '';
+        $queryString = isset($data['testmode']) ? '?testmode=' . var_export($data['testmode'], true) : '';
 
         $response = $this->sendRequest(self::GET, '/payments/' . $data['id'] . $queryString);
 

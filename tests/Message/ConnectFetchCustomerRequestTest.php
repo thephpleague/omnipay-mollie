@@ -24,6 +24,7 @@ class ConnectFetchCustomerRequestTest extends TestCase
             array(
                 'apiKey'            => 'mykey',
                 'customerReference' => 'cst_EEbQf6Q4hM',
+                'testmode'          => true
             )
         );
     }
@@ -35,7 +36,9 @@ class ConnectFetchCustomerRequestTest extends TestCase
     {
         $data = $this->request->getData();
 
-        $this->assertCount(0, $data);
+        $this->assertCount(1, $data);
+
+        $this->assertSame(true, $data['testmode']);
     }
 
     public function testSendSuccess()
@@ -64,7 +67,7 @@ class ConnectFetchCustomerRequestTest extends TestCase
         /** @var ConnectFetchCustomerRequest $response */
         $response = $this->request->send();
 
-        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/customers/cst_EEbQf6Q4hM"), $this->getMockClient()->getLastRequest());
+        $this->assertEqualRequest(new Request("GET", "https://api.mollie.com/v2/customers/cst_EEbQf6Q4hM?testmode=true"), $this->getMockClient()->getLastRequest());
 
         $this->assertInstanceOf(FetchCustomerResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
