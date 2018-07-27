@@ -72,7 +72,7 @@ abstract class AbstractMollieRequest extends AbstractRequest
             [
                 'Authorization' => 'Bearer ' . $this->getApiKey()
             ],
-            json_encode($data)
+            ($data === null) ? null : json_encode($data)
         );
 
         return json_decode($response->getBody(), true);
