@@ -78,6 +78,32 @@ class ConnectPurchaseRequestTest extends TestCase
         $this->assertCount(8, $data);
     }
 
+    public function testGetDataWithApplicationFee()
+    {
+        $this->request->initialize(array(
+            'apiKey' => 'mykey',
+            "amount" => "10.00",
+            "currency" => "EUR",
+            "description" => "My first Payment",
+            "returnUrl" => "https://webshop.example.org/mollie-return.php",
+            "profileId" => "pfl_3RkSN1zuPE",
+            'testmode' => true,
+            'notifyUrl' => 'https://www.example.com/hook',
+            'applicationFeeAmount' => '0.37',
+            'applicationFeeCurrency' => 'EUR',
+            'applicationFeeDescription' => 'applicationFee to use Mollie Connect'
+        ));
+
+        $data = $this->request->getData();
+
+        $this->assertSame(["value" => "10.00", "currency" => "EUR"], $data['amount']);
+        $this->assertSame('My first Payment', $data['description']);
+        $this->assertSame('https://webshop.example.org/mollie-return.php', $data['redirectUrl']);
+        $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
+        $this->assertSame(["amount" => ["value" => "0.37", "currency" => "EUR"], "description" => "applicationFee to use Mollie Connect"], $data['applicationFee']);
+        $this->assertCount(9, $data);
+    }
+
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('ConnectPurchaseSuccess.txt');

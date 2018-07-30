@@ -15,6 +15,57 @@ use Omnipay\Mollie\Message\Response\PurchaseResponse;
 class ConnectPurchaseRequest extends PurchaseRequest
 {
     /**
+     * @param $value
+     * @return $this
+     */
+    public function setApplicationFeeAmount($value)
+    {
+        return $this->setParameter('applicationFeeAmount', $value);
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setApplicationFeeDescription($value)
+    {
+        return $this->setParameter('applicationFeeDescription', $value);
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setApplicationFeeCurrency($value)
+    {
+        return $this->setParameter('applicationFeeCurrency', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationFeeAmount()
+    {
+        return $this->getParameter('applicationFeeAmount');
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationFeeDescription()
+    {
+        return $this->getParameter('applicationFeeDescription');
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationFeeCurrency()
+    {
+        return $this->getParameter('applicationFeeCurrency');
+    }
+
+    /**
      * @return array
      * @throws InvalidRequestException
      */
@@ -56,6 +107,19 @@ class ConnectPurchaseRequest extends PurchaseRequest
 
         if ($billingEmail = $this->getBillingEmail()) {
             $data['billingEmail'] = $billingEmail;
+        }
+
+        if ($this->getApplicationFeeAmount() &&
+            $this->getApplicationFeeCurrency() &&
+            $this->getApplicationFeeDescription()
+        ) {
+            $data['applicationFee'] = array(
+                'amount' => array(
+                    'value' => $this->getApplicationFeeAmount(),
+                    'currency' => $this->getApplicationFeeCurrency(),
+                ),
+                'description' => $this->getApplicationFeeDescription()
+            );
         }
 
         if (empty($data['profileId'])) {
