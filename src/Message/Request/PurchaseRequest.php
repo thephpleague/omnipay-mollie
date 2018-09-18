@@ -67,6 +67,23 @@ class PurchaseRequest extends AbstractMollieRequest
     /**
      * @return string
      */
+    public function getCustomerReference()
+    {
+        return $this->getParameter('customerReference');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setCustomerReference($value)
+    {
+        return $this->setParameter('customerReference', $value);
+    }
+
+    /**
+     * @return string
+     */
     public function getSequenceType()
     {
         return $this->getParameter('sequenceType');
@@ -118,6 +135,10 @@ class PurchaseRequest extends AbstractMollieRequest
 
         if ($billingEmail = $this->getBillingEmail()) {
             $data['billingEmail'] = $billingEmail;
+        }
+
+        if ($customerReference = $this->getCustomerReference()) {
+            $data['customerId'] = $customerReference;
         }
 
         if ($sequenceType = $this->getSequenceType()) {
