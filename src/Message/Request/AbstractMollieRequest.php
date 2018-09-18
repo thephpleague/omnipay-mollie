@@ -13,6 +13,7 @@ abstract class AbstractMollieRequest extends AbstractRequest
 {
     const POST = 'POST';
     const GET = 'GET';
+    const DELETE = 'DELETE';
 
     /**
      * @var string

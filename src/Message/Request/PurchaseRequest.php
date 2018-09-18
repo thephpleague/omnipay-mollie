@@ -65,6 +65,23 @@ class PurchaseRequest extends AbstractMollieRequest
     }
 
     /**
+     * @return string
+     */
+    public function getSequenceType()
+    {
+        return $this->getParameter('sequenceType');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setSequenceType($value)
+    {
+        return $this->setParameter('sequenceType', $value);
+    }
+
+    /**
      * @return array
      * @throws InvalidRequestException
      */
@@ -101,6 +118,10 @@ class PurchaseRequest extends AbstractMollieRequest
 
         if ($billingEmail = $this->getBillingEmail()) {
             $data['billingEmail'] = $billingEmail;
+        }
+
+        if ($sequenceType = $this->getSequenceType()) {
+            $data['sequenceType'] = $sequenceType;
         }
 
         return $data;
