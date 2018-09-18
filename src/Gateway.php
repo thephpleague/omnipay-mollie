@@ -5,13 +5,16 @@ namespace Omnipay\Mollie;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
+use Omnipay\Mollie\Message\Request\CreateCustomerMandateRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
+use Omnipay\Mollie\Message\Request\FetchCustomerMandatesRequest;
 use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
 use Omnipay\Mollie\Message\Request\FetchIssuersRequest;
 use Omnipay\Mollie\Message\Request\FetchPaymentMethodsRequest;
 use Omnipay\Mollie\Message\Request\FetchTransactionRequest;
 use Omnipay\Mollie\Message\Request\PurchaseRequest;
 use Omnipay\Mollie\Message\Request\RefundRequest;
+use Omnipay\Mollie\Message\Request\RevokeCustomerMandateRequest;
 use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
 
 /**
@@ -28,6 +31,8 @@ use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
  * @method RequestInterface createCard(array $options = array())
  * @method RequestInterface updateCard(array $options = array())
  * @method RequestInterface deleteCard(array $options = array())
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Gateway extends AbstractGateway
 {
@@ -45,7 +50,7 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'apiKey' => ''
+            'apiKey' => '',
         );
     }
 
@@ -172,5 +177,32 @@ class Gateway extends AbstractGateway
         $request = $this->createRequest(FetchCustomerRequest::class, $parameters);
 
         return $request;
+    }
+
+    /**
+     * @param array $parameters
+     * @return FetchCustomerMandatesRequest
+     */
+    public function fetchCustomerMandates(array $parameters = [])
+    {
+        return $this->createRequest(FetchCustomerMandatesRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return CreateCustomerMandateRequest
+     */
+    public function createCustomerMandate(array $parameters = [])
+    {
+        return $this->createRequest(CreateCustomerMandateRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return RevokeCustomerMandateRequest
+     */
+    public function revokeCustomerMandate(array $parameters = [])
+    {
+        return $this->createRequest(RevokeCustomerMandateRequest::class, $parameters);
     }
 }
