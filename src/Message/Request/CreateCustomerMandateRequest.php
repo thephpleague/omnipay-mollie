@@ -145,7 +145,6 @@ class CreateCustomerMandateRequest extends AbstractMollieRequest
         $data['method'] = $this->getMethod();
         $data['consumerName'] = $this->getConsumerName();
         $data['consumerAccount'] = $this->getConsumerAccount();
-        $data['customerReference'] = $this->getCustomerReference();
 
         if ($this->getConsumerBic()) {
             $data['consumerBic'] = $this->getConsumerBic();

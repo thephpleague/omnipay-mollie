@@ -82,7 +82,7 @@ class CreateCustomerRequest extends AbstractMollieRequest
      */
     public function getData()
     {
-        $this->validate('apiKey', 'description', 'email');
+        $this->validate('apiKey');
 
         $data                = [];
         $data['name']        = $this->getDescription();

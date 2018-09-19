@@ -38,12 +38,11 @@ class CreateCustomerMandateRequestTest extends TestCase
     {
         $data = $this->request->getData();
 
-        $this->assertSame("cst_bSNBBJBzdG", $data['customerReference']);
         $this->assertSame("NL53INGB0000000000", $data['consumerAccount']);
         $this->assertSame('directdebit', $data['method']);
         $this->assertSame("YOUR-COMPANY-MD13804", $data['mandateReference']);
 
-        $this->assertCount(5, $data);
+        $this->assertCount(4, $data);
     }
 
     public function testSendSuccess()
