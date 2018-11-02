@@ -13,6 +13,7 @@ abstract class AbstractMollieRequest extends AbstractRequest
 {
     const POST = 'POST';
     const GET = 'GET';
+    const DELETE = 'DELETE';
 
     /**
      * @var string
@@ -72,7 +73,7 @@ abstract class AbstractMollieRequest extends AbstractRequest
             [
                 'Authorization' => 'Bearer ' . $this->getApiKey()
             ],
-            ($data === null) ? null : json_encode($data)
+            ($data === null || $data === []) ? null : json_encode($data)
         );
 
         return json_decode($response->getBody(), true);
