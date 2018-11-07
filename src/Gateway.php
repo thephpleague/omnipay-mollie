@@ -4,12 +4,16 @@ namespace Omnipay\Mollie;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Mollie\Message\Request\CompleteOrderRequest;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerMandateRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
+use Omnipay\Mollie\Message\Request\CreateOrderRequest;
+use Omnipay\Mollie\Message\Request\CreateShipmentRequest;
 use Omnipay\Mollie\Message\Request\FetchCustomerMandatesRequest;
 use Omnipay\Mollie\Message\Request\FetchCustomerRequest;
 use Omnipay\Mollie\Message\Request\FetchIssuersRequest;
+use Omnipay\Mollie\Message\Request\FetchOrderRequest;
 use Omnipay\Mollie\Message\Request\FetchPaymentMethodsRequest;
 use Omnipay\Mollie\Message\Request\FetchTransactionRequest;
 use Omnipay\Mollie\Message\Request\PurchaseRequest;
@@ -139,6 +143,56 @@ class Gateway extends AbstractGateway
     {
         /** @var RefundRequest $request */
         $request = $this->createRequest(RefundRequest::class, $parameters);
+
+        return $request;
+    }
+
+    /**
+     * @param  array $parameters
+     * @return CreateOrderRequest
+     */
+    public function createOrder(array $parameters = [])
+    {
+        /** @var CreateOrderRequest $request */
+        $request = $this->createRequest(CreateOrderRequest::class, $parameters);
+
+        return $request;
+    }
+
+
+    /**
+     * @param  array $parameters
+     * @return FetchOrderRequest
+     */
+    public function fetchOrder(array $parameters = [])
+    {
+        /** @var FetchOrderRequest $request */
+        $request = $this->createRequest(FetchOrderRequest::class, $parameters);
+
+        return $request;
+    }
+
+
+    /**
+     * @param  array $parameters
+     * @return CompleteOrderRequest
+     */
+    public function completeOrder(array $parameters = [])
+    {
+        /** @var CompleteOrderRequest $request */
+        $request = $this->createRequest(CompleteOrderRequest::class, $parameters);
+
+        return $request;
+    }
+
+    /**
+     * @param  array $parameters
+     * @return CreateShipmentRequest
+     */
+    public function createShipment(array $parameters = [])
+    {
+        /** @var CreateShipmentRequest $request */
+        $request = $this->createRequest(CreateShipmentRequest::class, $parameters);
 
         return $request;
     }

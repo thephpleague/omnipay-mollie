@@ -80,6 +80,14 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
     /**
      * @return boolean
      */
+    public function isAuthorized()
+    {
+        return isset($this->data['status']) && 'authorized' === $this->data['status'];
+    }
+
+    /**
+     * @return boolean
+     */
     public function isPaidOut()
     {
         return isset($this->data['_links']['settlement']);
