@@ -8,6 +8,14 @@ namespace Omnipay\Mollie\Message\Response;
 class CompleteOrderResponse extends FetchOrderResponse
 {
     /**
+     * {@inheritdoc}
+     */
+    public function isSuccessful()
+    {
+        return parent::isSuccessful() && $this->isPaid();
+    }
+
+    /**
      * The order status is never a redirect
      *
      * {@inheritdoc}

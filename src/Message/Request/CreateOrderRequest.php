@@ -245,7 +245,7 @@ class CreateOrderRequest extends AbstractMollieRequest
             if (null === $totalAmount) {
                 $totalAmount = $item->getQuantity() * $item->getPrice();
             }
-            
+
             if (null === $vatAmount) {
                 $vatAmount =  round($totalAmount * ($vatRate / (100 + $vatRate)), $this->getCurrencyDecimalPlaces());
             }

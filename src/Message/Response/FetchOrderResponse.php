@@ -10,14 +10,6 @@ use Omnipay\Mollie\Item;
  */
 class FetchOrderResponse extends FetchTransactionResponse
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function isSuccessful()
-    {
-        return parent::isSuccessful() && $this->isPaid();
-    }
-
     public function getLines()
     {
         if (isset($this->data['lines'])) {
