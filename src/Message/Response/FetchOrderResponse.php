@@ -18,6 +18,15 @@ class FetchOrderResponse extends FetchTransactionResponse
         return parent::isSuccessful() && $this->isPaid();
     }
 
+    public function getLines()
+    {
+        if (isset($this->data['lines'])) {
+            return $this->data['lines'];
+        }
+
+        return null;
+    }
+
     public function getItems()
     {
 

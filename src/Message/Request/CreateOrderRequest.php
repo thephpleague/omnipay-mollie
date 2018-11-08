@@ -72,6 +72,23 @@ class CreateOrderRequest extends AbstractMollieRequest
     /**
      * @return string
      */
+    public function getBillingEmail()
+    {
+        return $this->getParameter('billingEmail');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setBillingEmail($value)
+    {
+        return $this->setParameter('billingEmail', $value);
+    }
+
+    /**
+     * @return string
+     */
     public function getCustomerReference()
     {
         return $this->getParameter('customerReference');
@@ -104,6 +121,17 @@ class CreateOrderRequest extends AbstractMollieRequest
     }
 
     /**
+     * Alias for lines
+     *
+     * @param $items
+     * @return $this
+     */
+    public function setLines($items)
+    {
+        return $this->setItems($items);
+    }
+
+    /**
      * A list of items in this order
      *
      * @return Item[]|null A bag containing items in this order
@@ -122,36 +150,38 @@ class CreateOrderRequest extends AbstractMollieRequest
         $this->validate('apiKey', 'amount', 'locale', 'card', 'items', 'currency', 'orderNumber', 'returnUrl');
 
         $data = [];
-        $data['amount'] = $this->createAmountObject($this->getAmount());
-        $data['orderNumber'] = (string) $this->getOrderNumber();
-        $data['redirectUrl'] = $this->getReturnUrl();
-        $data['method'] = $this->getPaymentMethod();
-        $data['metadata'] = $this->getMetadata();
-        $data['payment'] = [];
-        $data['lines'] = [];
+        $data['amount'] = [
+            'value' => $this->getAmount(),
+            'currency' => $this->getCurrency()
+        ];
 
+        if ($card = $this->getCard()) {
+            $data += $this->getCardData($card);
+        }
+
+        $data['metadata'] = $this->getMetadata();
         if ($this->getTransactionId()) {
             $data['metadata']['transactionId'] = $this->getTransactionId();
         }
 
-        if ($issuer = $this->getIssuer()) {
-            $data['issuer'] = $issuer;
+        if ($card && $birthday = $card->getBirthday()) {
+            $data['consumerDateOfBirth'] = $birthday;
         }
 
-        if ($webhookUrl = $this->getNotifyUrl()) {
-            $data['webhookUrl'] = $webhookUrl;
-        }
+        $data['locale'] = $this->getLocale();
+        $data['orderNumber'] = (string) $this->getOrderNumber();
+        $data['redirectUrl'] = $this->getReturnUrl();
+        $data['webhookUrl'] = $this->getNotifyUrl();
+        $data['method'] = $this->getPaymentMethod();
 
-        if ($locale = $this->getLocale()) {
-            $data['locale'] = $locale;
-        }
-
+        $data['lines'] = [];
         if ($items = $this->getItems()) {
             $data['lines'] = $this->getLines($items);
         }
 
-        if ($card = $this->getCard()) {
-            $data += $this->getCardData($card);
+        $data['payment'] = [];
+        if ($issuer = $this->getIssuer()) {
+            $data['payment']['issuer'] = $issuer;
         }
 
         if ($customerReference = $this->getCustomerReference()) {
@@ -162,41 +192,43 @@ class CreateOrderRequest extends AbstractMollieRequest
             $data['payment']['sequenceType'] = $sequenceType;
         }
 
-        return $data;
+        return array_filter($data);
     }
 
     protected function getCardData(CreditCard $card)
     {
         $data = [];
 
-        $data['billingAddress'] = [
-            'givenName' => $card->getFirstName(),
-            'familyName' => $card->getLastName(),
-            'email' => $card->getEmail(),
+        $data['billingAddress'] = array_filter([
+            'organizationName' => $card->getCompany(),
             'streetAndNumber' => $card->getAddress1(),
             'streetAdditional' => $card->getAddress2(),
-            'postalCode' => $card->getPostcode(),
             'city' => $card->getCity(),
             'region' => $card->getState(),
+            'postalCode' => $card->getPostcode(),
             'country' => $card->getCountry(),
-        ];
+            'title' => $card->getTitle(),
+            'givenName' => $card->getFirstName(),
+            'familyName' => $card->getLastName(),
+            'email' => $this->getBillingEmail() ?: $card->getEmail(),
+            'phone' => $card->getPhone(),
+        ]);
 
         if ($card->getShippingAddress1()) {
-            $data['shippingAddress'] = [
+            $data['shippingAddress'] = array_filter([
+                'organizationName' => $card->getCompany(),
+                'streetAndNumber' => $card->getShippingAddress1(),
+                'streetAdditional' => $card->getShippingAddress2(),
+                'city' => $card->getShippingCity(),
+                'region' => $card->getShippingState(),
+                'postalCode' => $card->getShippingPostcode(),
+                'country' => $card->getShippingCountry(),
+                'title' => $card->getShippingTitle(),
                 'givenName' => $card->getShippingFirstName(),
                 'familyName' => $card->getShippingLastName(),
                 'email' => $card->getEmail(),
-                'streetAndNumber' => $card->getShippingAddress1(),
-                'streetAdditional' => $card->getShippingAddress2(),
-                'postalCode' => $card->getShippingPostcode(),
-                'city' => $card->getShippingCity(),
-                'region' => $card->getShippingState(),
-                'country' => $card->getShippingCountry(),
-            ];
-        }
-
-        if ($card->getCompany()) {
-            $data['organizationName'] = $card->getCompany();
+                'phone' => $card->getShippingPhone(),
+            ]);
         }
 
         return $data;
@@ -207,19 +239,25 @@ class CreateOrderRequest extends AbstractMollieRequest
         $lines = [];
         foreach ($items as $item) {
             $vatRate = $item->getVatRate();
-            $totalAmount = $item->getQuantity() * $item->getPrice();
-            $vatAmount = round($totalAmount * ($vatRate / (100 + $vatRate)), $this->getCurrencyDecimalPlaces());
+            $totalAmount = $item->getTotalAmount() ?? $item->getQuantity() * $item->getPrice();
+            $vatAmount = $item->getVatAmount();
+            
+            if (null === $vatAmount) {
+                $vatAmount =  round($totalAmount * ($vatRate / (100 + $vatRate)), $this->getCurrencyDecimalPlaces());
+            }
 
             $data = [
                 'type' => $item->getType(),
-                'name' => $item->getName(),
-                'quantity' => $item->getQuantity(),
-                'unitPrice' => $this->createAmountObject($item->getPrice()),
-                'discountAmount' => $this->createAmountObject($item->getDiscountAmount()),
-                'totalAmount' => $this->createAmountObject($totalAmount),
-                'vatRate' => $vatRate,
-                'vatAmount' => $this->createAmountObject($vatAmount),
                 'sku' => $item->getSku(),
+                'name' => $item->getName(),
+                'productUrl' => $item->getProductUrl(),
+                'imageUrl' => $item->getImageUrl(),
+                'quantity' => (int) $item->getQuantity(),
+                'vatRate' => $vatRate,
+                'unitPrice' => $this->createAmountObject($item->getUnitPrice()),
+                'totalAmount' => $this->createAmountObject($totalAmount),
+                'discountAmount' => $this->createAmountObject($item->getDiscountAmount()),
+                'vatAmount' => $this->createAmountObject($vatAmount),
             ];
 
             // Strip null values

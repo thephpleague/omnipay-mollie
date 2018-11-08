@@ -105,8 +105,8 @@ abstract class AbstractMollieRequest extends AbstractRequest
     protected function createAmountObject($amount)
     {
         return isset($amount) ? [
-            "value" => $this->formatCurrency($amount),
-            "currency" => $this->getCurrency()
+            'currency' => $this->getCurrency(),
+            'value' => $this->formatCurrency($amount),
         ] : null;
     }
 }

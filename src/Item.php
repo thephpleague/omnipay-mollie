@@ -4,6 +4,24 @@ namespace Omnipay\Mollie;
 
 class Item extends \Omnipay\Common\Item
 {
+    /**
+     * Check if a Amount object is used, store the value
+     *
+     * @param $key
+     * @param $value
+     * @return $this
+     */
+    protected function setParameter($key, $value)
+    {
+        if (is_array($value) && isset($value['amount'])) {
+            $value = $value['amount'];
+        }
+
+        $this->parameters->set($key, $value);
+
+        return $this;
+    }
+
     public function getId()
     {
         return $this->getParameter('id');
@@ -12,6 +30,16 @@ class Item extends \Omnipay\Common\Item
     public function setId($value)
     {
         return $this->setParameter('id', $value);
+    }
+
+    public function getUnitPrice()
+    {
+        return $this->getParameter('unitPrice');
+    }
+
+    public function setUnitPrice($value)
+    {
+        return $this->setParameter('unitPrice', $value);
     }
 
     public function getDiscountAmount()
@@ -72,5 +100,25 @@ class Item extends \Omnipay\Common\Item
     public function setType($value)
     {
         return $this->setParameter('type', $value);
+    }
+
+    public function getProductUrl()
+    {
+        return $this->getParameter('productUrl');
+    }
+
+    public function setProductUrl($value)
+    {
+        return $this->setParameter('productUrl', $value);
+    }
+
+    public function getImageUrl()
+    {
+        return $this->getParameter('imageUrl');
+    }
+
+    public function setImageUrl($value)
+    {
+        return $this->setParameter('imageUrl', $value);
     }
 }
