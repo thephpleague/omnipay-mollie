@@ -239,8 +239,12 @@ class CreateOrderRequest extends AbstractMollieRequest
         $lines = [];
         foreach ($items as $item) {
             $vatRate = $item->getVatRate();
-            $totalAmount = $item->getTotalAmount() ?? $item->getQuantity() * $item->getPrice();
+            $totalAmount = $item->getTotalAmount();
             $vatAmount = $item->getVatAmount();
+
+            if (null === $totalAmount) {
+                $totalAmount = $item->getQuantity() * $item->getPrice();
+            }
             
             if (null === $vatAmount) {
                 $vatAmount =  round($totalAmount * ($vatRate / (100 + $vatRate)), $this->getCurrencyDecimalPlaces());
