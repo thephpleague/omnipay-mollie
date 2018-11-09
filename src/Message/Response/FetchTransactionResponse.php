@@ -80,6 +80,14 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
     /**
      * @return boolean
      */
+    public function isAuthorized()
+    {
+        return isset($this->data['status']) && 'authorized' === $this->data['status'];
+    }
+
+    /**
+     * @return boolean
+     */
     public function isPaidOut()
     {
         return isset($this->data['_links']['settlement']);
@@ -146,7 +154,7 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
      */
     public function getAmount()
     {
-        if ($this->isSuccessful() && is_array($this->data['amount'])) {
+        if (isset($this->data['amount']) && is_array($this->data['amount'])) {
             /**
              * $this->data['amount'] = [
              *      "currency" => "EUR",

@@ -7,12 +7,11 @@ use Omnipay\Mollie\Message\Response\CompleteOrderResponse;
 use Omnipay\Mollie\Message\Response\CompletePurchaseResponse;
 
 /**
- * Retrieve a single payment object by its payment token.
+ * Retrieve a single order object by its payment token.
  *
- * @see https://docs.mollie.com/reference/v2/payments-api/get-payment
- * @method CompleteOrderResponse send()
+ * @see https://docs.mollie.com/reference/v2/payments-api/get-order
  */
-class CompletePurchaseRequest extends FetchTransactionRequest
+class CompleteOrderRequest extends FetchOrderRequest
 {
     /**
      * @return array
@@ -38,12 +37,12 @@ class CompletePurchaseRequest extends FetchTransactionRequest
 
     /**
      * @param array $data
-     * @return CompletePurchaseResponse
+     * @return CompleteOrderResponse
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest(self::GET, '/payments/' . $data['id']);
+        $response = $this->sendRequest(self::GET, '/orders/' . $data['id']);
 
-        return $this->response = new CompletePurchaseResponse($this, $response);
+        return $this->response = new CompleteOrderResponse($this, $response);
     }
 }

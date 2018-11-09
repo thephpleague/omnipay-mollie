@@ -2,7 +2,9 @@
 
 namespace Omnipay\Mollie\Message\Request;
 
+use Omnipay\Common\ItemBag;
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Mollie\Item;
 
 /**
  * This class holds all the common things for all of Mollie requests.
@@ -60,6 +62,26 @@ abstract class AbstractMollieRequest extends AbstractRequest
     }
 
     /**
+     * Set the items in this order
+     *
+     * @param Item[] $items An array of items in this order
+     * @return $this
+     */
+    public function setItems($items)
+    {
+        $orderItems = [];
+        foreach ($items as $item) {
+            if (is_array($item)) {
+                $orderItems[] = new Item($item);
+            } elseif (! ($item instanceof Item)) {
+                throw new \InvalidArgumentException('Item should be an instance of ' . Item::class);
+            }
+        }
+
+        return parent::setItems($orderItems);
+    }
+
+    /**
      * @param string $method
      * @param string $endpoint
      * @param array $data
@@ -77,5 +99,14 @@ abstract class AbstractMollieRequest extends AbstractRequest
         );
 
         return json_decode($response->getBody(), true);
+    }
+
+
+    protected function createAmountObject($amount)
+    {
+        return isset($amount) ? [
+            'currency' => $this->getCurrency(),
+            'value' => $this->formatCurrency($amount),
+        ] : null;
     }
 }
