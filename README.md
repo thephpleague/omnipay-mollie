@@ -60,6 +60,122 @@ if ($response->isSuccessful()) {
 }
 ```
 
+### Example using the Order API
+
+1. Create the order and pass the order items in the parameters.
+
+```php
+$response = $gateway->createOrder(
+    [
+           'amount'       => '1027.99',
+            'currency'     => 'EUR',
+            'orderNumber'  => '1337',
+            'lines'        => [
+                [
+                    'type' => 'physical',
+                    'sku' => '5702016116977',
+                    'name' => 'LEGO 42083 Bugatti Chiron',
+                    'productUrl' => 'https://shop.lego.com/nl-NL/Bugatti-Chiron-42083',
+                    'imageUrl' => 'https://sh-s7-live-s.legocdn.com/is/image//LEGO/42083_alt1?$main$',
+                    'quantity' => 2,
+                    'vatRate' => '21.00',
+                    'unitPrice' => '399.00',
+                    'totalAmount' => '698.00',
+                    'discountAmount' => '100.00',
+                    'vatAmount' => '121.14',
+                ],
+                [
+                    'type' => 'physical',
+                    'sku' => '5702015594028',
+                    'name' => 'LEGO 42056 Porsche 911 GT3 RS',
+                    'productUrl' => 'https://shop.lego.com/nl-NL/Porsche-911-GT3-RS-42056',
+                    'imageUrl' => 'https://sh-s7-live-s.legocdn.com/is/image/LEGO/42056?$PDPDefault$',
+                    'quantity' => 1,
+                    'vatRate' => '21.00',
+                    'unitPrice' => '329.99',
+                    'totalAmount' => '329.99',
+                    'vatAmount' => '57.27',
+                ]
+            ],
+            'card' => [
+                'company' => 'Mollie B.V.',
+                'email' => 'norris@chucknorrisfacts.net',
+                'birthday' => '1958-01-31',
+                'billingTitle' => 'Dhr',
+                'billingFirstName' => 'Piet',
+                'billingLastName' => 'Mondriaan',
+                'billingAddress1' => 'Keizersgracht 313',
+                'billingCity' => 'Amsterdam',
+                'billingPostcode' => '1234AB',
+                'billingState' => 'Noord-Holland',
+                'billingCountry' => 'NL',
+                'billingPhone' => '+31208202070',
+                'shippingTitle' => 'Mr',
+                'shippingFirstName' => 'Chuck',
+                'shippingLastName' => 'Norris',
+                'shippingAddress1' => 'Prinsengracht 313',
+                'shippingAddress2' => '4th floor',
+                'shippingCity' => 'Haarlem',
+                'shippingPostcode' => '5678AB',
+                'shippingState' => 'Noord-Holland',
+                'shippingCountry' => 'NL',
+            ],
+            'metadata' => [
+                'order_id' => '1337',
+                'description' => 'Lego cars',
+            ],
+            'locale' => 'nl_NL',
+            'returnUrl'    => 'https://example.org/redirect',
+            'notifyUrl'    => 'https://example.org/webhook',
+            'paymentMethod' => 'klarnapaylater',
+            'billingEmail' => 'piet@mondriaan.com',
+    ]
+)->send();
+
+// Process response
+if ($response->isSuccessful()) {
+
+    // Payment was successful
+    print_r($response);
+
+} elseif ($response->isRedirect()) {
+
+    // Redirect to offsite payment gateway
+    $response->redirect();
+
+} else {
+
+    // Payment failed
+    echo $response->getMessage();
+}
+```
+
+2. On return/notify, complete the order. This will not always be completed, because for Klarna the shipments needs to be created first.
+
+
+```php
+$response = $gateway->completeOrder(
+    [
+        "transactionReference" => "ord_xxxx",
+    ]
+)->send();
+```
+
+3. When shipping the items, create the shipment for this order. You can leave the `items` emtpy to ship all items.
+
+```php
+$response = $gateway->createShipment(
+    [
+        "transactionReference" => "ord_xxx",
+        'items' => [
+            [
+                'id' => 'odl_xxx',
+                'quantity' => 1,
+            ]
+        ]
+    ]
+)->send();
+```
 
 ## Support
 
