@@ -14,6 +14,23 @@ use Omnipay\Mollie\Message\Response\FetchPaymentMethodsResponse;
 class FetchPaymentMethodsRequest extends AbstractMollieRequest
 {
     /**
+     * @param string $resource
+     * @return $this
+     */
+    public function setResource(string $resource)
+    {
+        return $this->setParameter('resource', $resource);
+    }
+
+    /**
+     * @return string
+     */
+    public function getResource()
+    {
+        return $this->getParameter('resource');
+    }
+
+    /**
      * @return array
      * @throws InvalidRequestException
      */
@@ -21,7 +38,9 @@ class FetchPaymentMethodsRequest extends AbstractMollieRequest
     {
         $this->validate('apiKey');
 
-        return [];
+        return [
+            'resource' => $this->getResource(),
+        ];
     }
 
     /**
@@ -30,7 +49,11 @@ class FetchPaymentMethodsRequest extends AbstractMollieRequest
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest(self::GET, '/methods');
+        $query = http_build_query($data);
+        $response = $this->sendRequest(self::GET, sprintf(
+            '/methods%s',
+            ($query ? '?' . $query : '')
+        ));
 
         return $this->response = new FetchPaymentMethodsResponse($this, $response);
     }
