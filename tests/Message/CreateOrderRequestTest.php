@@ -180,7 +180,7 @@ class CreateOrderRequestTest extends TestCase
                 'vatRate' => '21.00',
                 'unitPrice' => '-100.00',
                 'totalAmount' => '-100.00',
-                'vatAmount' => '-21.00',
+                'vatAmount' => '-17.36',
             ],
         ]);
 
