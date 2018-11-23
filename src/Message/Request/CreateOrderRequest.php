@@ -19,6 +19,13 @@ use Omnipay\Mollie\Message\Response\PurchaseResponse;
 class CreateOrderRequest extends AbstractMollieRequest
 {
     /**
+     * Lines can contain a negative amount (discounts etc.)
+     *
+     * @var bool
+     */
+    protected $negativeAmountAllowed = true;
+
+    /**
      * @return array
      */
     public function getMetadata()

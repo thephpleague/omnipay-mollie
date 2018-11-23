@@ -53,7 +53,7 @@ class CreateOrderRequestTest extends TestCase
                     'unitPrice' => '329.99',
                     'totalAmount' => '329.99',
                     'vatAmount' => '57.27',
-                ]
+                ],
             ],
             'card' => [
                 'company' => 'Mollie B.V.',
@@ -157,6 +157,37 @@ class CreateOrderRequestTest extends TestCase
         $this->assertSame('698.00', $line['totalAmount']['value']);
         $this->assertSame('100.00', $line['discountAmount']['value']);
         $this->assertSame('121.14', $line['vatAmount']['value']);
+    }
+
+    public function testDiscountLines()
+    {
+        $this->request->setLines([
+            [
+                'type' => 'physical',
+                'sku' => '5702016116977',
+                'name' => 'LEGO 42083 Bugatti Chiron',
+                'quantity' => 2,
+                'vatRate' => '21.00',
+                'unitPrice' => '399.00',
+                'totalAmount' => '698.00',
+                'discountAmount' => '100.00',
+                'vatAmount' => '121.14',
+            ],
+            [
+                'type' => 'discount',
+                'name' => 'Discount 100 EURO',
+                'quantity' => 1,
+                'vatRate' => '21.00',
+                'unitPrice' => '-100.00',
+                'totalAmount' => '-100.00',
+                'vatAmount' => '-21.00',
+            ],
+        ]);
+
+        $this->setMockHttpResponse('CreateOrderSuccess.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf(CreateOrderResponse::class, $response);
     }
 
 
