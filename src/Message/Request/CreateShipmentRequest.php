@@ -3,14 +3,13 @@
 namespace Omnipay\Mollie\Message\Request;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Mollie\Message\Response\CreateShipmentResponse;
-use Omnipay\Mollie\Message\Response\PurchaseResponse;
 
 /**
  * Create a shipment with the Mollie API.
  *
  * @see https://docs.mollie.com/reference/v2/shipments-api/create-shipment
+ * @method CreateShipmentResponse send()
  */
 class CreateShipmentRequest extends AbstractMollieRequest
 {

@@ -10,6 +10,7 @@ use Omnipay\Mollie\Message\Response\PurchaseResponse;
  * Create a payment with the Mollie API.
  *
  * @see https://docs.mollie.com/reference/v2/payments-api/create-payment
+ * @method PurchaseResponse send()
  */
 class PurchaseRequest extends AbstractMollieRequest
 {

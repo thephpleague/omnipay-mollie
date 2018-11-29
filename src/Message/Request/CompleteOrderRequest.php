@@ -4,12 +4,12 @@ namespace Omnipay\Mollie\Message\Request;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Message\Response\CompleteOrderResponse;
-use Omnipay\Mollie\Message\Response\CompletePurchaseResponse;
 
 /**
  * Retrieve a single order object by its payment token.
  *
  * @see https://docs.mollie.com/reference/v2/payments-api/get-order
+ * @method CompleteOrderResponse send()
  */
 class CompleteOrderRequest extends FetchOrderRequest
 {

@@ -10,6 +10,7 @@ use Omnipay\Mollie\Message\Response\FetchCustomerMandatesResponse;
  * Retrieve all mandates for the given customer.
  *
  * @see https://docs.mollie.com/reference/v2/mandates-api/list-mandates
+ * @method FetchCustomerMandatesResponse send()
  */
 class FetchCustomerMandatesRequest extends AbstractMollieRequest
 {

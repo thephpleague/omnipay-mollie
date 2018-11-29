@@ -10,6 +10,7 @@ use Omnipay\Mollie\Message\Response\UpdateCustomerResponse;
  * Update an existing customer.
  *
  * @see https://docs.mollie.com/reference/v2/customers-api/update-customer
+ * @method UpdateCustomerResponse send()
  */
 class UpdateCustomerRequest extends AbstractMollieRequest
 {
