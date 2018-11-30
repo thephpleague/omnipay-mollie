@@ -10,6 +10,7 @@ use Omnipay\Mollie\Message\Response\CreateCustomerMandateResponse;
  * Create a mandate for a specific customer.
  *
  * @see https://docs.mollie.com/reference/v2/mandates-api/create-mandate
+ * @method CreateCustomerMandateResponse send()
  */
 class CreateCustomerMandateRequest extends AbstractMollieRequest
 {

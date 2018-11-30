@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
  * Returns issuers available for the ideal payment method.
  *
  * @see https://docs.mollie.com/reference/v2/methods-api/get-method
+ * @method FetchIssuersResponse send()
  */
 class FetchIssuersRequest extends AbstractMollieRequest
 {

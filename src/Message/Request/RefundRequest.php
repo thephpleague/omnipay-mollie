@@ -13,6 +13,7 @@ use Omnipay\Mollie\Message\Response\RefundResponse;
  * The amount of the refund will be withheld from your next settlement.
  *
  * @see https://docs.mollie.com/reference/v2/refunds-api/create-refund
+ * @method RefundResponse send()
  */
 class RefundRequest extends AbstractMollieRequest
 {

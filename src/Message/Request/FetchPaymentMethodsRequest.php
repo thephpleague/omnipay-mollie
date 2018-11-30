@@ -10,6 +10,7 @@ use Omnipay\Mollie\Message\Response\FetchPaymentMethodsResponse;
  * Retrieve all available payment methods.
  *
  * @see https://docs.mollie.com/reference/v2/methods-api/list-methods
+ * @method FetchPaymentMethodsResponse send()
  */
 class FetchPaymentMethodsRequest extends AbstractMollieRequest
 {

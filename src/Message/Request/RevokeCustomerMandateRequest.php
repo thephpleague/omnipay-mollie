@@ -10,6 +10,7 @@ use Omnipay\Mollie\Message\Response\RevokeCustomerMandateResponse;
  * Revoke a customer's mandate.
  *
  * @see https://docs.mollie.com/reference/v2/mandates-api/revoke-mandate
+ * @method RevokeCustomerMandateResponse send()
  */
 class RevokeCustomerMandateRequest extends AbstractMollieRequest
 {
