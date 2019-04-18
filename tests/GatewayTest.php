@@ -4,6 +4,7 @@ namespace Omnipay\Mollie\Test;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Gateway;
+use Omnipay\Mollie\Message\Request\CancelOrderRequest;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerMandateRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
@@ -211,5 +212,10 @@ class GatewayTest extends GatewayTestCase
         );
 
         $this->assertInstanceOf(CreateCustomerMandateRequest::class, $request);
+    }
+
+    public function testVoid()
+    {
+        $this->assertInstanceOf(CancelOrderRequest::class, $this->gateway->void());
     }
 }
