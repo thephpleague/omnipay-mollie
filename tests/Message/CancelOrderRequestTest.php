@@ -26,7 +26,7 @@ final class CancelOrderRequestTest extends TestCase
         $this->request = new CancelOrderRequest($this->httpClient, $this->getHttpRequest());
     }
 
-    public function insufficientDataProvider(): array
+    public function insufficientDataProvider()
     {
         return [
             [['apiKey' => 'mykey']],
@@ -34,7 +34,7 @@ final class CancelOrderRequestTest extends TestCase
         ];
     }
 
-    public function responseDataProvider(): array
+    public function responseDataProvider()
     {
         return [
             [['id' => 'ord_kEn1PlbGa'], false],
@@ -65,7 +65,7 @@ final class CancelOrderRequestTest extends TestCase
     /**
      * @dataProvider responseDataProvider
      */
-    public function testSendData(array $responseData, bool $success)
+    public function testSendData(array $responseData, $success)
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->expects(self::once())
@@ -80,7 +80,6 @@ final class CancelOrderRequestTest extends TestCase
                 ['Authorization' => 'Bearer mykey']
             )->willReturn($response);
 
-
         $this->request->initialize(['apiKey' => 'mykey', 'transactionReference' => 'ord_kEn1PlbGa']);
         $voidResponse = $this->request->sendData([]);
 
@@ -88,5 +87,4 @@ final class CancelOrderRequestTest extends TestCase
         $this->assertEquals($success, $voidResponse->isSuccessful());
         $this->assertSame('ord_kEn1PlbGa', $voidResponse->getTransactionReference());
     }
-
 }

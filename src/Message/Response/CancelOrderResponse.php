@@ -12,6 +12,10 @@ final class CancelOrderResponse extends FetchOrderResponse
      */
     public function isSuccessful()
     {
-        return 'canceled' === $this->data['status'] ?? '';
+        if (!isset($this->data['status'])) {
+            return false;
+        }
+
+        return 'canceled' === $this->data['status'];
     }
 }
