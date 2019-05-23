@@ -32,6 +32,23 @@ class FetchPaymentMethodsRequest extends AbstractMollieRequest
     }
 
     /**
+     * @param string $includeWallets
+     * @return $this
+     */
+    public function setIncludeWallets($includeWallets)
+    {
+        return $this->setParameter('includeWallets', $includeWallets);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIncludeWallets()
+    {
+        return $this->getParameter('includeWallets');
+    }
+
+    /**
      * @param string $locale
      * @return $this
      */
@@ -106,6 +123,7 @@ class FetchPaymentMethodsRequest extends AbstractMollieRequest
             'billingCountry' => $this->getBillingCountry(),
             'locale' => $this->getLocale(),
             'resource' => $this->getResource(),
+            'includeWallets' => $this->getIncludeWallets(),
             'sequenceType' => $this->getSequenceType(),
         ];
     }
