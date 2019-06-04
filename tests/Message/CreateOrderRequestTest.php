@@ -215,7 +215,7 @@ class CreateOrderRequestTest extends TestCase
         $this->assertNull($response->getRedirectData());
         $this->assertSame('ord_pbjz8x', $response->getTransactionReference());
         $this->assertSame('created' ,$response->getStatus());
-        $this->assertFalse($response->isOpen());
+        $this->assertTrue($response->isOpen());
         $this->assertFalse($response->isPaid());
         $this->assertNull($response->getCode());
     }
