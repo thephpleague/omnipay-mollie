@@ -4,12 +4,13 @@ namespace Omnipay\Mollie\Test\Message;
 
 use GuzzleHttp\Psr7\Request;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Mollie\Item;
 use Omnipay\Mollie\Message\Request\FetchOrderRequest;
 use Omnipay\Mollie\Message\Request\FetchTransactionRequest;
 use Omnipay\Mollie\Message\Response\FetchOrderResponse;
-use Omnipay\Mollie\Message\Response\FetchTransactionResponse;
 use Omnipay\Tests\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 class FetchOrderRequestTest extends TestCase
 {
@@ -89,4 +90,38 @@ class FetchOrderRequestTest extends TestCase
         $this->assertSame(array_keys($line),  array_keys($item->getParameters()));
     }
 
+    public function testSendDataWithIncludingPayments()
+    {
+        $expectedData = ['_embedded' => 'some-payments'];
+
+        $clientResponse = $this->createMock(ResponseInterface::class);
+        $clientResponse->expects(self::once())
+            ->method('getBody')
+            ->willReturn(\json_encode($expectedData));
+
+        $httpClient = $this->createMock(ClientInterface::class);
+        $httpClient->expects(self::once())
+            ->method('request')
+            ->with(
+                FetchOrderRequest::GET,
+                'https://api.mollie.com/v2/orders/ord_kEn1PlbGa?embed=payments',
+                ['Authorization' => 'Bearer mykey'],
+                null
+            )->willReturn($clientResponse);
+
+        $request = new FetchOrderRequest($httpClient, $this->getHttpRequest());
+        $request->initialize(
+            [
+                'apiKey' => 'mykey',
+                'transactionReference' => 'ord_kEn1PlbGa',
+                'includePayments' => true,
+            ]
+        );
+
+        $response = $request->sendData(['id' => 'ord_kEn1PlbGa']);
+
+        self::assertInstanceOf(FetchOrderResponse::class, $response);
+        self::assertEquals($request, $response->getRequest());
+        self::assertEquals($expectedData, $response->getData());
+    }
 }
