@@ -3,9 +3,7 @@
 namespace Omnipay\Mollie\Message\Request;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Mollie\Message\Response\FetchOrderResponse;
-use Omnipay\Mollie\Message\Response\FetchTransactionResponse;
 
 /**
  * Retrieve a single order object by its payment token.
@@ -30,13 +28,37 @@ class FetchOrderRequest extends AbstractMollieRequest
     }
 
     /**
+     * @return bool
+     */
+    public function hasIncludePayments()
+    {
+        return (bool) $this->getParameter('includePayments');
+    }
+
+    /**
      * @param array $data
      * @return FetchOrderResponse
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest(self::GET, '/orders/' . $data['id']);
+        $response = $this->sendRequest(
+            self::GET,
+            \sprintf(
+                '/orders/%s%s',
+                $data['id'],
+                $this->hasIncludePayments() ? '?embed=payments' : ''
+            )
+        );
 
         return $this->response = new FetchOrderResponse($this, $response);
+    }
+
+    /**
+     * @param bool $includePayments
+     * @return self
+     */
+    public function setIncludePayments($includePayments)
+    {
+        return $this->setParameter('includePayments', $includePayments);
     }
 }
