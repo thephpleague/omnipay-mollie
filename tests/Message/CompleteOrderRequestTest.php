@@ -64,7 +64,7 @@ class CompleteOrderRequestTest extends TestCase
 
         $this->assertInstanceOf(CompleteOrderResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isOpen());
+        $this->assertTrue($response->isOpen());
         $this->assertFalse($response->isPaid());
         $this->assertFalse($response->isRedirect());
         $this->assertSame('ord_kEn1PlbGa', $response->getTransactionReference());

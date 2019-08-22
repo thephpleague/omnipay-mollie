@@ -58,7 +58,8 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
      */
     public function isOpen()
     {
-        return isset($this->data['status']) && 'open' === $this->data['status'];
+        return isset($this->data['status'])
+            && ('open' === $this->data['status'] || 'created' === $this->data['status']);
     }
 
     /**
