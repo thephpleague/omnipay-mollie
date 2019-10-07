@@ -41,6 +41,11 @@ use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
 class Gateway extends AbstractGateway
 {
     /**
+     * Version of our gateway.
+     */
+    const GATEWAY_VERSION = "5.1.1";
+
+    /**
      * @return string
      */
     public function getName()
