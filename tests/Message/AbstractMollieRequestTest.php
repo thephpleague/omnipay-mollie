@@ -35,4 +35,31 @@ class AbstractMollieRequestTest extends TestCase
         $this->assertEquals($versionString, $httpRequest->getHeaderLine('User-Agent'));
     }
 
+    public function testCustomVersionStrings()
+    {
+        $this->gateway->initialize([
+            'versionStrings' => ['Acme/6.84']
+        ]);
+        $request = $this->gateway->fetchIssuers();
+        $request->send();
+
+        /** @var \Psr\Http\Message\RequestInterface $httpRequest */
+        $httpRequest = $this->getMockedRequests()[0];
+
+        $versionString = 'Omnipay-Mollie/'.Gateway::GATEWAY_VERSION.' PHP/' . phpversion() . ' Acme/6.84';
+        $this->assertEquals($versionString, $httpRequest->getHeaderLine('User-Agent'));
+    }
+
+    public function testAddVersionString()
+    {
+        $this->gateway->addVersionString('Acme/6.84');
+        $request = $this->gateway->fetchIssuers();
+        $request->send();
+
+        /** @var \Psr\Http\Message\RequestInterface $httpRequest */
+        $httpRequest = $this->getMockedRequests()[0];
+
+        $versionString = 'Omnipay-Mollie/'.Gateway::GATEWAY_VERSION.' PHP/' . phpversion() . ' Acme/6.84';
+        $this->assertEquals($versionString, $httpRequest->getHeaderLine('User-Agent'));
+    }
 }

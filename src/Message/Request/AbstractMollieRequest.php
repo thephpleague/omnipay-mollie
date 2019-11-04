@@ -46,6 +46,23 @@ abstract class AbstractMollieRequest extends AbstractRequest
     }
 
     /**
+     * @return array|null
+     */
+    public function getVersionStrings()
+    {
+        return $this->getParameter('versionStrings');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setVersionStrings(array $values)
+    {
+        return $this->setParameter('versionStrings', $values);
+    }
+
+    /**
      * @param string $value
      * @return $this
      */
@@ -94,6 +111,10 @@ abstract class AbstractMollieRequest extends AbstractRequest
             'Omnipay-Mollie/' . Gateway::GATEWAY_VERSION,
             'PHP/' . phpversion(),
         ];
+
+        if ($customVersions = $this->getParameter('versionStrings')) {
+            $versions = array_merge($versions, $customVersions);
+        }
 
         $headers = [
             'Accept' => "application/json",

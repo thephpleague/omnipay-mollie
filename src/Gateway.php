@@ -81,6 +81,35 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * @return array|null
+     */
+    public function getVersionStrings()
+    {
+        return $this->getParameter('versionStrings');
+    }
+
+    /**
+     * @param  string $value
+     * @return $this
+     */
+    public function setVersionStrings(array $values)
+    {
+        return $this->setParameter('versionStrings', $values);
+    }
+
+    /**
+     * @param  string $value
+     * @return $this
+     */
+    public function addVersionString($value)
+    {
+        $versionStrings =  $this->getVersionStrings() ?: [];
+        $versionStrings[] = str_replace([" ", "\t", "\n", "\r"], '-', $value);
+
+        return $this->setVersionStrings($versionStrings);
+    }
+
+    /**
      * @param  array $parameters
      * @return FetchIssuersRequest
      */
