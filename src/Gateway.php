@@ -43,7 +43,7 @@ class Gateway extends AbstractGateway
     /**
      * Version of our gateway.
      */
-    const GATEWAY_VERSION = "5.1.1";
+    const GATEWAY_VERSION = "5.2";
 
     /**
      * @return string
