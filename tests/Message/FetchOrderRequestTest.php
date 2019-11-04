@@ -105,7 +105,9 @@ class FetchOrderRequestTest extends TestCase
             ->with(
                 FetchOrderRequest::GET,
                 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa?embed=payments',
-                ['Authorization' => 'Bearer mykey'],
+                $this->callback(function ($headers) {
+                    return $headers['Authorization'] == 'Bearer mykey';
+                }),
                 null
             )->willReturn($clientResponse);
 
