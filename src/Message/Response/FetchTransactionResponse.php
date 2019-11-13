@@ -115,6 +115,14 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
     }
 
     /**
+     * @return boolean
+     */
+    public function hasChargebacks()
+    {
+        return !empty($this->data['_links']['chargebacks']);
+    }
+
+    /**
      * @return string|null
      */
     public function getTransactionReference()
