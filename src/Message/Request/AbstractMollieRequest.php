@@ -118,6 +118,7 @@ abstract class AbstractMollieRequest extends AbstractRequest
 
         $headers = [
             'Accept' => "application/json",
+            'Content-Type' => "application/json",
             'Authorization' => 'Bearer ' . $this->getApiKey(),
             'User-Agent' => implode(' ', $versions),
         ];
