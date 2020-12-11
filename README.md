@@ -177,6 +177,12 @@ $response = $gateway->createShipment(
 )->send();
 ```
 
+4. As long as the order is `created`, `authorized` or `shipping`, it may be cancelled (voided) 
+
+```php
+$response = $gateway->void(["transactionReference" => "ord_xxx"])->send();
+```
+
 ## Support
 
 If you are having general issues with Omnipay, we suggest posting on
