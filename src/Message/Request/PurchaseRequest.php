@@ -100,6 +100,24 @@ class PurchaseRequest extends AbstractMollieRequest
     }
 
     /**
+     * @return string
+     */
+    public function getInclude()
+    {
+        return $this->getParameter('include');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setInclude($value)
+    {
+        return $this->setParameter('include', $value);
+    }
+
+
+    /**
      * @return array
      * @throws InvalidRequestException
      */
@@ -155,7 +173,13 @@ class PurchaseRequest extends AbstractMollieRequest
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest(self::POST, '/payments', $data);
+        $endpoint = '/payments';
+
+        if ($include = $this->getInclude()) {
+            $endpoint .= '?include=' . $include;
+        }
+
+        $response = $this->sendRequest(self::POST, $endpoint, $data);
 
         return $this->response = new PurchaseResponse($this, $response);
     }

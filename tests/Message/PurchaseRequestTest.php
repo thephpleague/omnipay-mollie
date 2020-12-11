@@ -174,6 +174,41 @@ class PurchaseRequestTest extends TestCase
         );
     }
 
+    public function testSendSuccessWithQrcode()
+    {
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
+        $response = $this->request->setInclude('details.qrCode')->send();
+
+        $this->assertEqualRequest(
+            new Request(
+                "POST",
+                "https://api.mollie.com/v2/payments?include=details.qrCode",
+                [],
+                '{  
+                   "amount":{  
+                      "value":"12.00",
+                      "currency":"USD"
+                   },
+                   "description":"Description",
+                   "redirectUrl":"https:\/\/www.example.com\/return",
+                   "method":null,
+                   "metadata":[
+                        "meta"
+                    ],
+                   "issuer":"my bank",
+                   "locale":"fr_FR",
+                   "billingEmail":"billing-email@example.com"
+                }'
+            ),
+            $this->getMockClient()->getLastRequest()
+        );
+
+
+        $this->assertInstanceOf(PurchaseResponse::class, $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+    }
+
     public function testIssuerFailure()
     {
         $this->setMockHttpResponse('PurchaseIssuerFailure.txt');
