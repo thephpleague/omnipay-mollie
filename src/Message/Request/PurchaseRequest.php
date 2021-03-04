@@ -85,6 +85,23 @@ class PurchaseRequest extends AbstractMollieRequest
     /**
      * @return string
      */
+    public function getMandateId()
+    {
+        return $this->getParameter('mandateId');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setMandateId($value)
+    {
+        return $this->setParameter('mandateId', $value);
+    }
+    
+    /**
+     * @return string
+     */
     public function getSequenceType()
     {
         return $this->getParameter('sequenceType');
@@ -162,6 +179,10 @@ class PurchaseRequest extends AbstractMollieRequest
 
         if ($sequenceType = $this->getSequenceType()) {
             $data['sequenceType'] = $sequenceType;
+        }
+        
+        if ($mandateId = $this->getMandateId()) {
+            $data['mandateId'] = $mandateId;
         }
 
         return $data;
