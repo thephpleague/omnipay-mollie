@@ -16,7 +16,7 @@ class CompletePurchaseRequestTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new CompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
@@ -28,12 +28,11 @@ class CompletePurchaseRequestTest extends TestCase
         ));
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     * @expectedExceptionMessage The transactionReference parameter is required
-     */
     public function testGetDataWithoutIDParameter()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+        $this->expectExceptionMessage('The transactionReference parameter is required');
+
         $this->getHttpRequest()->request->remove('id');
 
         $data = $this->request->getData();

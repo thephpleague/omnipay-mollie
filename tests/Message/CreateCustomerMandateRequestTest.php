@@ -17,7 +17,7 @@ class CreateCustomerMandateRequestTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new CreateCustomerMandateRequest($this->getHttpClient(), $this->getHttpRequest());
 

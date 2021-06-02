@@ -20,7 +20,7 @@ final class CancelOrderRequestTest extends TestCase
      */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->httpClient = $this->createMock(ClientInterface::class);
         $this->request = new CancelOrderRequest($this->httpClient, $this->getHttpRequest());
@@ -46,12 +46,11 @@ final class CancelOrderRequestTest extends TestCase
     /**
      * @dataProvider insufficientDataProvider
      *
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     *
      * @param array $input
      */
     public function testGetDataWillValidateRequiredData(array $input)
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
         $this->request->initialize($input);
         $this->request->getData();
     }

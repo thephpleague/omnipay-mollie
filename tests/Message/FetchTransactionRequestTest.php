@@ -17,7 +17,7 @@ class FetchTransactionRequestTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new FetchTransactionRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(

@@ -4,10 +4,6 @@ namespace Omnipay\Mollie\Test\Message;
 
 trait AssertRequestTrait
 {
-    abstract function assertEquals($expected, $actual, $message = '', $delta = 0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false);
-
-    abstract function assertJsonStringEqualsJsonString($expected, $actual, $message = null);
-
     public function assertEqualRequest(\Psr\Http\Message\RequestInterface $expectedRequest, \Psr\Http\Message\RequestInterface $actualRequest)
     {
         $this->assertEquals($expectedRequest->getMethod(), $actualRequest->getMethod(), "Expected request Method should be equal to actual request method.");

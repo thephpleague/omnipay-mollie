@@ -16,7 +16,7 @@ class RefundRequestTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new RefundRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize([
@@ -45,11 +45,10 @@ class RefundRequestTest extends TestCase
         $this->assertCount(1, $data);
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     */
     public function testGetDataWithoutAmount()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+
         $this->request->initialize(
             [
                 'apiKey'               => 'mykey',
