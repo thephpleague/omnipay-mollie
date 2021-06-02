@@ -29,7 +29,7 @@ class GatewayTest extends GatewayTestCase
      */
     protected $gateway;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -96,11 +96,10 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     */
     public function testThatRefundDoesntWorkWithoutAmount()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+
         $request = $this->gateway->refund(
             array(
                 'apiKey'               => 'key',

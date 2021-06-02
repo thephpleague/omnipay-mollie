@@ -21,7 +21,7 @@ class FetchOrderRequestTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new FetchOrderRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
@@ -122,8 +122,8 @@ class FetchOrderRequestTest extends TestCase
 
         $response = $request->sendData(['id' => 'ord_kEn1PlbGa']);
 
-        self::assertInstanceOf(FetchOrderResponse::class, $response);
-        self::assertEquals($request, $response->getRequest());
-        self::assertEquals($expectedData, $response->getData());
+        $this->assertInstanceOf(FetchOrderResponse::class, $response);
+        $this->assertEquals($request, $response->getRequest());
+        $this->assertEquals($expectedData, $response->getData());
     }
 }

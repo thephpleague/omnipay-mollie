@@ -21,7 +21,7 @@ class CreateShipmentRequestTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new CreateShipmentRequest($this->getHttpClient(), $this->getHttpRequest());
 

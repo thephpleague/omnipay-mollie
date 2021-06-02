@@ -33,15 +33,12 @@
         "psr-4": { "Omnipay\\Mollie\\Test\\": "tests/" }
     },
     "require": {
-        "omnipay/common": "^3.0.1"
+        "php": "^7.3|^8.0",
+        "omnipay/common": "^3.1"
     },
     "require-dev": {
-        "omnipay/tests": "^3.1",
-        "squizlabs/php_codesniffer": "^3",
-        "phpro/grumphp": "^0.14",
-        "phpmd/phpmd": "^2",
-        "overtrue/phplint": "^1",
-        "jakub-onderka/php-parallel-lint": "^1"
+        "omnipay/tests": "^4.0.2",
+        "squizlabs/php_codesniffer": "^3"
     },
     "extra": {
         "branch-alias": {
