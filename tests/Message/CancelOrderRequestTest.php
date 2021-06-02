@@ -76,7 +76,9 @@ final class CancelOrderRequestTest extends TestCase
             ->with(
                 'DELETE',
                 'https://api.mollie.com/v2/orders/ord_kEn1PlbGa',
-                ['Authorization' => 'Bearer mykey']
+                $this->callback(function ($headers) {
+                    return $headers['Authorization'] == 'Bearer mykey';
+                })
             )->willReturn($response);
 
         $this->request->initialize(['apiKey' => 'mykey', 'transactionReference' => 'ord_kEn1PlbGa']);
