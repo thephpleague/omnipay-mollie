@@ -2,7 +2,7 @@
 
 **Mollie driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/thephpleague/omnipay-mollie.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-mollie)
+[![Unit Tests](https://github.com/thephpleague/omnipay-mollie/actions/workflows/run-tests.yml/badge.svg)](https://github.com/thephpleague/omnipay-mollie/actions/workflows/run-tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/mollie/version.png)](https://packagist.org/packages/omnipay/mollie)
 [![Total Downloads](https://poser.pugx.org/omnipay/mollie/d/total.png)](https://packagist.org/packages/omnipay/mollie)
 
