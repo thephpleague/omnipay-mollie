@@ -34,7 +34,7 @@
     },
     "require": {
         "php": "^7.3|^8.0",
-        "omnipay/common": "^3.0.1"
+        "omnipay/common": "^3.1"
     },
     "require-dev": {
         "omnipay/tests": "^4.0.2",
