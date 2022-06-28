@@ -128,6 +128,23 @@ class CreateOrderRequest extends AbstractMollieRequest
     }
 
     /**
+     * @return string
+     */
+    public function getCardToken()
+    {
+        return $this->getParameter('cardToken');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setCardToken($value)
+    {
+        return $this->setParameter('cardToken', $value);
+    }
+
+    /**
      * Alias for lines
      *
      * @param $items
@@ -197,6 +214,10 @@ class CreateOrderRequest extends AbstractMollieRequest
 
         if ($sequenceType = $this->getSequenceType()) {
             $data['payment']['sequenceType'] = $sequenceType;
+        }
+
+        if ($cardToken = $this->getCardToken()) {
+            $data['payment']['cardToken'] = $cardToken;
         }
 
         return array_filter($data);
