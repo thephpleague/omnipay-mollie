@@ -34,7 +34,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             array(
                 'Authorization' => 'Bearer ' . $this->getApiKey()
             ),
-            json_encode($data)
+            $data !== null ? json_encode($data) : null
         );
 
         return json_decode($response->getBody(), true);
