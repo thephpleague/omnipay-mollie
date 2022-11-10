@@ -298,6 +298,14 @@ class CreateOrderRequest extends AbstractMollieRequest
 
         return $lines;
     }
+    
+    /**
+     * @return bool
+     */
+    public function hasIncludePayments()
+    {
+        return (bool) $this->getParameter('includePayments');
+    }
 
     /**
      * @param array $data
@@ -305,8 +313,24 @@ class CreateOrderRequest extends AbstractMollieRequest
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest(self::POST, '/orders', $data);
+        $response = $this->sendRequest(
+            self::POST,
+            \sprintf(
+                '/orders%s',
+                $this->hasIncludePayments() ? '?embed=payments' : ''
+            ),
+            $data
+        );
 
         return $this->response = new CreateOrderResponse($this, $response);
+    }
+    
+    /**
+     * @param bool $includePayments
+     * @return self
+     */
+    public function setIncludePayments($includePayments)
+    {
+        return $this->setParameter('includePayments', $includePayments);
     }
 }
