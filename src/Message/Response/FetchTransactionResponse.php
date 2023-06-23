@@ -40,14 +40,6 @@ class FetchTransactionResponse extends AbstractMollieResponse implements Redirec
     /**
      * {@inheritdoc}
      */
-    public function getRedirectData()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function isSuccessful()
     {
         return parent::isSuccessful();
