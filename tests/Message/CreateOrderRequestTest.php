@@ -212,7 +212,7 @@ class CreateOrderRequestTest extends TestCase
         $this->assertTrue($response->isRedirect());
         $this->assertSame('GET', $response->getRedirectMethod());
         $this->assertSame('https://www.mollie.com/payscreen/order/checkout/pbjz8x', $response->getRedirectUrl());
-        $this->assetEmpty($response->getRedirectData());
+        $this->assertEmpty($response->getRedirectData());
         $this->assertSame('ord_pbjz8x', $response->getTransactionReference());
         $this->assertSame('created' ,$response->getStatus());
         $this->assertTrue($response->isOpen());
