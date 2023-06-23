@@ -163,7 +163,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertTrue($response->isRedirect());
         $this->assertSame('GET', $response->getRedirectMethod());
         $this->assertSame('https://www.mollie.com/payscreen/select-method/7UhSN1zuXS', $response->getRedirectUrl());
-        $this->assertNull($response->getRedirectData());
+        $this->assertEmpty($response->getRedirectData());
         $this->assertSame('tr_7UhSN1zuXS', $response->getTransactionReference());
         $this->assertTrue($response->isOpen());
         $this->assertFalse($response->isPaid());
@@ -227,7 +227,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getRedirectUrl());
-        $this->assertNull($response->getRedirectData());
+        $this->assertEmpty($response->getRedirectData());
         $this->assertSame('{"status":422,"title":"Unprocessable Entity","detail":"The payment method is invalid","field":"method","_links":{"documentation":{"href":"https:\/\/docs.mollie.com\/guides\/handling-errors","type":"text\/html"}}}', $response->getMessage());
     }
 }
