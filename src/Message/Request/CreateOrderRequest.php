@@ -145,6 +145,23 @@ class CreateOrderRequest extends AbstractMollieRequest
     }
 
     /**
+     * @return string
+     */
+    public function getCancelUrl()
+    {
+        return $this->getParameter('cancelUrl');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setCancelUrl($value)
+    {
+        return $this->setParameter('cancelUrl', $value);
+    }
+
+    /**
      * Alias for lines
      *
      * @param $items
@@ -197,6 +214,10 @@ class CreateOrderRequest extends AbstractMollieRequest
         $data['redirectUrl'] = $this->getReturnUrl();
         $data['webhookUrl'] = $this->getNotifyUrl();
         $data['method'] = $this->getPaymentMethod();
+
+        if ($this->getCancelUrl()) {
+            $data['cancelUrl'] = $this->getCancelUrl();
+        }
 
         $data['lines'] = [];
         if ($items = $this->getItems()) {
@@ -298,7 +319,7 @@ class CreateOrderRequest extends AbstractMollieRequest
 
         return $lines;
     }
-    
+
     /**
      * @return bool
      */
@@ -324,7 +345,7 @@ class CreateOrderRequest extends AbstractMollieRequest
 
         return $this->response = new CreateOrderResponse($this, $response);
     }
-    
+
     /**
      * @param bool $includePayments
      * @return self
