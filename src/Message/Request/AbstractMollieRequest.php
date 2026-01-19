@@ -105,7 +105,7 @@ abstract class AbstractMollieRequest extends AbstractRequest
      * @param array $data
      * @return array
      */
-    protected function sendRequest($method, $endpoint, array $data = null)
+    protected function sendRequest($method, $endpoint, ?array $data = null)
     {
         $versions = [
             'Omnipay-Mollie/' . Gateway::GATEWAY_VERSION,
