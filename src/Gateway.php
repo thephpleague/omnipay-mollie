@@ -5,6 +5,7 @@ namespace Omnipay\Mollie;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Mollie\Message\Request\CancelOrderRequest;
+use Omnipay\Mollie\Message\Request\CaptureRequest;
 use Omnipay\Mollie\Message\Request\CompleteOrderRequest;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerMandateRequest;
@@ -292,6 +293,15 @@ class Gateway extends AbstractGateway
     public function revokeCustomerMandate(array $parameters = [])
     {
         return $this->createRequest(RevokeCustomerMandateRequest::class, $parameters);
+    }
+
+    /**
+     * @param  array $parameters
+     * @return CaptureRequest
+     */
+    public function capture(array $parameters = [])
+    {
+        return $this->createRequest(CaptureRequest::class, $parameters);
     }
 
     /**

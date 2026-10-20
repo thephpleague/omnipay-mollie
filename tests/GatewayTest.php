@@ -217,4 +217,12 @@ class GatewayTest extends GatewayTestCase
     {
         $this->assertInstanceOf(CancelOrderRequest::class, $this->gateway->void());
     }
+
+    public function testCapture()
+    {
+        $request = $this->gateway->capture(['apiKey' => 'key', 'transactionReference' => 'tr_WDqYK6vllg']);
+
+        $this->assertInstanceOf(\Omnipay\Mollie\Message\Request\CaptureRequest::class, $request);
+        $this->assertTrue($this->gateway->supportsCapture());
+    }
 }

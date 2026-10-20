@@ -98,6 +98,12 @@ $response = $gateway->purchase(
 )->send();
 ```
 
+Capture the authorized amount (or a part of it by passing `amount` and `currency`):
+
+```php
+$response = $gateway->capture(["transactionReference" => "tr_WDqYK6vllg"])->send();
+```
+
 ### Example using the Order API
 
 1. Create the order and pass the order items in the parameters.

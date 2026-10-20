@@ -1,0 +1,14 @@
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/hal+json
+
+{
+    "status": 422,
+    "title": "Unprocessable Entity",
+    "detail": "The payment cannot be captured, because its status is not 'authorized'",
+    "_links": {
+        "documentation": {
+            "href": "https://docs.mollie.com/overview/handling-errors",
+            "type": "text/html"
+        }
+    }
+}
