@@ -128,6 +128,110 @@ class PurchaseRequestTest extends TestCase
         $this->assertCount(8, $data);
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
+    public function testGetDataWithLinesAddressesAndCaptureMode()
+    {
+        $this->request->initialize([
+            'apiKey' => 'mykey',
+            'amount' => '1027.99',
+            'currency' => 'EUR',
+            'description' => 'Order #12345',
+            'returnUrl' => 'https://www.example.com/return',
+            'paymentMethod' => 'klarna',
+            'captureMode' => 'manual',
+            'card' => [
+                'firstName' => 'Piet',
+                'lastName' => 'Mondriaan',
+                'email' => 'piet@example.org',
+                'address1' => 'Keizersgracht 126',
+                'postcode' => '1015 CW',
+                'city' => 'Amsterdam',
+                'country' => 'NL',
+                'shippingFirstName' => 'Piet',
+                'shippingLastName' => 'Mondriaan',
+                'shippingAddress1' => 'Prinsengracht 126',
+                'shippingPostcode' => '1015 EA',
+                'shippingCity' => 'Amsterdam',
+                'shippingCountry' => 'NL',
+            ],
+            'items' => [
+                new \Omnipay\Mollie\Item([
+                    'type' => 'physical',
+                    'sku' => '5702016116977',
+                    'name' => 'LEGO 42083 Bugatti Chiron',
+                    'quantity' => 2,
+                    'vatRate' => '21.00',
+                    'unitPrice' => '399.00',
+                    'totalAmount' => '698.00',
+                    'discountAmount' => '100.00',
+                    'vatAmount' => '121.14',
+                ]),
+                [
+                    'type' => 'discount',
+                    'name' => 'Coupon',
+                    'quantity' => 1,
+                    'vatRate' => '21.00',
+                    'unitPrice' => '-20.00',
+                    'totalAmount' => '-20.00',
+                    'vatAmount' => '-3.47',
+                ],
+                [
+                    'type' => 'shipping_fee',
+                    'name' => 'Shipping',
+                    'quantity' => 1,
+                    'vatRate' => '21.00',
+                    'unitPrice' => '349.99',
+                    'totalAmount' => '349.99',
+                ],
+            ],
+        ]);
+
+        $data = $this->request->getData();
+
+        $this->assertSame('manual', $data['captureMode']);
+        $this->assertCount(3, $data['lines']);
+        $this->assertSame([
+            'type' => 'physical',
+            'sku' => '5702016116977',
+            'description' => 'LEGO 42083 Bugatti Chiron',
+            'quantity' => 2,
+            'vatRate' => '21.00',
+            'unitPrice' => ['currency' => 'EUR', 'value' => '399.00'],
+            'totalAmount' => ['currency' => 'EUR', 'value' => '698.00'],
+            'discountAmount' => ['currency' => 'EUR', 'value' => '100.00'],
+            'vatAmount' => ['currency' => 'EUR', 'value' => '121.14'],
+        ], $data['lines'][0]);
+        $this->assertSame(['currency' => 'EUR', 'value' => '-20.00'], $data['lines'][1]['totalAmount']);
+        $this->assertSame(['currency' => 'EUR', 'value' => '60.74'], $data['lines'][2]['vatAmount']);
+        $this->assertSame([
+            'streetAndNumber' => 'Keizersgracht 126',
+            'city' => 'Amsterdam',
+            'postalCode' => '1015 CW',
+            'country' => 'NL',
+            'givenName' => 'Piet',
+            'familyName' => 'Mondriaan',
+            'email' => 'piet@example.org',
+        ], $data['billingAddress']);
+        $this->assertSame('Prinsengracht 126', $data['shippingAddress']['streetAndNumber']);
+    }
+
+    /**
+     * @throws InvalidRequestException
+     */
+    public function testGetDataWithoutAddressSendsNoAddress()
+    {
+        $this->request->setCard(['email' => 'piet@example.org']);
+
+        $data = $this->request->getData();
+
+        $this->assertArrayNotHasKey('billingAddress', $data);
+        $this->assertArrayNotHasKey('shippingAddress', $data);
+        $this->assertArrayNotHasKey('lines', $data);
+        $this->assertArrayNotHasKey('captureMode', $data);
+    }
+
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('PurchaseSuccess.txt');

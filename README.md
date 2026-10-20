@@ -60,6 +60,44 @@ if ($response->isSuccessful()) {
 }
 ```
 
+### Payments with order lines and manual capture (e.g. Klarna)
+
+Mollie recommends the Payments API instead of the Order API. Payment methods like Klarna require order lines and the billing address, which are added from the `items` and the `card` parameters. With `captureMode` set to `manual`, the payment is only authorized and captured later (e.g. after shipping):
+
+```php
+$response = $gateway->purchase(
+    [
+        "amount" => "349.99",
+        "currency" => "EUR",
+        "description" => "Order #12345",
+        "returnUrl" => "https://webshop.example.org/mollie-return.php",
+        "paymentMethod" => "klarna",
+        "captureMode" => "manual",
+        "card" => [
+            "firstName" => "Piet",
+            "lastName" => "Mondriaan",
+            "email" => "piet@example.org",
+            "address1" => "Keizersgracht 126",
+            "postcode" => "1015 CW",
+            "city" => "Amsterdam",
+            "country" => "NL",
+        ],
+        "items" => [
+            [
+                "type" => "physical",
+                "sku" => "5702016116977",
+                "name" => "LEGO 42083 Bugatti Chiron",
+                "quantity" => 1,
+                "vatRate" => "21.00",
+                "unitPrice" => "349.99",
+                "totalAmount" => "349.99",
+                "vatAmount" => "60.74",
+            ],
+        ],
+    ]
+)->send();
+```
+
 ### Example using the Order API
 
 1. Create the order and pass the order items in the parameters.

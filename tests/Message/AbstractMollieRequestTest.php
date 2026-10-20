@@ -23,6 +23,16 @@ class AbstractMollieRequestTest extends TestCase
     }
 
 
+    public function testSetItemsKeepsItemInstances()
+    {
+        $request = $this->gateway->purchase();
+        $request->setItems([new \Omnipay\Mollie\Item(['name' => 'Item object']), ['name' => 'Item array']]);
+
+        $this->assertCount(2, $request->getItems());
+        $this->assertSame('Item object', $request->getItems()->all()[0]->getName());
+        $this->assertSame('Item array', $request->getItems()->all()[1]->getName());
+    }
+
     public function testVersionString()
     {
         $request = $this->gateway->fetchIssuers();
