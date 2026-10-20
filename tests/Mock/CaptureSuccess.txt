@@ -1,0 +1,21 @@
+HTTP/1.1 201 Created
+Content-Type: application/hal+json
+
+{
+    "resource": "capture",
+    "id": "cpt_mNepDkEtco6ah3QNPUGYH",
+    "mode": "test",
+    "amount": {
+        "value": "35.95",
+        "currency": "EUR"
+    },
+    "status": "pending",
+    "paymentId": "tr_WDqYK6vllg",
+    "createdAt": "2026-10-20T14:00:00+00:00",
+    "_links": {
+        "self": {
+            "href": "https://api.mollie.com/v2/payments/tr_WDqYK6vllg/captures/cpt_mNepDkEtco6ah3QNPUGYH",
+            "type": "application/hal+json"
+        }
+    }
+}

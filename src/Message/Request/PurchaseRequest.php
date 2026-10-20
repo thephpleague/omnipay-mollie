@@ -152,6 +152,36 @@ class PurchaseRequest extends AbstractMollieRequest
 
 
     /**
+     * @return string|null
+     */
+    public function getCaptureMode()
+    {
+        return $this->getParameter('captureMode');
+    }
+
+    /**
+     * Use "manual" to only authorize the payment and capture it later (e.g. for Klarna and cards)
+     *
+     * @param string $value "automatic" or "manual"
+     * @return $this
+     */
+    public function setCaptureMode($value)
+    {
+        return $this->setParameter('captureMode', $value);
+    }
+
+    /**
+     * Alias for items
+     *
+     * @param array $items
+     * @return $this
+     */
+    public function setLines($items)
+    {
+        return $this->setItems($items);
+    }
+
+    /**
      * @return array
      * @throws InvalidRequestException
      */
@@ -204,6 +234,19 @@ class PurchaseRequest extends AbstractMollieRequest
 
         if ($cardToken = $this->getCardToken()) {
             $data['cardToken'] = $cardToken;
+        }
+
+        if ($captureMode = $this->getCaptureMode()) {
+            $data['captureMode'] = $captureMode;
+        }
+
+        // Order lines and addresses are required by some methods like Klarna and improve risk checks
+        if ($items = $this->getItems()) {
+            $data['lines'] = $this->getLines($items, 'description');
+        }
+
+        if (($card = $this->getCard()) && ($card->getAddress1() || $card->getShippingAddress1())) {
+            $data += $this->getCardData($card);
         }
 
         return $data;

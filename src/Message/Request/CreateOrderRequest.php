@@ -2,9 +2,7 @@
 
 namespace Omnipay\Mollie\Message\Request;
 
-use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Common\ItemBag;
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Mollie\Item;
 use Omnipay\Mollie\Message\Response\CreateOrderResponse;
@@ -242,82 +240,6 @@ class CreateOrderRequest extends AbstractMollieRequest
         }
 
         return array_filter($data);
-    }
-
-    protected function getCardData(CreditCard $card)
-    {
-        $data = [];
-
-        $data['billingAddress'] = array_filter([
-            'organizationName' => $card->getCompany(),
-            'streetAndNumber' => $card->getAddress1(),
-            'streetAdditional' => $card->getAddress2(),
-            'city' => $card->getCity(),
-            'region' => $card->getState(),
-            'postalCode' => $card->getPostcode(),
-            'country' => $card->getCountry(),
-            'title' => $card->getTitle(),
-            'givenName' => $card->getFirstName(),
-            'familyName' => $card->getLastName(),
-            'email' => $this->getBillingEmail() ?: $card->getEmail(),
-            'phone' => $card->getPhone(),
-        ]);
-
-        if ($card->getShippingAddress1()) {
-            $data['shippingAddress'] = array_filter([
-                'organizationName' => $card->getCompany(),
-                'streetAndNumber' => $card->getShippingAddress1(),
-                'streetAdditional' => $card->getShippingAddress2(),
-                'city' => $card->getShippingCity(),
-                'region' => $card->getShippingState(),
-                'postalCode' => $card->getShippingPostcode(),
-                'country' => $card->getShippingCountry(),
-                'title' => $card->getShippingTitle(),
-                'givenName' => $card->getShippingFirstName(),
-                'familyName' => $card->getShippingLastName(),
-                'email' => $card->getEmail(),
-                'phone' => $card->getShippingPhone(),
-            ]);
-        }
-
-        return $data;
-    }
-
-    protected function getLines(ItemBag $items)
-    {
-        $lines = [];
-        foreach ($items as $item) {
-            $vatRate = $item->getVatRate();
-            $totalAmount = $item->getTotalAmount();
-            $vatAmount = $item->getVatAmount();
-
-            if (null === $totalAmount) {
-                $totalAmount = $item->getQuantity() * $item->getPrice();
-            }
-
-            if (null === $vatAmount) {
-                $vatAmount =  round($totalAmount * ($vatRate / (100 + $vatRate)), $this->getCurrencyDecimalPlaces());
-            }
-
-            $data = [
-                'type' => $item->getType(),
-                'sku' => $item->getSku(),
-                'name' => $item->getName(),
-                'productUrl' => $item->getProductUrl(),
-                'imageUrl' => $item->getImageUrl(),
-                'quantity' => (int) $item->getQuantity(),
-                'vatRate' => $vatRate,
-                'unitPrice' => $this->createAmountObject($item->getUnitPrice()),
-                'totalAmount' => $this->createAmountObject($totalAmount),
-                'discountAmount' => $this->createAmountObject($item->getDiscountAmount()),
-                'vatAmount' => $this->createAmountObject($vatAmount),
-            ];
-
-            // Strip null values
-            $lines[] = array_filter($data);
-        }
-
-        return $lines;
     }
 
     /**

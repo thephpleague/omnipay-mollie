@@ -217,4 +217,26 @@ class GatewayTest extends GatewayTestCase
     {
         $this->assertInstanceOf(CancelOrderRequest::class, $this->gateway->void());
     }
+
+    public function testVoidPayment()
+    {
+        $request = $this->gateway->void(['transactionReference' => 'tr_WDqYK6vllg']);
+
+        $this->assertInstanceOf(\Omnipay\Mollie\Message\Request\CancelPaymentRequest::class, $request);
+    }
+
+    public function testVoidOrder()
+    {
+        $request = $this->gateway->void(['transactionReference' => 'ord_kEn1PlbGa']);
+
+        $this->assertInstanceOf(CancelOrderRequest::class, $request);
+    }
+
+    public function testCapture()
+    {
+        $request = $this->gateway->capture(['apiKey' => 'key', 'transactionReference' => 'tr_WDqYK6vllg']);
+
+        $this->assertInstanceOf(\Omnipay\Mollie\Message\Request\CaptureRequest::class, $request);
+        $this->assertTrue($this->gateway->supportsCapture());
+    }
 }

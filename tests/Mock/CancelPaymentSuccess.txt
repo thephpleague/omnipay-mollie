@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Content-Type: application/hal+json
+
+{
+    "resource": "payment",
+    "id": "tr_WDqYK6vllg",
+    "mode": "test",
+    "amount": {
+        "value": "35.95",
+        "currency": "EUR"
+    },
+    "description": "Order #12345",
+    "method": "klarna",
+    "metadata": null,
+    "status": "canceled",
+    "canceledAt": "2026-10-20T14:00:00+00:00",
+    "createdAt": "2026-10-20T13:00:00+00:00"
+}
