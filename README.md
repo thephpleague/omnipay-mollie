@@ -98,10 +98,11 @@ $response = $gateway->purchase(
 )->send();
 ```
 
-Capture the authorized amount (or a part of it by passing `amount` and `currency`):
+Capture the authorized amount (or a part of it by passing `amount` and `currency`) or release the authorization:
 
 ```php
 $response = $gateway->capture(["transactionReference" => "tr_WDqYK6vllg"])->send();
+$response = $gateway->void(["transactionReference" => "tr_WDqYK6vllg"])->send();
 ```
 
 ### Example using the Order API

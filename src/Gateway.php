@@ -5,6 +5,7 @@ namespace Omnipay\Mollie;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Mollie\Message\Request\CancelOrderRequest;
+use Omnipay\Mollie\Message\Request\CancelPaymentRequest;
 use Omnipay\Mollie\Message\Request\CaptureRequest;
 use Omnipay\Mollie\Message\Request\CompleteOrderRequest;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
@@ -305,11 +306,17 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * Cancels an order or, for payment IDs ("tr_..."), a payment resp. its authorization
+     *
      * @param  array $parameters
-     * @return CancelOrderRequest
+     * @return CancelOrderRequest|CancelPaymentRequest
      */
     public function void(array $parameters = [])
     {
+        if (isset($parameters['transactionReference']) && strpos($parameters['transactionReference'], 'tr_') === 0) {
+            return $this->createRequest(CancelPaymentRequest::class, $parameters);
+        }
+
         return $this->createRequest(CancelOrderRequest::class, $parameters);
     }
 }
